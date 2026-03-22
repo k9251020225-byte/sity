@@ -969,11 +969,18 @@ details summary{transition:all .3s}
 .qtag.active{background:var(--cr)!important;color:var(--cream)!important;transform:scale(1.08);box-shadow:0 6px 20px rgba(115,65,65,.25)}
 .qtag-wrap:has(.qtag.active) .qtag:not(.active){opacity:.5;transform:scale(.95)}
 
-/* === FAQ: стрелка === */
-details.ex>summary{position:relative;padding-right:24px}
-details.ex>summary::after{content:'\203A';position:absolute;right:8px;top:50%;transform:translateY(-50%) rotate(90deg);transition:transform .3s;font-size:1.2rem;line-height:1}
-details.ex[open]>summary::after{transform:translateY(-50%) rotate(-90deg)}
-details.ex>summary.serial-btn-main::after,details.ex>summary.sec-btn::after,details.episode>summary::after{content:none}
+/* === FAQ: стрелка (только в #faq) === */
+#faq details.ex>summary{position:relative;padding-right:24px}
+#faq details.ex>summary::after{content:'\203A';position:absolute;right:8px;top:50%;transform:translateY(-50%) rotate(90deg);transition:transform .3s;font-size:1.2rem;line-height:1}
+#faq details.ex[open]>summary::after{transform:translateY(-50%) rotate(-90deg)}
+
+/* === Сериал: сброс FAQ-стилей === */
+#serial details.ex{background:none;border-radius:0;padding:0;box-shadow:none}
+#serial details.ex[open]{background:none;box-shadow:none}
+#serial details.ex summary{font-size:inherit;letter-spacing:0;padding:0}
+#serial details.sa{background:none;border-radius:0;padding:0;margin:0 0 18px}
+#serial .sa summary.sap{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--td);line-height:1.9;letter-spacing:0;padding:0}
+#serial p.sap{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--td);line-height:1.9;margin:0 0 18px}
 
 /* === SCROLL HINT в hero === */
 .hero::after{content:'';position:absolute;bottom:24px;left:50%;width:1.5px;height:32px;background:linear-gradient(to bottom,var(--cr),transparent);animation:scrollHint 2s ease-in-out infinite;z-index:5}

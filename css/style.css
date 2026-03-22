@@ -901,7 +901,7 @@ details summary{transition:all .3s}
   border: 1px solid rgba(255,242,230,.08);
 }
 .sec-dark .card .ct{color:#f5eadc}
-.sec-dark .card .cd{color:rgba(245,234,220,.7)}
+.sec-dark .card .cd{color:#f5eadc}
 .sec-dark .card .cn{color:rgba(245,234,220,.15)}
 .sec-dark .card:hover, .sec-dark .prod:hover {
   background: rgba(255,242,230,.12);

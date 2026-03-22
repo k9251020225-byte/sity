@@ -193,7 +193,7 @@ p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td)
 .tn{display:block;background:rgba(168,62,62,.03);border-left:3px solid var(--cr);padding:16px 16px;margin:8px 0 4px;font-family:'Raleway',sans-serif;font-size:.95rem;color:var(--td);line-height:1.8;border-radius:0 12px 12px 0}
 .tn p{margin-bottom:8px;font-family:'Raleway',sans-serif;font-size:.95rem}
 .tn .nb{font-size:.85rem;color:var(--cr);margin-top:10px}
-.trig{background:rgba(168,62,62,.08);color:#a83e3e;padding:2px 6px;border-radius:4px;font-weight:600;border-bottom:1.5px solid rgba(168,62,62,.3)}
+.trig{background:rgba(140,80,80,.05);color:#8a6262;padding:2px 5px;border-radius:3px;font-weight:500;border-bottom:1px dashed rgba(140,80,80,.22)}
 @media(max-width:480px){p.sap{font-size:1rem;line-height:1.85}}
 /* LETTER BUTTON — sparkle */
 .letter-btn{list-style:none;cursor:pointer;display:block;text-align:center;padding:20px 0;border:none;font-family:'Playfair Display',serif;font-size:clamp(1rem,2.5vw,1.3rem);font-weight:500;color:var(--cr);transition:color .3s,text-shadow .3s;font-style:italic}
@@ -948,7 +948,7 @@ details summary{transition:all .3s}
 @keyframes tnReveal{from{opacity:0;transform:translateY(-8px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:translateY(0);clip-path:inset(0 0 0 0)}}
 .tn[style*="block"]{border-left-color:var(--cr);box-shadow:-2px 0 12px rgba(168,62,62,.08)}
 .trig{transition:background .3s,color .3s,box-shadow .3s;cursor:pointer}
-.trig:hover{background:rgba(168,62,62,.14);box-shadow:0 1px 6px rgba(168,62,62,.15)}
+.trig:hover{background:rgba(140,80,80,.09);box-shadow:none}
 
 /* === SERIAL: прогресс чтения === */
 .serial-progress{position:sticky;top:68px;z-index:50;height:3px;background:rgba(115,65,65,.08);margin:0 -16px 16px;overflow:hidden}

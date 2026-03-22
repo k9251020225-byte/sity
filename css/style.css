@@ -946,6 +946,55 @@ details summary{transition:all .3s}
 .doc-preview__lines span:nth-child(3){width:92%}
 .doc-preview__lines span:nth-child(4){width:60%}
 
+/* === PSY COMMENT: плавное появление === */
+.sa .tn{animation:tnReveal .5s cubic-bezier(.4,0,.2,1) both}
+@keyframes tnReveal{from{opacity:0;transform:translateY(-8px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:translateY(0);clip-path:inset(0 0 0 0)}}
+.sa[open] .tn{border-left-color:var(--cr);box-shadow:-2px 0 12px rgba(168,62,62,.08)}
+.trig{transition:background .3s,color .3s,box-shadow .3s;cursor:pointer}
+.trig:hover{background:linear-gradient(180deg,rgba(168,62,62,.12),rgba(168,62,62,.2));box-shadow:0 2px 8px rgba(168,62,62,.15)}
+
+/* === SERIAL: прогресс чтения === */
+.serial-progress{position:sticky;top:68px;z-index:50;height:3px;background:rgba(115,65,65,.08);margin:0 -16px 16px;overflow:hidden}
+.serial-progress-bar{height:100%;width:0%;background:linear-gradient(to right,var(--cr),var(--gd));transition:width .1s linear;border-radius:0 2px 2px 0}
+
+/* === PRODUCTS: градиентный блик === */
+.prod{position:relative;overflow:hidden}
+.prod::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .6s ease;pointer-events:none}
+.prod:hover::after{left:120%}
+.prod::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--cr),var(--gd));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:1}
+.prod:hover::before{transform:scaleX(1)}
+.prod:hover .pp{color:var(--cr);text-shadow:0 0 8px rgba(168,62,62,.15)}
+
+/* === QTAG: активный стиль === */
+.qtag.active{background:var(--cr)!important;color:var(--cream)!important;transform:scale(1.08);box-shadow:0 6px 20px rgba(115,65,65,.25)}
+.qtag-wrap:has(.qtag.active) .qtag:not(.active){opacity:.5;transform:scale(.95)}
+
+/* === FAQ: стрелка === */
+details.ex>summary{position:relative;padding-right:24px}
+details.ex>summary::after{content:'\203A';position:absolute;right:8px;top:50%;transform:translateY(-50%) rotate(90deg);transition:transform .3s;font-size:1.2rem;line-height:1}
+details.ex[open]>summary::after{transform:translateY(-50%) rotate(-90deg)}
+details.ex>summary.serial-btn-main::after,details.ex>summary.sec-btn::after,details.episode>summary::after{content:none}
+
+/* === SCROLL HINT в hero === */
+.hero::after{content:'';position:absolute;bottom:24px;left:50%;width:1.5px;height:32px;background:linear-gradient(to bottom,var(--cr),transparent);animation:scrollHint 2s ease-in-out infinite;z-index:5}
+@keyframes scrollHint{0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)}50%{opacity:.8;transform:translateX(-50%) translateY(8px)}}
+
+/* === NAV CTA пульс === */
+.nc{animation:ncPulse 3s ease-in-out infinite}
+@keyframes ncPulse{0%,100%{box-shadow:0 0 0 0 rgba(115,65,65,.2)}50%{box-shadow:0 0 0 8px rgba(115,65,65,0)}}
+
+/* === COMPARE TABLE === */
+.compare-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:.82rem;animation:fu .5s both}
+.compare-table th{font-family:'Playfair Display',serif;font-weight:600;color:var(--td);padding:12px 10px;border-bottom:2px solid var(--cr);text-align:center}
+.compare-table th:first-child{text-align:left;color:var(--art);font-family:'Raleway',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.compare-table td{padding:10px;border-bottom:1px solid rgba(115,65,65,.06);text-align:center;color:var(--tm)}
+.compare-table td:first-child{text-align:left;font-weight:500;color:var(--td)}
+.compare-table tr:hover td{background:rgba(168,62,62,.02)}
+.compare-table .check{color:var(--gd);font-size:1.1rem}
+.compare-table .highlight-col{background:rgba(168,62,62,.03)}
+.compare-toggle{display:block;margin:20px auto 0;background:none;border:1px solid var(--cr);color:var(--cr);padding:10px 28px;font-family:'Raleway',sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:24px;transition:all .3s}
+.compare-toggle:hover{background:var(--cr);color:var(--cream)}
+
 /* ACCESSIBILITY */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}

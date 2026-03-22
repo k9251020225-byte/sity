@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>М1 — Нарциссическая пустота · Инструкция к себе</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#fff2e6;--cream-d:#f5e6d3;--gd:#052102;--gd-soft:#586357;--cr:#734141;--td:#1a0f0a;--tb:#3d2a22;--tm:#7a6058;--tl:#a08878}
+html{font-size:18px}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);color:var(--tb);line-height:1.75;padding:0;margin:0}
+@media(max-width:480px){html{font-size:17px}}
+
+/* Page container */
+.page{max-width:620px;margin:0 auto;padding:40px 24px 60px}
+
+/* Header */
+.page-header{text-align:center;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid rgba(115,65,65,.12)}
+.page-label{font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gd-soft);margin-bottom:28px}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:500;color:var(--td);line-height:1.3;margin-bottom:12px}
+.page-subtitle{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;font-style:italic;color:var(--cr);line-height:1.6;margin-bottom:8px}
+.page-desc{font-size:.88rem;color:var(--tm);line-height:1.7;max-width:480px;margin:0 auto}
+
+/* Insight block — green */
+.insight{background:#586357;color:#fff2e6;padding:28px 24px;margin:36px 0;text-align:center;line-height:1.7}
+.insight p{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:6px}
+.insight p:last-child{margin-bottom:0}
+.insight strong{font-weight:600}
+
+/* Section headers */
+.section-title{font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gd-soft);margin-bottom:20px;padding-top:36px;border-top:1px solid rgba(88,99,87,.1)}
+.section-title:first-of-type{border-top:none;padding-top:0}
+
+/* Body text */
+.body-text{font-size:.92rem;color:var(--tb);line-height:1.8;margin-bottom:16px}
+.body-text strong{color:var(--td);font-weight:600}
+
+/* Mechanism block */
+.mechanism{background:rgba(88,99,87,.04);border-left:3px solid var(--gd-soft);padding:22px 20px;margin:24px 0}
+.mechanism-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gd-soft);font-weight:600;margin-bottom:12px}
+.mechanism p{font-size:.88rem;color:var(--tb);line-height:1.8;margin-bottom:10px}
+.mechanism p:last-child{margin-bottom:0}
+
+/* Table */
+.symptom-table{width:100%;border-collapse:collapse;margin:24px 0}
+.symptom-table th{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);background:var(--gd-soft);padding:12px 14px;text-align:left;font-weight:600}
+.symptom-table td{font-size:.84rem;color:var(--tb);padding:14px;border-bottom:1px solid rgba(88,99,87,.1);vertical-align:top;line-height:1.65}
+.symptom-table tr:nth-child(even) td{background:rgba(88,99,87,.02)}
+.symptom-table td:first-child{font-weight:500;color:var(--td);width:40%}
+
+/* Questions block */
+.questions{background:rgba(168,62,62,.03);padding:24px 20px;margin:28px 0}
+.questions-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cr);font-weight:600;margin-bottom:16px}
+.questions ol{padding-left:20px}
+.questions li{font-size:.88rem;color:var(--tb);line-height:1.75;margin-bottom:10px}
+.questions li:last-child{margin-bottom:0}
+.questions li strong{color:var(--td)}
+
+/* Practice block */
+.practice{margin:28px 0}
+.practice-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gd-soft);font-weight:600;margin-bottom:16px}
+.practice-step{display:flex;gap:12px;margin-bottom:16px;font-size:.88rem;color:var(--tb);line-height:1.75}
+.practice-num{font-family:'Raleway',sans-serif;font-weight:700;color:var(--gd-soft);min-width:24px;font-size:.82rem}
+
+/* Accent quote */
+.accent-quote{text-align:center;padding:28px 20px;margin:32px 0}
+.accent-quote p{font-family:'Playfair Display',serif;font-size:1.05rem;font-style:italic;color:var(--cr);line-height:1.7}
+
+/* Insight block — cranberry variant */
+.insight-cr{background:var(--cr);color:#fff2e6;padding:28px 24px;margin:36px 0;text-align:center;line-height:1.7}
+.insight-cr p{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:6px}
+.insight-cr p:last-child{margin-bottom:0}
+
+/* Footer */
+.page-footer{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:16px;border-top:1px solid rgba(88,99,87,.1);font-size:.72rem;color:var(--tl)}
+.page-footer .author{font-family:'Raleway',sans-serif;letter-spacing:.1em}
+.page-footer .page-num{font-family:'Raleway',sans-serif}
+
+/* Author card */
+.author-card{background:var(--gd-soft);color:var(--cream);padding:20px 24px;margin:36px 0;text-align:center}
+.author-card .name{font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px}
+.author-card .desc{font-size:.76rem;color:rgba(255,242,230,.7);line-height:1.6}
+
+/* Print */
+@media print{
+  body{background:#fff}
+  .page{padding:20px}
+  .insight,.insight-cr,.author-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- Header -->
+<div class="page-header">
+<div class="page-label">Инструкция к себе &middot; Екатерина Судас</div>
+<h1 class="page-title">Нарциссическая пустота</h1>
+<div class="page-subtitle">Когда ты бежишь &mdash; ты бежишь не вперёд.<br>Ты бежишь от того, что внутри.</div>
+<p class="page-desc">Почему невозможно остановиться, отдохнуть, побыть одной &mdash; и&nbsp;что за&nbsp;этим стоит.</p>
+</div>
+
+<!-- Key insight -->
+<div class="insight">
+<p>Ты не трудоголик. Ты не «сильная женщина».</p>
+<p><strong>Ты человек, который не может остановиться,<br>потому что в тишине &mdash; пусто.<br>А пустота невыносима.</strong></p>
+</div>
+
+<!-- Author card -->
+<div class="author-card">
+<div class="name">Екатерина Судас</div>
+<div class="desc">Клинический психолог &middot; МГУ &middot; Проживание травм &middot; 500+ сессий<br>Telegram: @psyMuza &middot; Запись: @sudas_psy</div>
+</div>
+
+<!-- Section: What is it -->
+<div class="section-title">Что такое нарциссическая пустота &mdash; и почему это не про нарциссизм</div>
+
+<p class="body-text">Слово «нарциссическая» здесь не про тщеславие. Не про эгоизм. Не про селфи и самолюбование.</p>
+
+<p class="body-text">Это про то, что внутри нет ощущения: <strong>«Я есть &mdash; и этого достаточно»</strong>.</p>
+
+<p class="body-text">Нет внутренней опоры. Есть только опора на функцию: я&nbsp;&mdash; мать, я&nbsp;&mdash; работник, я&nbsp;&mdash; та, кто помогает. Убери функцию &mdash; и&nbsp;кажется, что тебя нет. Что ты&nbsp;&mdash; пустое место.</p>
+
+<p class="body-text">Поэтому ты не можешь отдыхать. Отдых &mdash; это пауза. А в паузе ты встречаешься с пустотой. И тело это знает. Поэтому оно не даёт тебе остановиться.</p>
+
+<!-- Mechanism -->
+<div class="mechanism">
+<div class="mechanism-title">Механизм пустоты</div>
+<p>Ощущение «я есть» формируется в раннем детстве &mdash; через зеркалирование. Мама смотрит на ребёнка &mdash; и ребёнок видит в её глазах себя. «Ты радуешься &mdash; я вижу твою радость.» «Тебе больно &mdash; я вижу твою боль.»</p>
+<p>Если мама не зеркалит &mdash; ребёнок не формирует ощущение себя. Внутри остаётся дыра. Не метафорическая &mdash; буквальная: <strong>отсутствие переживания собственного существования</strong>.</p>
+<p>Эту дыру потом всю жизнь нужно чем-то заполнять. Работой. Заботой. Чужими проблемами. Чем угодно &mdash; лишь&nbsp;бы не тишина.</p>
+</div>
+
+<!-- Section: How it looks -->
+<div class="section-title">Как это устроено в твоей жизни</div>
+
+<p class="body-text">Дэниэл Стерн назвал это «отсутствием аффективной настройки». Когда мать физически присутствует, но эмоционально &mdash; нет. Она кормит, одевает, контролирует. Но не спрашивает: «Как ты?» Не говорит: «Я вижу, что тебе грустно.»</p>
+
+<p class="body-text">Ребёнок учится: <strong>мои чувства никому не интересны. Значит, я&nbsp;&mdash; не интересна. Я ценна только тем, что&nbsp;делаю.</strong></p>
+
+<!-- Insight -->
+<div class="insight">
+<p>Пустота внутри &mdash; это не&nbsp;пустота.</p>
+<p><strong>Это непрожитая боль, которая так и&nbsp;не&nbsp;нашла адресата.</strong></p>
+<p>Боль маленькой девочки, которая ждала,<br>что мама спросит: «Как&nbsp;ты?» &mdash; и&nbsp;не&nbsp;дождалась.</p>
+</div>
+
+<!-- Table -->
+<div class="section-title">Как выглядит пустота: симптомы</div>
+
+<table class="symptom-table">
+<thead>
+<tr>
+<th>Что ты делаешь</th>
+<th>Что на самом деле за этим стоит</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Работаешь допоздна, берёшь сверхурочные</td>
+<td>Пока я работаю &mdash; я существую. Остановиться = встретиться с&nbsp;пустотой</td>
+</tr>
+<tr>
+<td>Не можешь отдыхать, чувствуешь вину за «ничегонеделание»</td>
+<td>Отдых = я бесполезна = меня можно бросить</td>
+</tr>
+<tr>
+<td>Берёшь на себя чужих детей, чужие проблемы</td>
+<td>Чужая боль заполняет мою пустоту. Пока я спасаю &mdash; я не чувствую свою дыру</td>
+</tr>
+<tr>
+<td>Не можешь делегировать, «лучше сама»</td>
+<td>Если отдам контроль &mdash; обнаружится, что без&nbsp;моей функции я&nbsp;&mdash; никто</td>
+</tr>
+<tr>
+<td>После выполненной задачи нет удовлетворения, только «что дальше»</td>
+<td>Пустота не заполняется делами. Она требует другого &mdash; присутствия, а&nbsp;не&nbsp;продуктивности</td>
+</tr>
+</tbody>
+</table>
+
+<!-- Questions -->
+<div class="questions">
+<div class="questions-title">Три вопроса для самопроверки</div>
+<p class="body-text" style="margin-bottom:14px">Когда ты ловишь себя на том, что снова бежишь &mdash; остановись и спроси:</p>
+<ol>
+<li><strong>Я сейчас делаю это потому, что хочу &mdash; или потому, что не могу остановиться?</strong></li>
+<li><strong>Что случится, если я сейчас ничего не сделаю? Что я почувствую?</strong></li>
+<li><strong>Чью потребность я сейчас закрываю &mdash; свою или чужую?</strong></li>
+</ol>
+<p class="body-text" style="margin-top:14px;margin-bottom:0;font-style:italic;color:var(--tm)">Если на второй вопрос ответ «мне станет тревожно / пусто / страшно» &mdash; ты бежишь не к цели. Ты бежишь от себя.</p>
+</div>
+
+<!-- Accent quote -->
+<div class="accent-quote">
+<p>Чтобы перестать бежать &mdash;<br>не нужно бежать быстрее.</p>
+<p>Нужно научиться <strong>стоять</strong>.</p>
+</div>
+
+<!-- Practice -->
+<div class="section-title">Что делать &mdash; практика</div>
+
+<p class="body-text">Не «перестать бежать». Это невозможно приказом. Задача &mdash; <strong>начать замечать</strong>.</p>
+
+<div class="practice">
+<div class="practice-step">
+<span class="practice-num">01</span>
+<div><strong>Назови.</strong> Когда ловишь себя на очередном «я ещё вот это сделаю» &mdash; мысленно скажи: «Я сейчас заполняю пустоту.» Не останавливай себя. Просто назови. Одно только называние снижает интенсивность автоматизма.</div>
+</div>
+<div class="practice-step">
+<span class="practice-num">02</span>
+<div><strong>Две минуты тишины.</strong> Один раз в день. Без телефона, без дел, без детей. Просто сидеть. Если поднимается тревога &mdash; это нормально. Тревога = ты подошла к краю пустоты. Ты не обязана в неё прыгать. Достаточно постоять рядом.</div>
+</div>
+<div class="practice-step">
+<span class="practice-num">03</span>
+<div><strong>Одна строка в день.</strong> Каждый вечер записывай: «Сегодня я бежала от&nbsp;___». Или: «Сегодня я остановилась на ___ минут, и внутри было ___». Через месяц ты увидишь паттерн.</div>
+</div>
+</div>
+
+<!-- Final insight -->
+<div class="insight">
+<p>Задача &mdash; не починить себя. Не стать другой.</p>
+<p><strong>Задача &mdash; начать встречаться с тем, что внутри.</strong></p>
+<p>Сначала &mdash; просто замечать.<br>Потому что то, что мы видим &mdash;<br>перестаёт нами управлять.</p>
+</div>
+
+<!-- Footer -->
+<div class="page-footer">
+<span class="author">Екатерина Судас &middot; @psyMuza</span>
+<span class="page-num">Нарциссическая пустота &middot; М1</span>
+</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

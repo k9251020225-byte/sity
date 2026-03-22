@@ -10,6 +10,15 @@ navLinks.forEach(function(link){
   if(sec)sections.push({el:sec,link:link});
 });
 
+// Logo click -> scroll to top
+var logoLink=document.querySelector('.nl');
+if(logoLink){
+  logoLink.addEventListener('click',function(e){
+    e.preventDefault();
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+}
+
 var lastScrollY=0;
 var ticking=false;
 
@@ -37,7 +46,7 @@ function onScroll(){
 
       // Parallax-lite on hero photo
       if(heroPhoto&&lastScrollY<window.innerHeight){
-        heroPhoto.style.transform='translateY('+lastScrollY*0.12+'px)';
+        heroPhoto.style.transform='translateY('+lastScrollY*0.15+'px)';
       }
 
       ticking=false;
@@ -49,6 +58,7 @@ window.addEventListener('scroll',onScroll,{passive:true});
 
 // Hero parallax reference
 var heroPhoto=document.querySelector('.hero-photo');
+if(heroPhoto)heroPhoto.style.willChange='transform';
 
 // Hamburger
 var mtb=document.getElementById('mtb');
@@ -60,6 +70,14 @@ if(mtb&&mo){
 }
 
 // ========== Staggered Reveal with IntersectionObserver ==========
+// Auto-assign .reveal-child to direct children of grids inside .reveal
+document.querySelectorAll('.reveal').forEach(function(el){
+  var gridChildren=el.querySelectorAll('.g2 > *, .g3 > *, .qtag-wrap > .qtag, .serial-grid > *, .artg > *, .libgrid > *');
+  gridChildren.forEach(function(child){
+    child.classList.add('reveal-child');
+  });
+});
+
 var revealObserver=new IntersectionObserver(function(entries){
   entries.forEach(function(entry){
     if(entry.isIntersecting){
@@ -86,28 +104,37 @@ document.querySelectorAll('details.ex').forEach(function(details){
   var content=details.querySelector('.eb');
   if(!summary||!content)return;
 
+  // Prevent CSS animation from firing on [open] — we control it via JS
+  content.style.animation='none';
+
   summary.addEventListener('click',function(e){
     e.preventDefault();
     if(details.open){
       // Closing
-      content.style.maxHeight=content.scrollHeight+'px';
+      var h=content.scrollHeight;
+      content.style.transition='none';
+      content.style.maxHeight=h+'px';
       content.style.opacity='1';
+      content.style.overflow='hidden';
       // Force reflow
       content.offsetHeight;
+      content.style.transition='max-height .3s cubic-bezier(.4,0,.2,1), opacity .25s ease';
       content.style.maxHeight='0';
       content.style.opacity='0';
-      content.style.overflow='hidden';
-      content.addEventListener('transitionend',function handler(){
+      content.addEventListener('transitionend',function handler(ev){
+        if(ev.propertyName!=='max-height')return;
         details.open=false;
         content.style.maxHeight='';
         content.style.opacity='';
         content.style.overflow='';
+        content.style.transition='';
         content.removeEventListener('transitionend',handler);
       });
     }else{
       // Opening
       details.open=true;
       var h=content.scrollHeight;
+      content.style.transition='none';
       content.style.maxHeight='0';
       content.style.opacity='0';
       content.style.overflow='hidden';
@@ -116,8 +143,9 @@ document.querySelectorAll('details.ex').forEach(function(details){
       content.style.transition='max-height .4s cubic-bezier(.4,0,.2,1), opacity .35s ease';
       content.style.maxHeight=h+'px';
       content.style.opacity='1';
-      content.addEventListener('transitionend',function handler(){
-        content.style.maxHeight='';
+      content.addEventListener('transitionend',function handler(ev){
+        if(ev.propertyName!=='max-height')return;
+        content.style.maxHeight='none';
         content.style.overflow='';
         content.style.transition='';
         content.removeEventListener('transitionend',handler);
@@ -158,8 +186,17 @@ var counterObserver=new IntersectionObserver(function(entries){
   });
 },{threshold:0.5});
 
-document.querySelectorAll('[data-counter]').forEach(function(el){
+// Support both [data-counter] attribute and .counter class
+document.querySelectorAll('[data-counter], .counter').forEach(function(el){
   counterObserver.observe(el);
+});
+
+// Auto-detect price numbers in .pp elements and step numbers in .cn
+document.querySelectorAll('.pp, .cn').forEach(function(el){
+  var text=el.textContent.trim();
+  if(/^\d/.test(text)){
+    counterObserver.observe(el);
+  }
 });
 
 // === INTERACTIVE: Что вас привело ===

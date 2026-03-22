@@ -24,6 +24,8 @@ section{position:relative;z-index:1;padding:60px 0;min-height:100vh;display:flex
 .reveal{opacity:0;transform:translateY(40px) scale(0.97);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);animation:reveal-fallback 0s .1s forwards}
 .reveal.v{opacity:1;transform:translateY(0) scale(1);animation:none}
 @keyframes reveal-fallback{to{opacity:1;transform:translateY(0)}}
+.reveal-child{opacity:0;transform:translateY(24px) scale(0.96);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal-child.v{opacity:1;transform:translateY(0) scale(1)}
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0 24px}
 .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:44px;align-items:center}
@@ -111,7 +113,7 @@ section{position:relative;z-index:1;padding:60px 0;min-height:100vh;display:flex
 /* EXPAND */
 details.ex{margin-bottom:8px;background:rgba(255,255,255,.3);border-radius:12px;padding:4px 16px;transition:all .3s}details.ex[open]{background:rgba(255,255,255,.5);box-shadow:0 2px 12px rgba(115,65,65,.04)}details.ex summary{cursor:pointer;font-family:'Raleway',sans-serif;font-size:.85rem;letter-spacing:.08em;color:var(--cr);padding:10px 0;border:none;list-style:none}
 details.ex summary::-webkit-details-marker{display:none}
-details.ex .eb{padding:12px 0;font-size:.95rem;color:var(--tb);line-height:1.8;animation:revealContent .5s cubic-bezier(.4,0,.2,1) both;transform-origin:top}details.ex .eb p{margin-bottom:10px}
+details.ex .eb{padding:12px 0;font-size:.95rem;color:var(--tb);line-height:1.8;transform-origin:top}details.ex .eb p{margin-bottom:10px}
 @keyframes revealContent{from{opacity:0;transform:scaleY(0.8) translateY(-10px)}to{opacity:1;transform:scaleY(1) translateY(0)}}
 /* PRODUCTS */
 .prod{background:rgba(255,255,255,.45);border:none;border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;transition:all .4s;box-shadow:0 2px 12px rgba(115,65,65,.04)}

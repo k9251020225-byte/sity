@@ -299,6 +299,94 @@ window.resetQuiz=function(){
   if(steps[0])steps[0].classList.add('active');
 };
 
+// === SERIAL READING PROGRESS ===
+document.querySelectorAll('.episode .eb, details.ex > .eb').forEach(function(eb) {
+  var parent = eb.closest('details');
+  if (!parent) return;
+  var summary = parent.querySelector('summary');
+  if (!summary) return;
+  // Only for serial episodes (long content)
+  if (eb.children.length < 5) return;
+
+  var bar = document.createElement('div');
+  bar.className = 'serial-progress';
+  bar.innerHTML = '<div class="serial-progress-bar"></div>';
+  eb.insertBefore(bar, eb.firstChild);
+  var progressBar = bar.querySelector('.serial-progress-bar');
+
+  window.addEventListener('scroll', function() {
+    if (!parent.open) return;
+    requestAnimationFrame(function() {
+      var rect = eb.getBoundingClientRect();
+      var total = eb.scrollHeight;
+      var visible = window.innerHeight;
+      var scrolled = -rect.top + 68;
+      var pct = Math.max(0, Math.min(100, (scrolled / (total - visible)) * 100));
+      progressBar.style.width = pct + '%';
+    });
+  }, { passive: true });
+});
+
+// === PRODUCT COMPARISON TABLE ===
+var productsSection = document.getElementById('products');
+if (productsSection) {
+  var g3 = productsSection.querySelector('.g3');
+  if (g3) {
+    var toggleBtn = document.createElement('button');
+    toggleBtn.className = 'compare-toggle';
+    toggleBtn.textContent = 'Сравнить форматы';
+    g3.parentNode.insertBefore(toggleBtn, g3.nextSibling);
+
+    var tableWrap = document.createElement('div');
+    tableWrap.style.display = 'none';
+    tableWrap.style.overflow = 'auto';
+    tableWrap.innerHTML =
+      '<table class="compare-table">' +
+      '<tr><th></th><th>Вход</th><th class="highlight-col">Экспресс</th><th>Маршрут</th></tr>' +
+      '<tr><td>Сессии</td><td>1</td><td class="highlight-col">2</td><td>20</td></tr>' +
+      '<tr><td>Длительность</td><td>1,5 часа</td><td class="highlight-col">3 часа</td><td>5 месяцев</td></tr>' +
+      '<tr><td>Диагностика</td><td><span class="check">&#10003;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td><td><span class="check">&#10003;</span></td></tr>' +
+      '<tr><td>Письменный отчёт</td><td>&mdash;</td><td class="highlight-col"><span class="check">&#10003;</span></td><td><span class="check">&#10003;</span></td></tr>' +
+      '<tr><td>Рекомендации</td><td>Устно</td><td class="highlight-col">Письменно</td><td>Письменно</td></tr>' +
+      '<tr><td>Сопровождение</td><td>&mdash;</td><td class="highlight-col">&mdash;</td><td><span class="check">&#10003;</span></td></tr>' +
+      '</table>';
+    g3.parentNode.insertBefore(tableWrap, toggleBtn.nextSibling);
+
+    toggleBtn.addEventListener('click', function() {
+      if (tableWrap.style.display === 'none') {
+        tableWrap.style.display = 'block';
+        toggleBtn.textContent = 'Скрыть сравнение';
+      } else {
+        tableWrap.style.display = 'none';
+        toggleBtn.textContent = 'Сравнить форматы';
+      }
+    });
+  }
+}
+
+// === SERIAL NAVIGATION (prev/next) ===
+document.querySelectorAll('.episode').forEach(function(ep, idx, all) {
+  var eb = ep.querySelector('.eb');
+  if (!eb) return;
+  var nav = document.createElement('div');
+  nav.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:16px;border-top:1px solid rgba(115,65,65,.08)';
+  var prevHtml = idx > 0 ? '<button class="compare-toggle" data-dir="prev" style="padding:8px 20px">&larr; Предыдущая</button>' : '<span></span>';
+  var nextHtml = idx < all.length - 1 ? '<button class="compare-toggle" data-dir="next" style="padding:8px 20px;background:var(--cr);color:var(--cream);border-color:var(--cr)">Следующая &rarr;</button>' : '<span></span>';
+  nav.innerHTML = '<div>' + prevHtml + '</div><div>' + nextHtml + '</div>';
+  eb.appendChild(nav);
+  nav.querySelectorAll('button').forEach(function(b) {
+    b.addEventListener('click', function() {
+      var dir = this.getAttribute('data-dir');
+      var target = dir === 'next' ? all[idx + 1] : all[idx - 1];
+      ep.open = false;
+      setTimeout(function() {
+        target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    });
+  });
+});
+
 }catch(e){
 var f=document.querySelectorAll('.reveal');
 for(var fi=0;fi<f.length;fi++){f[fi].classList.add('v')}

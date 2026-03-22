@@ -845,6 +845,35 @@ details summary{transition:all .3s}
   .serial-howto{padding:16px 14px!important}
 }
 
+/* Тёмные секции */
+.sec-dark {
+  background: #052102;
+  color: rgba(255,242,230,.85);
+}
+.sec-dark .sl { color: rgba(255,242,230,.5); }
+.sec-dark .st { color: #fff2e6; }
+.sec-dark .ss { color: rgba(255,242,230,.7); }
+.sec-dark .sd { background: linear-gradient(to right, transparent, rgba(255,242,230,.3), transparent); }
+.sec-dark .card, .sec-dark .prod { background: rgba(255,242,230,.06); }
+.sec-dark .card:hover, .sec-dark .prod:hover { background: rgba(255,242,230,.1); }
+
+.sec-wine {
+  background: #3d0000;
+  color: rgba(255,242,230,.9);
+}
+.sec-wine .st { color: #fff2e6; }
+.sec-wine .ss { color: rgba(255,242,230,.7); }
+.sec-wine .hbtn { background: #fff2e6; color: #3d0000; }
+.sec-wine .hbtn:hover { background: #f5e6d3; }
+
+.sec-artichoke {
+  background: #586357;
+  color: rgba(255,242,230,.85);
+}
+.sec-artichoke .sl { color: rgba(255,242,230,.5); }
+.sec-artichoke .st { color: #fff2e6; }
+.sec-artichoke .ss { color: rgba(255,242,230,.7); }
+
 /* ACCESSIBILITY */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}

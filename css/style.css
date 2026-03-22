@@ -915,6 +915,37 @@ details summary{transition:all .3s}
 .sec-artichoke .st { color: #fff2e6; }
 .sec-artichoke .ss { color: rgba(255,242,230,.7); }
 
+/* SERIAL CHARACTER CARDS — premium */
+.serial-card{background:rgba(255,255,255,.55);border:none!important;border-radius:16px!important;padding:28px 24px!important;position:relative;overflow:hidden;transition:all .5s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 16px rgba(115,65,65,.06)}
+.serial-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .4s}
+.serial-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(115,65,65,.12)}
+.serial-card:hover::before{height:5px}
+
+/* EPISODE CARDS — Netflix-style */
+.episode{border:none!important;margin-bottom:4px;background:none!important;padding:0!important}
+.episode summary{display:flex!important;align-items:center;gap:16px;padding:20px 24px!important;cursor:pointer;list-style:none;background:rgba(255,255,255,.35)!important;border-radius:12px;transition:all .4s;border:1px solid transparent!important;color:var(--td)!important;font-size:1rem!important;letter-spacing:0!important}
+.episode summary::-webkit-details-marker{display:none}
+.episode summary:hover{background:rgba(255,255,255,.6)!important;border-color:rgba(168,62,62,.12)!important;transform:translateX(4px)}
+.episode .ep-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:300;color:var(--cr);opacity:.4;min-width:36px;line-height:1}
+.episode .ep-info{flex:1}
+.episode .ep-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--td);margin-bottom:2px}
+.episode .ep-hint{font-family:'Raleway',sans-serif;font-size:.7rem;letter-spacing:.08em;color:var(--tl)}
+.episode .ep-arrow{font-size:.8rem;color:var(--cr);opacity:.4;transition:transform .3s,opacity .3s}
+.episode[open] .ep-arrow{transform:rotate(90deg);opacity:.8}
+.episode[open] summary{background:rgba(168,62,62,.04)!important;border-color:rgba(168,62,62,.15)!important;border-radius:12px 12px 0 0}
+.episode .eb{padding:24px!important;background:rgba(255,255,255,.2)!important;border:1px solid rgba(168,62,62,.08)!important;border-top:none!important;border-radius:0 0 12px 12px}
+
+/* PSY COMMENT — premium */
+.tn::before{content:'Комментарий психолога';display:block;font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cr);margin-bottom:10px;opacity:.6}
+
+/* DOCUMENT PREVIEW — mockup */
+.doc-preview__lines{margin-top:14px;opacity:.15}
+.doc-preview__lines span{display:block;height:2px;background:var(--tm);margin-bottom:8px;border-radius:1px}
+.doc-preview__lines span:nth-child(1){width:100%}
+.doc-preview__lines span:nth-child(2){width:85%}
+.doc-preview__lines span:nth-child(3){width:92%}
+.doc-preview__lines span:nth-child(4){width:60%}
+
 /* ACCESSIBILITY */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}

@@ -266,15 +266,32 @@ footer{background:linear-gradient(180deg,var(--gd),var(--mul));padding:36px 8px 
 .mt{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:5px;z-index:200}.mt span{width:20px;height:1.5px;background:var(--td)}
 .mo{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,242,230,.97);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;opacity:0;pointer-events:none;transition:opacity .4s}
 .mo.open{opacity:1;pointer-events:all}.mo a{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--td)}.mo a:hover{color:var(--cr)}
-@media(max-width:900px){.nk{display:none}.mt{display:flex}section{padding:36px 0}.hero-inner,.vis-duo,.g2,.g3,.cg,.books{grid-template-columns:1fr}.fg{grid-template-columns:1fr}.fbt{flex-direction:column}.flg{text-align:left;max-width:100%}}
+@media(max-width:900px){.nk{display:none}.mt{display:flex}section{padding:36px 0}.hero-inner,.vis-duo,.g2,.g3,.cg,.books{grid-template-columns:1fr}.fg{grid-template-columns:1fr}.fbt{flex-direction:column}.flg{text-align:left;max-width:100%}
+.c,.cw{padding:0 16px}
+.prod,.caseblk,.ep,.serial-entry,.ctat{max-width:100%!important}
+div[style*="max-width:700"],div[style*="max-width:640"],div[style*="max-width:600"],div[style*="max-width:500"]{max-width:100%!important}
+p[style*="max-width"],details[style*="max-width"]{max-width:100%!important}
+}
 @media(max-width:480px){
 body{font-size:20px}
-.c,.cw{padding:0 6px}
-.hero{padding:80px 6px 30px}
+.c,.cw{padding:0 12px}
+.hero{padding:80px 12px 30px}
 section{padding:36px 0}
-.ss{font-size:1.05rem}
+.ss{font-size:1.05rem;max-width:100%!important}
 .sl{font-size:.72rem}
 .st{font-size:1.15rem}
+/* Убираем узкие max-width — контент на всю ширину */
+.prod,.caseblk,.ep,.serial-entry,.ctat,
+div[style*="max-width:700"],div[style*="max-width:640"],
+div[style*="max-width:600"],div[style*="max-width:500"],
+div[style*="max-width:400"],
+details[style*="max-width"],
+p[style*="max-width"],
+.route-sum,.letter-wrap,.reveal{max-width:100%!important;padding-left:0;padding-right:0}
+.c[style*="max-width"]{max-width:100%!important;padding:0 12px!important}
+div[style*="padding:0 40px"]{padding:0 12px!important}
+.letter-text{padding:0 4px}
+footer{padding:36px 12px 18px}
 }
 
 }80%{transform:translate(3px,-3px);opacity:.8}}

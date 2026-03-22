@@ -297,6 +297,33 @@ div[style*="padding:0 40px"]{padding:0 12px!important}
 footer{padding:36px 12px 18px}
 }
 
+@media(max-width:400px){
+html{font-size:16px}
+body{font-size:16px}
+.hero-text h1{font-size:1.4rem}
+.hero-text .hsl{font-size:.9rem}
+.hero-text .hsub{font-size:.82rem}
+.hero-text .hcore{font-size:.82rem;line-height:1.65}
+.st{font-size:1rem}
+.ss{font-size:.88rem}
+.sl{font-size:.6rem}
+.card .ct{font-size:.82rem}
+.card .cd{font-size:.72rem}
+.prod .pn{font-size:.95rem}
+.prod .pd{font-size:.78rem}
+.prod .pp{font-size:.74rem}
+.hbtn{padding:10px 22px;font-size:.82rem}
+p.sap{font-size:.86rem;line-height:1.75}
+.letter-text{font-size:.9rem;line-height:1.8}
+.tn{font-size:.82rem}
+.tn p{font-size:.82rem}
+.scene-text{font-size:.86rem}
+.nav{padding:12px 16px}
+.nav.sc{padding:10px 16px}
+.nl{font-size:.85rem}
+.nc{font-size:.68rem!important;padding:8px 16px}
+}
+
 /* orphan keyframe removed */
 
 /* HIDDEN PRODUCTS - revealed by button */

@@ -7,86 +7,247 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--cream:#fff2e6;--cream-d:#f5e6d3;--gd:#052102;--gd-soft:#586357;--cr:#734141;--td:#1a0f0a;--tb:#3d2a22;--tm:#7a6058;--tl:#a08878}
-html{font-size:18px}
-body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);color:var(--tb);line-height:1.75;padding:0;margin:0}
+:root{
+  --cream:#fff2e6;
+  --cream-d:#f5e6d3;
+  --gd:#1a5c18;
+  --gd-soft:#586357;
+  --cr:#734141;
+  --cr-l:#8f5555;
+  --td:#1a0f0a;
+  --tb:#3d2a22;
+  --tm:#7a6058;
+  --tl:#a08878;
+  --bd:rgba(115,65,65,.12);
+  --card-bg:rgba(255,255,255,.4);
+  --card-shadow:0 2px 12px rgba(115,65,65,.04);
+  --card-shadow-hover:0 8px 28px rgba(115,65,65,.08);
+  --radius:16px;
+  --radius-pill:28px;
+}
+html{font-size:18px;scroll-behavior:smooth}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);color:var(--tb);line-height:1.75;padding:0;margin:0;overflow-x:hidden}
 @media(max-width:480px){html{font-size:17px}}
 
 /* Page container */
-.page{max-width:620px;margin:0 auto;padding:40px 24px 60px}
+.page{max-width:660px;margin:0 auto;padding:48px 24px 64px}
 
 /* Header */
-.page-header{text-align:center;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid rgba(115,65,65,.12)}
+.page-header{text-align:center;margin-bottom:48px;padding-bottom:36px}
 .page-label{font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gd-soft);margin-bottom:28px}
 .page-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:500;color:var(--td);line-height:1.3;margin-bottom:12px}
 .page-subtitle{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;font-style:italic;color:var(--cr);line-height:1.6;margin-bottom:8px}
 .page-desc{font-size:.88rem;color:var(--tm);line-height:1.7;max-width:480px;margin:0 auto}
 
+/* Divider */
+.section-divider{
+  width:60px;height:2px;
+  background:linear-gradient(to right,transparent,var(--cr),transparent);
+  margin:40px auto;border-radius:2px;
+}
+
 /* Insight block — green */
-.insight{background:#586357;color:#fff2e6;padding:28px 24px;margin:36px 0;text-align:center;line-height:1.7}
-.insight p{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:6px}
+.insight{
+  background:var(--gd-soft);
+  color:#fff2e6;
+  padding:32px 28px;
+  margin:36px 0;
+  text-align:center;
+  line-height:1.7;
+  border-radius:var(--radius);
+  box-shadow:0 4px 20px rgba(88,99,87,.12);
+}
+.insight p{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:8px}
 .insight p:last-child{margin-bottom:0}
 .insight strong{font-weight:600}
 
 /* Section headers */
-.section-title{font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gd-soft);margin-bottom:20px;padding-top:36px;border-top:1px solid rgba(88,99,87,.1)}
-.section-title:first-of-type{border-top:none;padding-top:0}
+.section-title{
+  font-family:'Raleway',sans-serif;
+  font-size:.68rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--gd-soft);
+  margin-bottom:20px;
+  padding-top:8px;
+}
 
 /* Body text */
 .body-text{font-size:.92rem;color:var(--tb);line-height:1.8;margin-bottom:16px}
 .body-text strong{color:var(--td);font-weight:600}
 
 /* Mechanism block */
-.mechanism{background:rgba(88,99,87,.04);border-left:3px solid var(--gd-soft);padding:22px 20px;margin:24px 0}
+.mechanism{
+  background:var(--card-bg);
+  border-left:3px solid var(--gd-soft);
+  padding:24px 22px;
+  margin:24px 0;
+  border-radius:0 var(--radius) var(--radius) 0;
+  box-shadow:var(--card-shadow);
+}
 .mechanism-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gd-soft);font-weight:600;margin-bottom:12px}
 .mechanism p{font-size:.88rem;color:var(--tb);line-height:1.8;margin-bottom:10px}
 .mechanism p:last-child{margin-bottom:0}
 
-/* Table */
-.symptom-table{width:100%;border-collapse:collapse;margin:24px 0}
-.symptom-table th{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);background:var(--gd-soft);padding:12px 14px;text-align:left;font-weight:600}
-.symptom-table td{font-size:.84rem;color:var(--tb);padding:14px;border-bottom:1px solid rgba(88,99,87,.1);vertical-align:top;line-height:1.65}
-.symptom-table tr:nth-child(even) td{background:rgba(88,99,87,.02)}
+/* Table — desktop */
+.symptom-table{width:100%;border-collapse:separate;border-spacing:0;margin:24px 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--card-shadow)}
+.symptom-table thead{background:var(--gd-soft)}
+.symptom-table th{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);padding:14px 16px;text-align:left;font-weight:600}
+.symptom-table td{font-size:.84rem;color:var(--tb);padding:16px;border-bottom:1px solid rgba(88,99,87,.08);vertical-align:top;line-height:1.65;background:var(--card-bg)}
+.symptom-table tr:nth-child(even) td{background:rgba(255,255,255,.55)}
 .symptom-table td:first-child{font-weight:500;color:var(--td);width:40%}
+.symptom-table tr:last-child td{border-bottom:none}
+
+/* Table — mobile cards */
+@media(max-width:560px){
+  .symptom-table,.symptom-table thead,.symptom-table tbody,.symptom-table tr,.symptom-table th,.symptom-table td{display:block;width:100%}
+  .symptom-table thead{display:none}
+  .symptom-table tr{
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:var(--card-shadow);
+    margin-bottom:12px;
+    padding:4px 0;
+    overflow:hidden;
+  }
+  .symptom-table td{border-bottom:none;padding:12px 16px}
+  .symptom-table td:first-child{
+    font-family:'Raleway',sans-serif;
+    font-size:.7rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--cr);
+    font-weight:600;
+    padding-bottom:4px;
+    width:100%;
+  }
+  .symptom-table td:last-child{padding-top:0;color:var(--tm)}
+}
 
 /* Questions block */
-.questions{background:rgba(168,62,62,.03);padding:24px 20px;margin:28px 0}
+.questions{
+  background:var(--card-bg);
+  padding:28px 24px;
+  margin:28px 0;
+  border-radius:var(--radius);
+  box-shadow:var(--card-shadow);
+  border-left:3px solid var(--cr);
+}
 .questions-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cr);font-weight:600;margin-bottom:16px}
 .questions ol{padding-left:20px}
 .questions li{font-size:.88rem;color:var(--tb);line-height:1.75;margin-bottom:10px}
 .questions li:last-child{margin-bottom:0}
 .questions li strong{color:var(--td)}
 
-/* Practice block */
-.practice{margin:28px 0}
-.practice-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gd-soft);font-weight:600;margin-bottom:16px}
-.practice-step{display:flex;gap:12px;margin-bottom:16px;font-size:.88rem;color:var(--tb);line-height:1.75}
-.practice-num{font-family:'Raleway',sans-serif;font-weight:700;color:var(--gd-soft);min-width:24px;font-size:.82rem}
+/* Practice cards */
+.practice{margin:28px 0;display:flex;flex-direction:column;gap:14px}
+.practice-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gd-soft);font-weight:600;margin-bottom:4px}
+.practice-card{
+  background:var(--card-bg);
+  border-radius:var(--radius);
+  padding:22px 22px;
+  box-shadow:var(--card-shadow);
+  display:flex;
+  gap:14px;
+  font-size:.88rem;
+  color:var(--tb);
+  line-height:1.75;
+  transition:all .4s;
+}
+.practice-card:hover{
+  box-shadow:var(--card-shadow-hover);
+  transform:translateY(-2px);
+}
+.practice-num{
+  font-family:'Raleway',sans-serif;
+  font-weight:700;
+  color:var(--gd-soft);
+  min-width:28px;
+  font-size:.82rem;
+  line-height:1.75;
+}
 
 /* Accent quote */
-.accent-quote{text-align:center;padding:28px 20px;margin:32px 0}
+.accent-quote{
+  text-align:center;
+  padding:32px 24px;
+  margin:36px 0;
+  background:var(--card-bg);
+  border-radius:var(--radius);
+  box-shadow:var(--card-shadow);
+}
 .accent-quote p{font-family:'Playfair Display',serif;font-size:1.05rem;font-style:italic;color:var(--cr);line-height:1.7}
 
 /* Insight block — cranberry variant */
-.insight-cr{background:var(--cr);color:#fff2e6;padding:28px 24px;margin:36px 0;text-align:center;line-height:1.7}
-.insight-cr p{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:6px}
+.insight-cr{
+  background:var(--cr);
+  color:#fff2e6;
+  padding:32px 28px;
+  margin:36px 0;
+  text-align:center;
+  line-height:1.7;
+  border-radius:var(--radius);
+  box-shadow:0 4px 20px rgba(115,65,65,.15);
+}
+.insight-cr p{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:8px}
 .insight-cr p:last-child{margin-bottom:0}
 
-/* Footer */
-.page-footer{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:16px;border-top:1px solid rgba(88,99,87,.1);font-size:.72rem;color:var(--tl)}
-.page-footer .author{font-family:'Raleway',sans-serif;letter-spacing:.1em}
-.page-footer .page-num{font-family:'Raleway',sans-serif}
-
 /* Author card */
-.author-card{background:var(--gd-soft);color:var(--cream);padding:20px 24px;margin:36px 0;text-align:center}
+.author-card{
+  background:var(--gd-soft);
+  color:var(--cream);
+  padding:24px 28px;
+  margin:36px 0;
+  text-align:center;
+  border-radius:var(--radius);
+  box-shadow:0 4px 20px rgba(88,99,87,.12);
+}
 .author-card .name{font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px}
 .author-card .desc{font-size:.76rem;color:rgba(255,242,230,.7);line-height:1.6}
+
+/* CTA button */
+.cta-wrap{text-align:center;margin:36px 0}
+.cta-btn{
+  display:inline-block;
+  background:var(--cr);
+  color:var(--cream);
+  padding:14px 36px;
+  font-family:'Playfair Display',serif;
+  font-size:.95rem;
+  font-weight:500;
+  font-style:italic;
+  border-radius:var(--radius-pill);
+  transition:all .4s;
+  text-decoration:none;
+  letter-spacing:.02em;
+}
+.cta-btn:hover{
+  background:var(--cr-l);
+  box-shadow:0 8px 28px rgba(115,65,65,.2);
+  transform:translateY(-2px);
+}
+
+/* Footer */
+.page-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:48px;
+  padding-top:16px;
+  border-top:1px solid rgba(88,99,87,.1);
+  font-size:.72rem;
+  color:var(--tl);
+}
+.page-footer .author{font-family:'Raleway',sans-serif;letter-spacing:.1em}
+.page-footer .page-num{font-family:'Raleway',sans-serif}
 
 /* Print */
 @media print{
   body{background:#fff}
   .page{padding:20px}
   .insight,.insight-cr,.author-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .practice-card,.questions,.accent-quote,.mechanism{box-shadow:none;border:1px solid #eee}
+  .cta-wrap{display:none}
 }
 </style>
 </head>
@@ -98,14 +259,14 @@ body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);colo
 <div class="page-header">
 <div class="page-label">Инструкция к себе &middot; Екатерина Судас</div>
 <h1 class="page-title">Нарциссическая пустота</h1>
-<div class="page-subtitle">Когда ты бежишь &mdash; ты бежишь не вперёд.<br>Ты бежишь от того, что внутри.</div>
-<p class="page-desc">Почему невозможно остановиться, отдохнуть, побыть одной &mdash; и&nbsp;что за&nbsp;этим стоит.</p>
+<div class="page-subtitle">Когда бег не прекращается &mdash;<br>возможно, это бег не вперёд, а&nbsp;от&nbsp;чего-то внутри.</div>
+<p class="page-desc">Почему бывает так сложно остановиться, отдохнуть, побыть в&nbsp;тишине &mdash; и&nbsp;что может за&nbsp;этим стоять.</p>
 </div>
 
 <!-- Key insight -->
 <div class="insight">
-<p>Ты не трудоголик. Ты не «сильная женщина».</p>
-<p><strong>Ты человек, который не может остановиться,<br>потому что в тишине &mdash; пусто.<br>А пустота невыносима.</strong></p>
+<p>Возможно, дело не в трудоголизме и не в «силе характера».</p>
+<p><strong>Иногда за невозможностью остановиться<br>стоит ощущение пустоты,<br>с&nbsp;которой трудно встретиться.</strong></p>
 </div>
 
 <!-- Author card -->
@@ -114,116 +275,137 @@ body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);colo
 <div class="desc">Клинический психолог &middot; МГУ &middot; Проживание травм &middot; 500+ сессий<br>Telegram: @psyMuza &middot; Запись: @sudas_psy</div>
 </div>
 
+<div class="section-divider"></div>
+
 <!-- Section: What is it -->
 <div class="section-title">Что такое нарциссическая пустота &mdash; и почему это не про нарциссизм</div>
 
 <p class="body-text">Слово «нарциссическая» здесь не про тщеславие. Не про эгоизм. Не про селфи и самолюбование.</p>
 
-<p class="body-text">Это про то, что внутри нет ощущения: <strong>«Я есть &mdash; и этого достаточно»</strong>.</p>
+<p class="body-text">Речь идёт о состоянии, когда внутри нет устойчивого ощущения: <strong>«Я есть &mdash; и этого достаточно»</strong>.</p>
 
-<p class="body-text">Нет внутренней опоры. Есть только опора на функцию: я&nbsp;&mdash; мать, я&nbsp;&mdash; работник, я&nbsp;&mdash; та, кто помогает. Убери функцию &mdash; и&nbsp;кажется, что тебя нет. Что ты&nbsp;&mdash; пустое место.</p>
+<p class="body-text">Нет внутренней опоры на себя &mdash; есть только опора на функцию: «я &mdash; мать», «я &mdash; работник», «я &mdash; та, кто помогает». Если убрать функцию &mdash; может казаться, что от человека ничего не остаётся.</p>
 
-<p class="body-text">Поэтому ты не можешь отдыхать. Отдых &mdash; это пауза. А в паузе ты встречаешься с пустотой. И тело это знает. Поэтому оно не даёт тебе остановиться.</p>
+<p class="body-text">Поэтому отдых даётся с трудом. Отдых &mdash; это пауза. А в паузе может подняться то самое ощущение пустоты. И тело, зная об этом, не&nbsp;позволяет остановиться.</p>
 
 <!-- Mechanism -->
 <div class="mechanism">
-<div class="mechanism-title">Механизм пустоты</div>
-<p>Ощущение «я есть» формируется в раннем детстве &mdash; через зеркалирование. Мама смотрит на ребёнка &mdash; и ребёнок видит в её глазах себя. «Ты радуешься &mdash; я вижу твою радость.» «Тебе больно &mdash; я вижу твою боль.»</p>
-<p>Если мама не зеркалит &mdash; ребёнок не формирует ощущение себя. Внутри остаётся дыра. Не метафорическая &mdash; буквальная: <strong>отсутствие переживания собственного существования</strong>.</p>
-<p>Эту дыру потом всю жизнь нужно чем-то заполнять. Работой. Заботой. Чужими проблемами. Чем угодно &mdash; лишь&nbsp;бы не тишина.</p>
+<div class="mechanism-title">Как формируется это ощущение</div>
+<p>Переживание «я есть» складывается в раннем детстве &mdash; через зеркалирование. Мама смотрит на ребёнка &mdash; и ребёнок видит в её глазах себя. <em>«Ты радуешься &mdash; я вижу твою радость.»</em> <em>«Тебе больно &mdash; я вижу твою боль.»</em></p>
+<p>Если зеркалирования было недостаточно &mdash; ощущение себя может не сформироваться в полной мере. Внутри остаётся что-то вроде дыры &mdash; <strong>дефицит переживания собственного существования</strong>.</p>
+<p>Эту нехватку потом бывает нужно чем-то заполнять. Работой. Заботой. Чужими проблемами. Чем угодно &mdash; лишь бы не тишина.</p>
 </div>
 
+<div class="section-divider"></div>
+
 <!-- Section: How it looks -->
-<div class="section-title">Как это устроено в твоей жизни</div>
+<div class="section-title">Как это может проявляться в жизни</div>
 
-<p class="body-text">Дэниэл Стерн назвал это «отсутствием аффективной настройки». Когда мать физически присутствует, но эмоционально &mdash; нет. Она кормит, одевает, контролирует. Но не спрашивает: «Как ты?» Не говорит: «Я вижу, что тебе грустно.»</p>
+<p class="body-text">Дэниэл Стерн описал это как «отсутствие аффективной настройки» &mdash; когда мать физически присутствует, но эмоционально недоступна. Она кормит, одевает, контролирует. Но не спрашивает: «Как ты?» Не говорит: «Я вижу, что тебе грустно.»</p>
 
-<p class="body-text">Ребёнок учится: <strong>мои чувства никому не интересны. Значит, я&nbsp;&mdash; не интересна. Я ценна только тем, что&nbsp;делаю.</strong></p>
+<p class="body-text">У ребёнка может сложиться убеждение: <strong>«Мои чувства никому не интересны. Значит, я ценна только тем, что делаю.»</strong></p>
 
 <!-- Insight -->
 <div class="insight">
-<p>Пустота внутри &mdash; это не&nbsp;пустота.</p>
-<p><strong>Это непрожитая боль, которая так и&nbsp;не&nbsp;нашла адресата.</strong></p>
-<p>Боль маленькой девочки, которая ждала,<br>что мама спросит: «Как&nbsp;ты?» &mdash; и&nbsp;не&nbsp;дождалась.</p>
+<p>Пустота внутри &mdash; это не совсем пустота.</p>
+<p><strong>Часто это непрожитая боль, которая так и&nbsp;не&nbsp;нашла адресата.</strong></p>
+<p>Боль маленького ребёнка, который ждал,<br>что мама спросит: «Как ты?» &mdash; и&nbsp;не дождался.</p>
 </div>
 
+<div class="section-divider"></div>
+
 <!-- Table -->
-<div class="section-title">Как выглядит пустота: симптомы</div>
+<div class="section-title">Как может выглядеть пустота: возможные проявления</div>
 
 <table class="symptom-table">
 <thead>
 <tr>
-<th>Что ты делаешь</th>
-<th>Что на самом деле за этим стоит</th>
+<th>Что происходит</th>
+<th>Что может стоять за этим</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Работаешь допоздна, берёшь сверхурочные</td>
-<td>Пока я работаю &mdash; я существую. Остановиться = встретиться с&nbsp;пустотой</td>
+<td>Работа допоздна, сверхурочные</td>
+<td>«Пока я работаю &mdash; я существую. Остановиться значит встретиться с&nbsp;пустотой»</td>
 </tr>
 <tr>
-<td>Не можешь отдыхать, чувствуешь вину за «ничегонеделание»</td>
-<td>Отдых = я бесполезна = меня можно бросить</td>
+<td>Трудно отдыхать, чувство вины за «ничегонеделание»</td>
+<td>«Отдых = я бесполезна = меня могут бросить»</td>
 </tr>
 <tr>
-<td>Берёшь на себя чужих детей, чужие проблемы</td>
-<td>Чужая боль заполняет мою пустоту. Пока я спасаю &mdash; я не чувствую свою дыру</td>
+<td>Берёт на себя чужие проблемы и заботы</td>
+<td>«Чужая боль заполняет мою пустоту. Пока я спасаю &mdash; я не чувствую свою»</td>
 </tr>
 <tr>
-<td>Не можешь делегировать, «лучше сама»</td>
-<td>Если отдам контроль &mdash; обнаружится, что без&nbsp;моей функции я&nbsp;&mdash; никто</td>
+<td>Сложно делегировать: «лучше сама»</td>
+<td>«Если отдам контроль &mdash; обнаружится, что без моей функции я &mdash; никто»</td>
 </tr>
 <tr>
 <td>После выполненной задачи нет удовлетворения, только «что дальше»</td>
-<td>Пустота не заполняется делами. Она требует другого &mdash; присутствия, а&nbsp;не&nbsp;продуктивности</td>
+<td>Пустота не заполняется делами &mdash; ей нужно другое: присутствие, а&nbsp;не продуктивность</td>
 </tr>
 </tbody>
 </table>
 
+<div class="section-divider"></div>
+
 <!-- Questions -->
 <div class="questions">
 <div class="questions-title">Три вопроса для самопроверки</div>
-<p class="body-text" style="margin-bottom:14px">Когда ты ловишь себя на том, что снова бежишь &mdash; остановись и спроси:</p>
+<p class="body-text" style="margin-bottom:14px">Когда замечаете, что снова бежите &mdash; можно остановиться и спросить себя:</p>
 <ol>
 <li><strong>Я сейчас делаю это потому, что хочу &mdash; или потому, что не могу остановиться?</strong></li>
 <li><strong>Что случится, если я сейчас ничего не сделаю? Что я почувствую?</strong></li>
 <li><strong>Чью потребность я сейчас закрываю &mdash; свою или чужую?</strong></li>
 </ol>
-<p class="body-text" style="margin-top:14px;margin-bottom:0;font-style:italic;color:var(--tm)">Если на второй вопрос ответ «мне станет тревожно / пусто / страшно» &mdash; ты бежишь не к цели. Ты бежишь от себя.</p>
+<p class="body-text" style="margin-top:14px;margin-bottom:0;font-style:italic;color:var(--tm)">Если на второй вопрос ответ &mdash; «мне станет тревожно, пусто, страшно», &mdash; это может быть сигналом: бег направлен не к цели, а от встречи с собой.</p>
 </div>
+
+<div class="section-divider"></div>
 
 <!-- Accent quote -->
 <div class="accent-quote">
-<p>Чтобы перестать бежать &mdash;<br>не нужно бежать быстрее.</p>
-<p>Нужно научиться <strong>стоять</strong>.</p>
+<p>Чтобы замедлиться &mdash;<br>не нужно бежать быстрее.</p>
+<p>Иногда достаточно попробовать <strong>постоять на месте</strong>.</p>
 </div>
 
 <!-- Practice -->
-<div class="section-title">Что делать &mdash; практика</div>
+<div class="section-title">Что можно попробовать &mdash; практика</div>
 
-<p class="body-text">Не «перестать бежать». Это невозможно приказом. Задача &mdash; <strong>начать замечать</strong>.</p>
+<p class="body-text">Не «приказать себе остановиться» &mdash; это редко работает. Скорее &mdash; <strong>начать замечать</strong>.</p>
 
 <div class="practice">
-<div class="practice-step">
+<div class="practice-title">Практические шаги</div>
+
+<div class="practice-card">
 <span class="practice-num">01</span>
-<div><strong>Назови.</strong> Когда ловишь себя на очередном «я ещё вот это сделаю» &mdash; мысленно скажи: «Я сейчас заполняю пустоту.» Не останавливай себя. Просто назови. Одно только называние снижает интенсивность автоматизма.</div>
+<div><strong>Назовите.</strong> Когда ловите себя на очередном «я ещё вот это сделаю» &mdash; мысленно скажите: «Кажется, я сейчас заполняю пустоту.» Не останавливайте себя. Просто назовите. Само называние может снижать интенсивность автоматизма.</div>
 </div>
-<div class="practice-step">
+
+<div class="practice-card">
 <span class="practice-num">02</span>
-<div><strong>Две минуты тишины.</strong> Один раз в день. Без телефона, без дел, без детей. Просто сидеть. Если поднимается тревога &mdash; это нормально. Тревога = ты подошла к краю пустоты. Ты не обязана в неё прыгать. Достаточно постоять рядом.</div>
+<div><strong>Две минуты тишины.</strong> Один раз в день. Без телефона, без дел. Просто посидеть. Если поднимается тревога &mdash; это нормальная реакция. Тревога может означать приближение к краю пустоты. Не обязательно туда прыгать &mdash; достаточно постоять рядом.</div>
 </div>
-<div class="practice-step">
+
+<div class="practice-card">
 <span class="practice-num">03</span>
-<div><strong>Одна строка в день.</strong> Каждый вечер записывай: «Сегодня я бежала от&nbsp;___». Или: «Сегодня я остановилась на ___ минут, и внутри было ___». Через месяц ты увидишь паттерн.</div>
+<div><strong>Одна строка в день.</strong> Каждый вечер можно записать: «Сегодня я бежала от&nbsp;___». Или: «Сегодня я остановилась на ___ минут, и внутри было ___». Через месяц может проявиться паттерн.</div>
 </div>
 </div>
+
+<div class="section-divider"></div>
 
 <!-- Final insight -->
 <div class="insight">
-<p>Задача &mdash; не починить себя. Не стать другой.</p>
+<p>Задача &mdash; не починить себя. Не стать другим человеком.</p>
 <p><strong>Задача &mdash; начать встречаться с тем, что внутри.</strong></p>
-<p>Сначала &mdash; просто замечать.<br>Потому что то, что мы видим &mdash;<br>перестаёт нами управлять.</p>
+<p>Сначала &mdash; просто замечать.<br>Потому что то, что мы замечаем, &mdash;<br>постепенно теряет над нами власть.</p>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrap">
+<a href="https://t.me/sudas_psy" class="cta-btn">Записаться на консультацию</a>
 </div>
 
 <!-- Footer -->

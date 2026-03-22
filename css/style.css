@@ -933,7 +933,7 @@ details summary{transition:all .3s}
 .episode .ep-arrow{font-size:.8rem;color:var(--cr);opacity:.4;transition:transform .3s,opacity .3s}
 .episode[open] .ep-arrow{transform:rotate(90deg);opacity:.8}
 .episode[open] summary{background:rgba(168,62,62,.04)!important;border-color:rgba(168,62,62,.15)!important;border-radius:12px 12px 0 0}
-.episode .eb{padding:24px!important;background:rgba(255,255,255,.2)!important;border:1px solid rgba(168,62,62,.08)!important;border-top:none!important;border-radius:0 0 12px 12px}
+.episode .eb{padding:32px 0 24px!important;background:none!important;border:none!important;border-radius:0;max-width:100%}
 
 /* PSY COMMENT — premium */
 .tn::before{content:'Комментарий психолога';display:block;font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cr);margin-bottom:10px;opacity:.6}
@@ -975,12 +975,14 @@ details summary{transition:all .3s}
 #faq details.ex[open]>summary::after{transform:translateY(-50%) rotate(-90deg)}
 
 /* === Сериал: сброс FAQ-стилей === */
-#serial details.ex{background:none;border-radius:0;padding:0;box-shadow:none}
+#serial details.ex{background:none;border-radius:0;padding:0;box-shadow:none;max-width:100%}
 #serial details.ex[open]{background:none;box-shadow:none}
 #serial details.ex summary{font-size:inherit;letter-spacing:0;padding:0}
 #serial details.sa{background:none;border-radius:0;padding:0;margin:0 0 18px}
-#serial .sa summary.sap{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--td);line-height:1.9;letter-spacing:0;padding:0}
-#serial p.sap{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--td);line-height:1.9;margin:0 0 18px}
+#serial .sa summary.sap{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--td);line-height:2;letter-spacing:0;padding:0}
+#serial p.sap{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--td);line-height:2;margin:0 0 18px}
+#serial .tn{font-size:1rem}
+#serial .tn p{font-size:1rem}
 
 /* === SCROLL HINT в hero === */
 .hero::after{content:'';position:absolute;bottom:24px;left:50%;width:1.5px;height:32px;background:linear-gradient(to bottom,var(--cr),transparent);animation:scrollHint 2s ease-in-out infinite;z-index:5}

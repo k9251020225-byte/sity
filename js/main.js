@@ -387,6 +387,22 @@ document.querySelectorAll('.episode').forEach(function(ep, idx, all) {
   });
 });
 
+// === TRIG CLICK → TOGGLE .tn ===
+document.querySelectorAll('.trig').forEach(function(trig) {
+  trig.addEventListener('click', function() {
+    var p = this.closest('.sap') || this.closest('p');
+    if (!p) return;
+    var tn = p.nextElementSibling;
+    if (!tn || !tn.classList.contains('tn')) return;
+    if (tn.style.display === 'none' || !tn.style.display) {
+      tn.style.display = 'block';
+      tn.style.animation = 'tnReveal .4s ease both';
+    } else {
+      tn.style.display = 'none';
+    }
+  });
+});
+
 }catch(e){
 var f=document.querySelectorAll('.reveal');
 for(var fi=0;fi<f.length;fi++){f[fi].classList.add('v')}

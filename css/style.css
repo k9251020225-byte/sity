@@ -189,15 +189,12 @@ details.ex .eb{padding:12px 0;font-size:.95rem;color:var(--tb);line-height:1.8;t
 .ep-btn{font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;color:var(--cr);padding:14px 0;border:none;background:none;cursor:pointer;transition:color .3s;display:block;text-align:center}
 .ep-btn:hover{color:var(--cr-l)}
 /* STORY — paragraph as details/summary */
-.sa{margin:0;border:none;display:inline}
-.sa summary.sap{display:inline;list-style:none;cursor:pointer;font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2;margin:0}
-.sa summary.sap::-webkit-details-marker{display:none}
-p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2;margin:0;display:inline}
+p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2;margin:0 0 4px}
 .tn{display:block;background:rgba(168,62,62,.03);border-left:3px solid var(--cr);padding:16px 16px;margin:8px 0 4px;font-family:'Raleway',sans-serif;font-size:.95rem;color:var(--td);line-height:1.8;border-radius:0 12px 12px 0}
 .tn p{margin-bottom:8px;font-family:'Raleway',sans-serif;font-size:.95rem}
 .tn .nb{font-size:.85rem;color:var(--cr);margin-top:10px}
 .trig{background:none;color:var(--cr);padding:0;border-radius:0;font-weight:500;border-bottom:1px dashed var(--cr)}
-@media(max-width:480px){.sa summary.sap,p.sap{font-size:1.05rem;line-height:1.85}}
+@media(max-width:480px){p.sap{font-size:1rem;line-height:1.85}}
 /* LETTER BUTTON — sparkle */
 .letter-btn{list-style:none;cursor:pointer;display:block;text-align:center;padding:20px 0;border:none;font-family:'Playfair Display',serif;font-size:clamp(1rem,2.5vw,1.3rem);font-weight:500;color:var(--cr);transition:color .3s,text-shadow .3s;font-style:italic}
 .letter-btn:hover{color:var(--cr-l);text-shadow:0 0 30px rgba(115,65,65,.3)}
@@ -947,9 +944,9 @@ details summary{transition:all .3s}
 .doc-preview__lines span:nth-child(4){width:60%}
 
 /* === PSY COMMENT: плавное появление === */
-.sa .tn{animation:tnReveal .5s cubic-bezier(.4,0,.2,1) both}
+.tn[style*="display: block"],.tn[style*="display:block"]{animation:tnReveal .4s ease both}
 @keyframes tnReveal{from{opacity:0;transform:translateY(-8px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:translateY(0);clip-path:inset(0 0 0 0)}}
-.sa[open] .tn{border-left-color:var(--cr);box-shadow:-2px 0 12px rgba(168,62,62,.08)}
+.tn[style*="block"]{border-left-color:var(--cr);box-shadow:-2px 0 12px rgba(168,62,62,.08)}
 .trig{transition:background .3s,color .3s,box-shadow .3s;cursor:pointer}
 .trig:hover{background:rgba(168,62,62,.06);box-shadow:none}
 
@@ -978,9 +975,7 @@ details summary{transition:all .3s}
 #serial details.ex{background:none;border-radius:0;padding:0;box-shadow:none;max-width:100%}
 #serial details.ex[open]{background:none;box-shadow:none}
 #serial details.ex summary{font-size:inherit;letter-spacing:0;padding:0}
-#serial details.sa{background:none;border-radius:0;padding:0;margin:0;display:inline}
-#serial .sa summary.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2;letter-spacing:0;padding:0;display:inline}
-#serial p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2;margin:0;display:inline}
+#serial p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2;margin:0 0 4px}
 #serial .eb{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2}
 #serial .tn{font-size:.95rem;margin:12px 0}
 #serial .tn p{font-size:.95rem}

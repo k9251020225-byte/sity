@@ -785,7 +785,37 @@ details summary{transition:all .3s}
   cursor:pointer;border:none;background:none;transition:color .3s}
 .bq-restart:hover{color:var(--cr-l)}
 
+/* ===== SERIAL HOWTO BOX ===== */
+.serial-howto{position:relative;overflow:hidden}
+.serial-howto::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(135deg,rgba(168,62,62,.02),rgba(88,99,87,.02));
+  animation:howtoShimmer 6s ease-in-out infinite;pointer-events:none}
+@keyframes howtoShimmer{0%,100%{opacity:.5}50%{opacity:1}}
+.serial-card{transition:all .4s cubic-bezier(.4,0,.2,1)}
+.serial-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.serial-counter{opacity:0;animation:fu .5s .3s both}
+
+/* ===== QTAG PREMIUM POLISH ===== */
+.qtag{position:relative;overflow:hidden}
+.qtag::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  transition:left .6s}
+.qtag:hover::after{left:120%}
+.qtag-result-inner{position:relative}
+.qtag-result-inner::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:40px;height:1px;background:linear-gradient(to right,transparent,var(--cr),transparent)}
+
+/* ===== BOOK QUIZ PREMIUM ===== */
+.bq-btn{position:relative;overflow:hidden}
+.bq-btn::after{content:'→';position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  opacity:0;color:var(--cr);transition:all .3s;font-family:'Playfair Display',serif}
+.bq-btn:hover::after{opacity:1;right:0}
+.bq-result-book{position:relative;padding-left:14px}
+.bq-result-book::before{content:'';position:absolute;top:16px;left:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--cr),var(--art))}
+
 @media(max-width:480px){
   .qtag{font-size:.82rem;padding:8px 14px}
   .bq-question{font-size:1rem}
+  .serial-howto{padding:16px 14px!important}
 }

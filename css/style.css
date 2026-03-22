@@ -1,8 +1,8 @@
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--cream:#fff2e6;--cream-d:#f5e6d3;--art:#586357;--art-l:#6e7a6d;--gd:#1a5c18;--cr:#734141;--cr-l:#8f5555;--cab:#3d0000;--mul:#280d08;--td:#1a0f0a;--tb:#3d2a22;--tm:#7a6058;--tl:#7d6a5c;--bd:rgba(115,65,65,.12)}
+:root{--cream:#fff2e6;--cream-d:#f5e6d3;--art:#586357;--art-l:#6e7a6d;--gd:#1a5c18;--cr:#734141;--cr-l:#8f5555;--cab:#3d0000;--mul:#280d08;--td:#0f0806;--tb:#1a0f0a;--tm:#4a3830;--tl:#5a4a40;--bd:rgba(115,65,65,.12)}
 html{scroll-behavior:smooth;font-size:20px}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--tb);overflow-x:hidden;font-size:1rem;line-height:1.7}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--tb);overflow-x:hidden;font-size:1rem;line-height:1.7;font-weight:400}
 @media(min-width:1400px){html{font-size:22px}}
 @media(min-width:1800px){html{font-size:24px}}
 @media(max-width:480px){html{font-size:20px}}
@@ -18,7 +18,7 @@ section{position:relative;z-index:1;padding:40px 0}
 .c{max-width:1080px;margin:0 auto;padding:0 24px}.cw{max-width:1280px;margin:0 auto;padding:0 24px}
 .sl{font-family:'Raleway',sans-serif;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--art);margin-bottom:12px}
 .st{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;color:var(--td);line-height:1.25;margin-bottom:12px}.st em{font-style:italic;color:var(--cr)}
-.ss{font-size:1.05rem;color:var(--tm);font-weight:400;max-width:none;line-height:1.8;margin-bottom:24px}
+.ss{font-size:1.05rem;color:var(--tb);font-weight:400;max-width:none;line-height:1.8;margin-bottom:24px}
 .sd{width:60px;height:2px;background:linear-gradient(to right,transparent,var(--cr),transparent);margin:0 0 20px;border-radius:2px}
 .tc{text-align:center}.tc .sd,.tc .ss{margin-left:auto;margin-right:auto}
 .reveal{opacity:0;transform:translateY(40px) scale(0.97);transition:opacity .8s cubic-bezier(.4,0,.2,1),transform .8s cubic-bezier(.4,0,.2,1);animation:reveal-fallback 0s .1s forwards}
@@ -37,7 +37,7 @@ section{position:relative;z-index:1;padding:40px 0}
 .hero-text h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:500;color:var(--td);margin-bottom:4px}
 .hero-text .hti{font-family:'Raleway',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tm);margin-bottom:24px}
 .hero-text .hsl{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2.5vw,1.9rem);font-weight:500;font-style:italic;color:var(--cr);margin-bottom:6px}
-.hero-text .hsub{font-size:1rem;color:var(--td);font-weight:300;margin-bottom:20px}
+.hero-text .hsub{font-size:1rem;color:var(--td);font-weight:400;margin-bottom:20px}
 .hero-text .hcore{font-size:1rem;color:var(--tb);line-height:1.75;margin-bottom:24px}.hero-text .hcore em{color:var(--cr);font-style:italic;font-family:'Playfair Display',serif}
 .hbtn{display:inline-block;background:var(--cr);color:var(--cream);padding:16px 40px;font-family:'Playfair',serif;font-size:1.05rem;font-weight:500;font-style:italic;transition:all .4s;border-radius:28px;letter-spacing:.02em;animation:none}
 @keyframes softPulse{0%,100%{box-shadow:0 4px 16px rgba(115,65,65,.12)}50%{box-shadow:0 8px 32px rgba(115,65,65,.2)}}
@@ -926,7 +926,7 @@ details summary{transition:all .3s}
 .episode summary{display:flex!important;align-items:center;gap:16px;padding:20px 24px!important;cursor:pointer;list-style:none;background:rgba(255,255,255,.35)!important;border-radius:12px;transition:all .4s;border:1px solid transparent!important;color:var(--td)!important;font-size:1rem!important;letter-spacing:0!important}
 .episode summary::-webkit-details-marker{display:none}
 .episode summary:hover{background:rgba(255,255,255,.6)!important;border-color:rgba(168,62,62,.12)!important;transform:translateX(4px)}
-.episode .ep-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:300;color:var(--cr);opacity:.4;min-width:36px;line-height:1}
+.episode .ep-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:500;color:var(--cr);opacity:.6;min-width:36px;line-height:1}
 .episode .ep-info{flex:1}
 .episode .ep-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:var(--td);margin-bottom:2px}
 .episode .ep-hint{font-family:'Raleway',sans-serif;font-size:.7rem;letter-spacing:.08em;color:var(--tl)}

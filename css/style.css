@@ -927,8 +927,8 @@ details summary{transition:all .3s}
 
 .sec-artichoke {
   background: linear-gradient(180deg, #586357 0%, #647362 50%, #586357 100%);
-  color: var(--cream);
-  padding: 24px 0;
+  color: #f5eadc;
+  padding: 16px 0;
 }
 .sec-artichoke::before {
   content: '';

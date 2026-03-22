@@ -1,24 +1,21 @@
-name: Auto-merge to main
+name: Auto-deploy to main
 on:
   push:
     branches: ['claude/**']
 permissions:
   contents: write
-  pull-requests: write
 jobs:
-  merge:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Create and merge PR
-        env:
-          GH_TOKEN: ${{ github.token }}
+          ref: ${{ github.ref }}
+      - name: Push to main
         run: |
-          PR_URL=$(gh pr create --base main --head ${{ github.ref_name }} --title "Auto-deploy from ${{ github.ref_name }}" --body "Automated deployment" 2>/dev/null || echo "exists")
-          if [ "$PR_URL" != "exists" ]; then
-            gh pr merge "$PR_URL" --merge --auto
-          else
-            gh pr list --head ${{ github.ref_name }} --json url -q '.[0].url' | xargs -I {} gh pr merge {} --merge
-          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git merge ${{ github.sha }} --no-ff -m "Deploy from ${{ github.ref_name }}"
+          git push origin main

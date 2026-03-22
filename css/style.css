@@ -786,19 +786,18 @@ details summary{transition:all .3s}
 .bq-restart:hover{color:var(--cr-l)}
 
 /* ===== PRODUCT PREVIEW ===== */
-.product-card{transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
-.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
-.product-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(to right,transparent,var(--cr),transparent);opacity:0;transition:opacity .4s}
-.product-card:nth-child(2)::after{background:linear-gradient(to right,transparent,var(--gd),transparent)}
-.product-card:hover::after{opacity:1}
-.nav-row{padding:6px 0;border-bottom:1px solid rgba(0,0,0,.04);transition:background .2s}
-.nav-row:hover{background:rgba(168,62,62,.02)}
-.nav-row:last-child{border-bottom:none}
+.pp-situation{border-left:3px solid var(--cr)}
+.pp-doc{transition:all .4s cubic-bezier(.4,0,.2,1)}
+.pp-doc:hover{box-shadow:0 8px 28px rgba(0,0,0,.05)}
+.pp-tag{transition:all .25s;cursor:default}
+.pp-tag:hover{background:rgba(88,99,87,.06);transform:translateY(-1px)}
+.pp-map-row{transition:background .2s}
+.pp-map-row:hover{background:rgba(168,62,62,.04)!important}
 @media(max-width:580px){
-  .product-grid{grid-template-columns:1fr!important;gap:16px!important}
-  .nav-row{flex-wrap:wrap}
-  .nav-row span:last-child{margin-top:2px}
+  .pp-map-row{flex-wrap:wrap;gap:4px!important}
+  .pp-map-row span{min-width:0!important}
+  .pp-doc{padding:18px 16px!important}
+  .pp-situation{padding:22px 18px!important}
 }
 
 /* ===== SERIAL HOWTO BOX ===== */

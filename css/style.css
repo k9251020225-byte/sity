@@ -927,8 +927,8 @@ details summary{transition:all .3s}
 
 .sec-artichoke {
   background: linear-gradient(180deg, #586357 0%, #647362 50%, #586357 100%);
-  color: rgba(255,242,230,.85);
-  padding: 40px 0;
+  color: var(--cream);
+  padding: 24px 0;
 }
 .sec-artichoke::before {
   content: '';
@@ -940,9 +940,9 @@ details summary{transition:all .3s}
   background: linear-gradient(180deg, var(--cream), #586357);
   z-index: -1;
 }
-.sec-artichoke .sl { color: rgba(255,242,230,.5); }
+.sec-artichoke .sl { color: rgba(255,242,230,.6); }
 .sec-artichoke .st { color: #fff2e6; }
-.sec-artichoke .ss { color: rgba(255,242,230,.7); }
+.sec-artichoke .ss { color: rgba(255,242,230,.8); }
 
 /* SERIAL CHARACTER CARDS — premium */
 .serial-card{background:rgba(255,255,255,.55);border:none!important;border-radius:16px!important;padding:28px 24px!important;position:relative;overflow:hidden;transition:all .5s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 16px rgba(115,65,65,.06)}

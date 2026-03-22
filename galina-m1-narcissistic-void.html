@@ -5,525 +5,116 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>М1 — Нарциссическая пустота · Инструкция к себе</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
-:root{
-  --mashed-potatoes:#fff2e6;
-  --artichoke:#586357;
-  --green-bean:#052102;
-  --cranberry:#734141;
-  --cabernet:#3d0000;
-  --mulled-wine:#280d08;
-  --radius:16px;
-  --pill:28px;
-}
-
-html{font-size:18px;scroll-behavior:smooth}
-body{
-  font-family:'Cormorant Garamond',Georgia,serif;
-  background:var(--mashed-potatoes);
-  color:#3d2a22;
-  line-height:1.75;
-  margin:0;
-  overflow-x:hidden;
-}
-
-/* ===================== HERO ===================== */
-.hero{
-  background:linear-gradient(170deg, var(--mulled-wine) 0%, var(--cabernet) 60%, var(--cranberry) 100%);
-  color:var(--mashed-potatoes);
-  padding:clamp(64px, 12vw, 120px) 24px clamp(48px, 10vw, 100px);
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-}
-.hero::after{
-  content:'';
-  position:absolute;
-  bottom:0;left:0;right:0;
-  height:80px;
-  background:linear-gradient(to bottom, transparent, var(--mashed-potatoes));
-  pointer-events:none;
-}
-.hero-label{
-  font-family:'Raleway',sans-serif;
-  font-size:clamp(.6rem, 1.5vw, .72rem);
-  letter-spacing:.35em;
-  text-transform:uppercase;
-  color:rgba(255,242,230,.55);
-  margin-bottom:28px;
-}
-.hero-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2rem, 5.5vw, 3.2rem);
-  font-weight:600;
-  line-height:1.2;
-  margin-bottom:20px;
-}
-.hero-subtitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(.95rem, 2.5vw, 1.15rem);
-  font-weight:400;
-  font-style:italic;
-  line-height:1.65;
-  max-width:560px;
-  margin:0 auto 16px;
-  color:rgba(255,242,230,.85);
-}
-.hero-desc{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(.85rem, 2vw, .95rem);
-  color:rgba(255,242,230,.6);
-  line-height:1.7;
-  max-width:480px;
-  margin:0 auto;
-}
-
-/* ===================== SECTIONS ===================== */
-.section{
-  padding:clamp(48px, 8vw, 80px) 24px;
-}
-.section--light{
-  background:var(--mashed-potatoes);
-  color:#3d2a22;
-}
-.section--dark{
-  background:var(--green-bean);
-  color:var(--mashed-potatoes);
-}
-.section--cabernet{
-  background:var(--cabernet);
-  color:var(--mashed-potatoes);
-}
-.section__inner{
-  max-width:720px;
-  margin:0 auto;
-}
-
-/* Gradient dividers between sections */
-.gradient-divider{
-  height:4px;
-  background:linear-gradient(to right, var(--cabernet), var(--cranberry), var(--artichoke), var(--cranberry), var(--cabernet));
-  border:none;
-  margin:0;
-}
-
-/* ===================== TYPOGRAPHY ===================== */
-.section-label{
-  font-family:'Raleway',sans-serif;
-  font-size:clamp(.6rem, 1.4vw, .68rem);
-  letter-spacing:.25em;
-  text-transform:uppercase;
-  color:var(--artichoke);
-  margin-bottom:20px;
-  font-weight:600;
-}
-.section--dark .section-label,
-.section--cabernet .section-label{
-  color:rgba(255,242,230,.5);
-}
-
-.body-text{
-  font-size:clamp(.88rem, 2vw, .95rem);
-  line-height:1.85;
-  margin-bottom:18px;
-}
-.body-text strong{
-  font-weight:600;
-  color:var(--mulled-wine);
-}
-.section--dark .body-text strong,
-.section--cabernet .body-text strong{
-  color:var(--mashed-potatoes);
-}
-
-/* ===================== INSIGHT BLOCK ===================== */
-.insight-block{
-  background:rgba(255,255,255,.15);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  border:1px solid rgba(255,242,230,.12);
-  border-radius:var(--radius);
-  padding:clamp(28px, 5vw, 40px) clamp(24px, 4vw, 36px);
-  text-align:center;
-  margin:36px 0;
-}
-.section--light .insight-block{
-  background:var(--artichoke);
-  color:var(--mashed-potatoes);
-  border:none;
-  box-shadow:0 8px 32px rgba(88,99,87,.18);
-}
-.insight-block p{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(.95rem, 2.4vw, 1.1rem);
-  font-weight:400;
-  line-height:1.7;
-  margin-bottom:10px;
-}
-.insight-block p:last-child{margin-bottom:0}
-.insight-block strong{font-weight:600}
-
-/* ===================== AUTHOR CARD ===================== */
-.author-card{
-  background:rgba(255,242,230,.08);
-  border:1px solid rgba(255,242,230,.15);
-  border-radius:var(--radius);
-  padding:24px 28px;
-  text-align:center;
-  margin:36px 0;
-}
-.section--light .author-card{
-  background:var(--green-bean);
-  color:var(--mashed-potatoes);
-  border:none;
-  box-shadow:0 6px 24px rgba(5,33,2,.15);
-}
-.author-card .name{
-  font-family:'Raleway',sans-serif;
-  font-size:.78rem;
-  font-weight:600;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  margin-bottom:6px;
-  color:var(--mashed-potatoes);
-}
-.author-card .desc{
-  font-size:.78rem;
-  color:rgba(255,242,230,.65);
-  line-height:1.6;
-}
-
-/* ===================== MECHANISM CARD ===================== */
-.mechanism-card{
-  background:rgba(255,255,255,.45);
-  border-left:4px solid var(--artichoke);
-  border-radius:0 var(--radius) var(--radius) 0;
-  padding:clamp(20px, 4vw, 28px) clamp(18px, 3vw, 24px);
-  margin:28px 0;
-  box-shadow:0 4px 16px rgba(115,65,65,.06);
-}
-.section--dark .mechanism-card{
-  background:rgba(255,242,230,.07);
-  border-left-color:var(--cranberry);
-}
-.mechanism-card__title{
-  font-family:'Raleway',sans-serif;
-  font-size:.66rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--artichoke);
-  font-weight:600;
-  margin-bottom:14px;
-}
-.section--dark .mechanism-card__title{
-  color:rgba(255,242,230,.5);
-}
-.mechanism-card p{
-  font-size:clamp(.85rem, 1.8vw, .9rem);
-  line-height:1.85;
-  margin-bottom:12px;
-}
-.mechanism-card p:last-child{margin-bottom:0}
-
-/* ===================== QUOTE BLOCK ===================== */
-.quote-block{
-  border-left:4px solid var(--cranberry);
-  padding:clamp(24px, 4vw, 32px) clamp(20px, 3vw, 28px);
-  margin:36px 0;
-  background:rgba(115,65,65,.04);
-  border-radius:0 var(--radius) var(--radius) 0;
-}
-.section--dark .quote-block,
-.section--cabernet .quote-block{
-  background:rgba(255,242,230,.06);
-  border-left-color:rgba(255,242,230,.4);
-}
-.quote-block p{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(.95rem, 2.4vw, 1.1rem);
-  font-style:italic;
-  color:var(--cranberry);
-  line-height:1.7;
-  margin-bottom:8px;
-}
-.quote-block p:last-child{margin-bottom:0}
-.section--dark .quote-block p,
-.section--cabernet .quote-block p{
-  color:var(--mashed-potatoes);
-}
-
-/* ===================== TABLE ===================== */
-.symptom-table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0;
-  margin:28px 0;
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:0 4px 20px rgba(5,33,2,.12);
-}
-.symptom-table thead{background:var(--green-bean)}
-.symptom-table th{
-  font-family:'Raleway',sans-serif;
-  font-size:.64rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--mashed-potatoes);
-  padding:16px 18px;
-  text-align:left;
-  font-weight:600;
-}
-.symptom-table td{
-  font-size:clamp(.82rem, 1.8vw, .88rem);
-  color:#3d2a22;
-  padding:16px 18px;
-  border-bottom:1px solid rgba(88,99,87,.08);
-  vertical-align:top;
-  line-height:1.7;
-}
-.symptom-table tr:nth-child(odd) td{
-  background:rgba(255,255,255,.65);
-}
-.symptom-table tr:nth-child(even) td{
-  background:rgba(88,99,87,.04);
-}
-.symptom-table td:first-child{
-  font-weight:600;
-  color:var(--mulled-wine);
-  width:38%;
-}
-.symptom-table tr:last-child td{border-bottom:none}
-
-/* Table — mobile cards */
+/* Только дополнения для методички */
+.m-hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 24px}
+.m-section{padding:40px 0}
+.m-inner{max-width:760px;margin:0 auto;padding:0 24px}
+.m-body{font-size:1.05rem;line-height:1.85;margin-bottom:18px}
+.m-quote{border-left:3px solid var(--cr);padding:20px 24px;margin:28px 0;background:rgba(168,62,62,.03);border-radius:0 var(--radius,16px) var(--radius,16px) 0}
+.m-quote p{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--cr);line-height:1.7}
+.m-card{background:rgba(255,255,255,.45);border-radius:16px;padding:28px 24px;box-shadow:0 2px 12px rgba(115,65,65,.04);margin:28px 0}
+.m-card-title{font-family:'Raleway',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--art);font-weight:600;margin-bottom:14px}
+.m-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(5,33,2,.08);margin:28px 0}
+.m-table thead{background:var(--gd)}
+.m-table th{font-family:'Raleway',sans-serif;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);padding:16px 20px;text-align:left;font-weight:600}
+.m-table td{font-size:.95rem;color:var(--tb);padding:16px 20px;border-bottom:1px solid rgba(88,99,87,.06);line-height:1.7}
+.m-table tr:nth-child(odd) td{background:rgba(255,255,255,.5)}
+.m-table tr:nth-child(even) td{background:rgba(88,99,87,.03)}
+.m-table td:first-child{font-weight:600;color:var(--td);width:38%}
+.m-table tr:last-child td{border-bottom:none}
+.m-step{background:rgba(255,242,230,.08);border:1px solid rgba(255,242,230,.1);border-radius:16px;padding:24px;display:flex;gap:20px;align-items:flex-start;margin-bottom:14px;transition:all .4s}
+.m-step:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(61,0,0,.15)}
+.m-step-num{font-family:'Playfair Display',serif;font-weight:700;font-size:1.8rem;color:var(--cr);min-width:44px;line-height:1;opacity:.5}
+.m-step-text{font-size:1rem;line-height:1.8}
+.m-step-text strong{color:var(--cream)}
+.m-author{text-align:center;padding:20px;background:rgba(255,242,230,.06);border:1px solid rgba(255,242,230,.1);border-radius:16px;margin:28px 0}
+.m-author-name{font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);margin-bottom:4px}
+.m-author-desc{font-size:.82rem;color:rgba(255,242,230,.5);line-height:1.6}
+.m-footer{background:var(--mul,#280d08);color:rgba(255,242,230,.4);padding:28px 24px;text-align:center}
+.m-footer span{font-family:'Raleway',sans-serif;font-size:.72rem;letter-spacing:.1em}
+.m-hero-label{font-family:'Raleway',sans-serif;font-size:clamp(.6rem,1.5vw,.72rem);letter-spacing:.35em;text-transform:uppercase;color:rgba(255,242,230,.55);margin-bottom:28px}
+.m-hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:600;line-height:1.2;margin-bottom:20px;color:var(--cream)}
+.m-hero-subtitle{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.5vw,1.15rem);font-weight:400;font-style:italic;line-height:1.65;max-width:560px;margin:0 auto 16px;color:rgba(255,242,230,.85)}
+.m-hero-desc{font-size:clamp(.85rem,2vw,.95rem);color:rgba(255,242,230,.6);line-height:1.7;max-width:480px;margin:0 auto}
+.m-insight{background:rgba(255,255,255,.15);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,242,230,.12);border-radius:16px;padding:clamp(28px,5vw,40px) clamp(24px,4vw,36px);text-align:center;margin:36px 0}
+.m-insight p{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.4vw,1.1rem);font-weight:400;line-height:1.7;margin-bottom:10px}
+.m-insight p:last-child{margin-bottom:0}
+.m-insight strong{font-weight:600}
+.m-mechanism{background:rgba(255,255,255,.45);border-left:4px solid var(--art);border-radius:0 16px 16px 0;padding:clamp(20px,4vw,28px) clamp(18px,3vw,24px);margin:28px 0;box-shadow:0 4px 16px rgba(115,65,65,.06)}
+.m-mechanism-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--art);font-weight:600;margin-bottom:14px}
+.m-mechanism p{font-size:clamp(.85rem,1.8vw,.9rem);line-height:1.85;margin-bottom:12px}
+.m-mechanism p:last-child{margin-bottom:0}
+.m-questions{background:rgba(255,242,230,.08);border-left:4px solid rgba(255,242,230,.3);border-radius:0 16px 16px 0;padding:clamp(24px,4vw,32px) clamp(20px,3vw,28px);margin:28px 0;color:var(--cream)}
+.m-questions-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,242,230,.5);font-weight:600;margin-bottom:16px}
+.m-questions ol{padding-left:22px;color:var(--cream)}
+.m-questions li{font-size:clamp(.85rem,1.8vw,.9rem);line-height:1.8;margin-bottom:12px}
+.m-questions li:last-child{margin-bottom:0}
+.m-questions li strong{color:var(--cream)}
+.m-questions .note{margin-top:16px;font-style:italic;color:rgba(255,242,230,.6);font-size:.88rem}
+.m-quote-dark{border-left:4px solid rgba(255,242,230,.4);padding:clamp(24px,4vw,32px) clamp(20px,3vw,28px);margin:36px 0;background:rgba(255,242,230,.06);border-radius:0 16px 16px 0}
+.m-quote-dark p{font-family:'Playfair Display',serif;font-size:clamp(.95rem,2.4vw,1.1rem);font-style:italic;color:var(--cream);line-height:1.7;margin-bottom:8px}
+.m-quote-dark p:last-child{margin-bottom:0}
+.m-cta{text-align:center;margin:40px 0 16px}
 @media(max-width:600px){
-  .symptom-table,
-  .symptom-table thead,
-  .symptom-table tbody,
-  .symptom-table tr,
-  .symptom-table th,
-  .symptom-table td{display:block;width:100%}
-  .symptom-table thead{display:none}
-  .symptom-table tr{
-    background:rgba(255,255,255,.55);
-    border-radius:var(--radius);
-    box-shadow:0 2px 12px rgba(115,65,65,.06);
-    margin-bottom:14px;
-    padding:4px 0;
-    overflow:hidden;
-  }
-  .symptom-table td{border-bottom:none;padding:12px 18px}
-  .symptom-table td:first-child{
-    font-family:'Raleway',sans-serif;
-    font-size:.68rem;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:var(--cranberry);
-    font-weight:600;
-    padding-bottom:2px;
-    width:100%;
-    background:transparent;
-  }
-  .symptom-table td:last-child{
-    padding-top:0;
-    color:#7a6058;
-    background:transparent;
-  }
-}
-
-/* ===================== QUESTIONS CARD ===================== */
-.questions-card{
-  background:rgba(255,255,255,.5);
-  padding:clamp(24px, 4vw, 32px) clamp(20px, 3vw, 28px);
-  border-radius:var(--radius);
-  box-shadow:0 4px 16px rgba(115,65,65,.06);
-  border-left:4px solid var(--cranberry);
-  margin:28px 0;
-}
-.questions-card__title{
-  font-family:'Raleway',sans-serif;
-  font-size:.66rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--cranberry);
-  font-weight:600;
-  margin-bottom:16px;
-}
-.questions-card ol{padding-left:22px}
-.questions-card li{
-  font-size:clamp(.85rem, 1.8vw, .9rem);
-  line-height:1.8;
-  margin-bottom:12px;
-}
-.questions-card li:last-child{margin-bottom:0}
-.questions-card li strong{color:var(--mulled-wine)}
-.questions-card .note{
-  margin-top:16px;
-  font-style:italic;
-  color:#7a6058;
-  font-size:.88rem;
-}
-
-/* ===================== PRACTICE STEPS ===================== */
-.steps-grid{
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  margin:28px 0;
-}
-.step-card{
-  background:rgba(255,242,230,.1);
-  border:1px solid rgba(255,242,230,.12);
-  border-radius:var(--radius);
-  padding:clamp(20px, 4vw, 26px) clamp(18px, 3vw, 24px);
-  display:flex;
-  gap:18px;
-  align-items:flex-start;
-  transition:transform .3s, box-shadow .3s;
-}
-.step-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 36px rgba(61,0,0,.2);
-}
-.step-card__num{
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-  font-size:clamp(1.4rem, 3vw, 1.8rem);
-  color:var(--cranberry);
-  min-width:44px;
-  line-height:1;
-  padding-top:4px;
-  opacity:.7;
-}
-.section--cabernet .step-card__num{
-  color:rgba(255,242,230,.35);
-}
-.step-card__text{
-  font-size:clamp(.85rem, 1.8vw, .9rem);
-  line-height:1.8;
-}
-.step-card__text strong{
-  color:var(--mashed-potatoes);
-}
-
-/* ===================== CTA ===================== */
-.cta-wrap{
-  text-align:center;
-  margin:40px 0 16px;
-}
-.cta-btn{
-  display:inline-block;
-  background:var(--cranberry);
-  color:var(--mashed-potatoes);
-  padding:16px 42px;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(.9rem, 2vw, 1rem);
-  font-weight:500;
-  font-style:italic;
-  border-radius:var(--pill);
-  text-decoration:none;
-  letter-spacing:.03em;
-  transition:all .4s;
-  box-shadow:0 4px 20px rgba(115,65,65,.25);
-}
-.cta-btn:hover{
-  background:var(--cabernet);
-  box-shadow:0 8px 32px rgba(61,0,0,.35);
-  transform:translateY(-2px);
-}
-
-/* ===================== FOOTER ===================== */
-.footer{
-  background:var(--mulled-wine);
-  color:rgba(255,242,230,.45);
-  padding:32px 24px;
-}
-.footer__inner{
-  max-width:720px;
-  margin:0 auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:12px;
-}
-.footer .author{
-  font-family:'Raleway',sans-serif;
-  font-size:.7rem;
-  letter-spacing:.12em;
-}
-.footer .page-num{
-  font-family:'Raleway',sans-serif;
-  font-size:.7rem;
-  letter-spacing:.08em;
-}
-
-/* ===================== MOBILE ===================== */
-@media(max-width:600px){
-  .section{padding:36px 16px}
-  .hero{padding:56px 16px 44px}
-  .step-card{flex-direction:column;gap:6px}
-  .step-card__num{min-width:auto}
-  .footer__inner{flex-direction:column;text-align:center}
-}
-
-/* ===================== PRINT ===================== */
-@media print{
-  body{background:#fff}
-  .hero{background:var(--mulled-wine)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .section--dark,.section--cabernet{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .step-card:hover{transform:none;box-shadow:none}
-  .cta-wrap{display:none}
-  .gradient-divider{height:2px}
+  .m-hero{min-height:auto;padding:48px 16px}
+  .m-inner{padding:0 16px}
+  .m-step{flex-direction:column;gap:6px}
+  .m-table,.m-table thead,.m-table tbody,.m-table tr,.m-table th,.m-table td{display:block;width:100%}
+  .m-table thead{display:none}
+  .m-table tr{background:rgba(255,255,255,.45);border-radius:16px;box-shadow:0 2px 12px rgba(115,65,65,.04);margin-bottom:12px;overflow:hidden}
+  .m-table td{border-bottom:none;padding:12px 16px}
+  .m-table td:first-child{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cr);padding-bottom:2px;width:100%;background:transparent}
+  .m-table td:last-child{padding-top:0;color:var(--tm);background:transparent}
 }
 </style>
 </head>
 <body>
 
-<!-- ====== HERO ====== -->
-<section class="hero">
-  <div class="hero-label">Инструкция к себе &middot; Екатерина Судас</div>
-  <h1 class="hero-title">Нарциссическая пустота</h1>
-  <p class="hero-subtitle">Когда бег не прекращается &mdash;<br>возможно, это бег не вперёд, а&nbsp;от&nbsp;чего-то внутри.</p>
-  <p class="hero-desc">Почему бывает так сложно остановиться, отдохнуть, побыть в&nbsp;тишине &mdash; и&nbsp;что может за&nbsp;этим стоять.</p>
+<!-- ====== 1. HERO — dark, mulled-wine → cabernet ====== -->
+<section class="sec-dk sec-dark" style="background:linear-gradient(170deg,var(--mul,#280d08) 0%,var(--cab,#3d0000) 60%,var(--cr,#734141) 100%)">
+  <div class="m-hero">
+    <div class="m-hero-label">Инструкция к себе &middot; Екатерина Судас</div>
+    <h1 class="m-hero-title">Нарциссическая пустота</h1>
+    <p class="m-hero-subtitle">Когда бег не прекращается &mdash;<br>возможно, это бег не вперёд, а&nbsp;от&nbsp;чего-то внутри.</p>
+    <p class="m-hero-desc">Почему бывает так сложно остановиться, отдохнуть, побыть в&nbsp;тишине &mdash; и&nbsp;что может за&nbsp;этим стоять.</p>
+  </div>
 </section>
 
-<!-- ====== KEY INSIGHT — dark section ====== -->
-<div class="gradient-divider"></div>
-<section class="section section--dark">
-  <div class="section__inner">
+<!-- ====== 2. Ключевой инсайт — dark ====== -->
+<section class="sec-dk sec-dark">
+  <div class="m-inner">
 
-    <div class="insight-block">
+    <div class="m-insight">
       <p>Возможно, дело не в трудоголизме и не в «силе характера».</p>
       <p><strong>Иногда за невозможностью остановиться<br>стоит ощущение пустоты,<br>с&nbsp;которой трудно встретиться.</strong></p>
     </div>
 
-    <div class="author-card">
-      <div class="name">Екатерина Судас</div>
-      <div class="desc">Клинический психолог &middot; МГУ &middot; Проживание травм &middot; 500+ сессий<br>Telegram: @psyMuza &middot; Запись: @sudas_psy</div>
+    <div class="m-author">
+      <div class="m-author-name">Екатерина Судас</div>
+      <div class="m-author-desc">Клиническая психология &middot; МГУ &middot; 500+ сессий<br>Telegram: @psyMuza &middot; Запись: @sudas_psy</div>
     </div>
 
   </div>
 </section>
 
-<!-- ====== WHAT IS IT — light section ====== -->
-<div class="gradient-divider"></div>
-<section class="section section--light">
-  <div class="section__inner">
+<!-- ====== 3. Что это — светлый фон ====== -->
+<section class="m-section">
+  <div class="m-inner">
 
-    <div class="section-label">Что такое нарциссическая пустота &mdash; и почему это не про нарциссизм</div>
+    <div class="sl">Что такое нарциссическая пустота &mdash; и почему это не про нарциссизм</div>
 
-    <p class="body-text">Слово «нарциссическая» здесь не про тщеславие. Не про эгоизм. Не про селфи и самолюбование.</p>
+    <p class="m-body">Слово «нарциссическая» здесь не про тщеславие. Не про эгоизм. Не про селфи и самолюбование.</p>
 
-    <p class="body-text">Речь идёт о состоянии, когда внутри нет устойчивого ощущения: <strong>«Я есть &mdash; и этого достаточно»</strong>.</p>
+    <p class="m-body">Речь идёт о состоянии, когда внутри нет устойчивого ощущения: <strong>«Я есть &mdash; и этого достаточно»</strong>.</p>
 
-    <p class="body-text">Нет внутренней опоры на себя &mdash; есть только опора на функцию: «я &mdash; мать», «я &mdash; работник», «я &mdash; та, кто помогает». Если убрать функцию &mdash; может казаться, что от человека ничего не остаётся.</p>
+    <p class="m-body">Нет внутренней опоры на себя &mdash; есть только опора на функцию: «я &mdash; мать», «я &mdash; работник», «я &mdash; та, кто помогает». Если убрать функцию &mdash; может казаться, что от человека ничего не остаётся.</p>
 
-    <p class="body-text">Поэтому отдых даётся с трудом. Отдых &mdash; это пауза. А в паузе может подняться то самое ощущение пустоты. И тело, зная об этом, не&nbsp;позволяет остановиться.</p>
+    <p class="m-body">Поэтому отдых даётся с трудом. Отдых &mdash; это пауза. А в паузе может подняться то самое ощущение пустоты. И тело, зная об этом, не&nbsp;позволяет остановиться.</p>
 
-    <div class="mechanism-card">
-      <div class="mechanism-card__title">Как формируется это ощущение</div>
+    <div class="m-mechanism">
+      <div class="m-mechanism-title">Как формируется это ощущение</div>
       <p>Переживание «я есть» складывается в раннем детстве &mdash; через зеркалирование. Мама смотрит на ребёнка &mdash; и ребёнок видит в её глазах себя. <em>«Ты радуешься &mdash; я вижу твою радость.»</em> <em>«Тебе больно &mdash; я вижу твою боль.»</em></p>
       <p>Если зеркалирования было недостаточно &mdash; ощущение себя может не сформироваться в полной мере. Внутри остаётся что-то вроде дыры &mdash; <strong>дефицит переживания собственного существования</strong>.</p>
       <p>Эту нехватку потом бывает нужно чем-то заполнять. Работой. Заботой. Чужими проблемами. Чем угодно &mdash; лишь бы не тишина.</p>
@@ -532,18 +123,17 @@ body{
   </div>
 </section>
 
-<!-- ====== HOW IT SHOWS — dark (green-bean) section ====== -->
-<div class="gradient-divider"></div>
-<section class="section section--dark">
-  <div class="section__inner">
+<!-- ====== 4. Как проявляется — dark ====== -->
+<section class="sec-dk sec-dark">
+  <div class="m-inner">
 
-    <div class="section-label">Как это может проявляться в жизни</div>
+    <div class="sl">Как это может проявляться в жизни</div>
 
-    <p class="body-text">Дэниэл Стерн описал это как «отсутствие аффективной настройки» &mdash; когда мать физически присутствует, но эмоционально недоступна. Она кормит, одевает, контролирует. Но не спрашивает: «Как ты?» Не говорит: «Я вижу, что тебе грустно.»</p>
+    <p class="m-body">Дэниэл Стерн описал это как «отсутствие аффективной настройки» &mdash; когда мать физически присутствует, но эмоционально недоступна. Она кормит, одевает, контролирует. Но не спрашивает: «Как ты?» Не говорит: «Я вижу, что тебе грустно.»</p>
 
-    <p class="body-text">У ребёнка может сложиться убеждение: <strong>«Мои чувства никому не интересны. Значит, я ценна только тем, что делаю.»</strong></p>
+    <p class="m-body">У ребёнка может сложиться убеждение: <strong>«Мои чувства никому не интересны. Значит, я ценна только тем, что делаю.»</strong></p>
 
-    <div class="insight-block">
+    <div class="m-insight">
       <p>Пустота внутри &mdash; это не совсем пустота.</p>
       <p><strong>Часто это непрожитая боль, которая так и&nbsp;не&nbsp;нашла адресата.</strong></p>
       <p>Боль маленького ребёнка, который ждал,<br>что мама спросит: «Как ты?» &mdash; и&nbsp;не дождался.</p>
@@ -552,14 +142,13 @@ body{
   </div>
 </section>
 
-<!-- ====== TABLE — light section ====== -->
-<div class="gradient-divider"></div>
-<section class="section section--light">
-  <div class="section__inner">
+<!-- ====== 5. Таблица — светлый фон ====== -->
+<section class="m-section">
+  <div class="m-inner">
 
-    <div class="section-label">Как может выглядеть пустота: возможные проявления</div>
+    <div class="sl">Как может выглядеть пустота: возможные проявления</div>
 
-    <table class="symptom-table">
+    <table class="m-table">
       <thead>
         <tr>
           <th>Что происходит</th>
@@ -593,25 +182,25 @@ body{
   </div>
 </section>
 
-<!-- ====== QUESTIONS — cabernet section ====== -->
-<div class="gradient-divider"></div>
-<section class="section section--cabernet">
-  <div class="section__inner">
+<!-- ====== 6. Три вопроса — artichoke ====== -->
+<section class="sec-artichoke">
+  <div class="m-inner">
 
-    <div class="section-label">Три вопроса для самопроверки</div>
+    <div class="sl">Три вопроса для самопроверки</div>
 
-    <p class="body-text">Когда замечаете, что снова бежите &mdash; можно остановиться и спросить себя:</p>
+    <p class="m-body">Когда замечаете, что снова бежите &mdash; можно остановиться и спросить себя:</p>
 
-    <div class="questions-card" style="background:rgba(255,242,230,.08);border-left-color:rgba(255,242,230,.3);color:var(--mashed-potatoes)">
-      <ol style="color:var(--mashed-potatoes)">
-        <li><strong style="color:var(--mashed-potatoes)">Я сейчас делаю это потому, что хочу &mdash; или потому, что не могу остановиться?</strong></li>
-        <li><strong style="color:var(--mashed-potatoes)">Что случится, если я сейчас ничего не сделаю? Что я почувствую?</strong></li>
-        <li><strong style="color:var(--mashed-potatoes)">Чью потребность я сейчас закрываю &mdash; свою или чужую?</strong></li>
+    <div class="m-questions">
+      <div class="m-questions-title">Вопросы для рефлексии</div>
+      <ol>
+        <li><strong>Я сейчас делаю это потому, что хочу &mdash; или потому, что не могу остановиться?</strong></li>
+        <li><strong>Что случится, если я сейчас ничего не сделаю? Что я почувствую?</strong></li>
+        <li><strong>Чью потребность я сейчас закрываю &mdash; свою или чужую?</strong></li>
       </ol>
-      <p class="note" style="color:rgba(255,242,230,.6)">Если на второй вопрос ответ &mdash; «мне станет тревожно, пусто, страшно», &mdash; это может быть сигналом: бег направлен не к цели, а от встречи с собой.</p>
+      <p class="note">Если на второй вопрос ответ &mdash; «мне станет тревожно, пусто, страшно», &mdash; это может быть сигналом: бег направлен не к цели, а от встречи с собой.</p>
     </div>
 
-    <div class="quote-block">
+    <div class="m-quote-dark">
       <p>Чтобы замедлиться &mdash;<br>не нужно бежать быстрее.</p>
       <p>Иногда достаточно попробовать <strong>постоять на месте</strong>.</p>
     </div>
@@ -619,61 +208,52 @@ body{
   </div>
 </section>
 
-<!-- ====== PRACTICE — cabernet section ====== -->
-<div class="gradient-divider"></div>
-<section class="section section--cabernet">
-  <div class="section__inner">
+<!-- ====== 7. Практика — dark, cabernet gradient ====== -->
+<section class="sec-dk sec-dark" style="background:linear-gradient(180deg,var(--cab,#3d0000) 0%,#4a0a0a 50%,var(--cab,#3d0000) 100%)">
+  <div class="m-inner">
 
-    <div class="section-label">Что можно попробовать &mdash; практика</div>
+    <div class="sl">Что можно попробовать &mdash; практика</div>
 
-    <p class="body-text">Не «приказать себе остановиться» &mdash; это редко работает. Скорее &mdash; <strong>начать замечать</strong>.</p>
+    <p class="m-body">Не «приказать себе остановиться» &mdash; это редко работает. Скорее &mdash; <strong>начать замечать</strong>.</p>
 
-    <div class="steps-grid">
+    <div class="m-step">
+      <span class="m-step-num">01</span>
+      <div class="m-step-text"><strong>Назовите.</strong> Когда ловите себя на очередном «я ещё вот это сделаю» &mdash; мысленно скажите: «Кажется, я сейчас заполняю пустоту.» Не останавливайте себя. Просто назовите. Само называние может снижать интенсивность автоматизма.</div>
+    </div>
 
-      <div class="step-card">
-        <span class="step-card__num">01</span>
-        <div class="step-card__text"><strong>Назовите.</strong> Когда ловите себя на очередном «я ещё вот это сделаю» &mdash; мысленно скажите: «Кажется, я сейчас заполняю пустоту.» Не останавливайте себя. Просто назовите. Само называние может снижать интенсивность автоматизма.</div>
-      </div>
+    <div class="m-step">
+      <span class="m-step-num">02</span>
+      <div class="m-step-text"><strong>Две минуты тишины.</strong> Один раз в день. Без телефона, без дел. Просто посидеть. Если поднимается тревога &mdash; это нормальная реакция. Тревога может означать приближение к краю пустоты. Не обязательно туда прыгать &mdash; достаточно постоять рядом.</div>
+    </div>
 
-      <div class="step-card">
-        <span class="step-card__num">02</span>
-        <div class="step-card__text"><strong>Две минуты тишины.</strong> Один раз в день. Без телефона, без дел. Просто посидеть. Если поднимается тревога &mdash; это нормальная реакция. Тревога может означать приближение к краю пустоты. Не обязательно туда прыгать &mdash; достаточно постоять рядом.</div>
-      </div>
-
-      <div class="step-card">
-        <span class="step-card__num">03</span>
-        <div class="step-card__text"><strong>Одна строка в день.</strong> Каждый вечер можно записать: «Сегодня я бежала от&nbsp;___». Или: «Сегодня я остановилась на ___ минут, и внутри было ___». Через месяц может проявиться паттерн.</div>
-      </div>
-
+    <div class="m-step">
+      <span class="m-step-num">03</span>
+      <div class="m-step-text"><strong>Одна строка в день.</strong> Каждый вечер можно записать: «Сегодня я бежала от&nbsp;___». Или: «Сегодня я остановилась на ___ минут, и внутри было ___». Через месяц может проявиться паттерн.</div>
     </div>
 
   </div>
 </section>
 
-<!-- ====== FINAL INSIGHT — dark (green-bean) section ====== -->
-<div class="gradient-divider"></div>
-<section class="section section--dark">
-  <div class="section__inner">
+<!-- ====== 8. Финал + CTA — dark ====== -->
+<section class="sec-dk sec-dark">
+  <div class="m-inner">
 
-    <div class="insight-block">
+    <div class="m-insight">
       <p>Задача &mdash; не починить себя. Не стать другим человеком.</p>
       <p><strong>Задача &mdash; начать встречаться с тем, что внутри.</strong></p>
       <p>Сначала &mdash; просто замечать.<br>Потому что то, что мы замечаем, &mdash;<br>постепенно теряет над нами власть.</p>
     </div>
 
-    <div class="cta-wrap">
-      <a href="https://t.me/sudas_psy" class="cta-btn">Записаться на консультацию</a>
+    <div class="m-cta">
+      <a href="https://t.me/sudas_psy" class="hbtn">Записаться на консультацию</a>
     </div>
 
   </div>
 </section>
 
-<!-- ====== FOOTER ====== -->
-<footer class="footer">
-  <div class="footer__inner">
-    <span class="author">Екатерина Судас &middot; @psyMuza</span>
-    <span class="page-num">Нарциссическая пустота &middot; М1</span>
-  </div>
+<!-- ====== 9. Footer ====== -->
+<footer class="m-footer">
+  <span>Екатерина Судас &middot; @psyMuza &nbsp;&nbsp;&middot;&nbsp;&nbsp; Нарциссическая пустота &middot; М1</span>
 </footer>
 
 </body>

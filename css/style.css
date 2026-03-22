@@ -294,7 +294,7 @@ div[style*="padding:0 40px"]{padding:0 12px!important}
 footer{padding:36px 12px 18px}
 }
 
-}80%{transform:translate(3px,-3px);opacity:.8}}
+/* orphan keyframe removed */
 
 /* HIDDEN PRODUCTS - revealed by button */
 
@@ -335,7 +335,7 @@ footer{padding:36px 12px 18px}
 .instr-arrow{font-size:1rem;color:var(--cr);transition:transform .4s}
 .instr-btn[open] .instr-arrow{transform:rotate(180deg);color:var(--cr-l)}
 @keyframes instrshine{0%{background-position:300% 0}50%{background-position:-100% 0}100%{background-position:300% 0}}
-@keyframes instrborder{0%{background-position:200% 0}100%{background-position:-200% 0}}65%{transform:translateY(-50%) translateX(6px) scale(.9)}}
+@keyframes instrborder{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* MOBILE FIXES */
 @media(max-width:900px){
@@ -472,9 +472,6 @@ footer{padding:36px 12px 18px}
 @keyframes textglint{
   0%{background-position:200% 0}
   100%{background-position:-200% 0}
-}
-  100%{opacity:1;letter-spacing:.4em;filter:blur(0)}
-}
 }
 
 /* NEW ANIMATIONS mobile */
@@ -743,3 +740,52 @@ details summary{transition:all .3s}
 .cat-desc{padding:4px 0 18px 12px;font-family:'Raleway',sans-serif;font-size:1rem;color:var(--tm);line-height:1.8}
 .cat-desc p{margin-bottom:8px}
 .cat-short{font-style:italic;color:var(--td);margin-bottom:6px}
+
+/* ===== INTERACTIVE: ЧТО ВАС ПРИВЕЛО ===== */
+.qtag-wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:700px;margin:0 auto}
+.qtag{font-family:'Playfair Display',serif;font-size:.88rem;font-style:italic;color:var(--cr);
+  background:rgba(168,62,62,.04);border:1px solid rgba(168,62,62,.12);padding:10px 20px;
+  cursor:pointer;transition:all .4s;border-radius:1px}
+.qtag:hover{background:rgba(168,62,62,.1);border-color:var(--cr);transform:translateY(-2px);
+  box-shadow:0 4px 16px rgba(168,62,62,.12)}
+.qtag.active{background:rgba(168,62,62,.12);border-color:var(--cr);color:var(--td);
+  box-shadow:0 2px 12px rgba(168,62,62,.15)}
+.qtag-result{max-width:600px;margin:24px auto 0;min-height:0;overflow:hidden;transition:all .5s}
+.qtag-result.show{min-height:80px}
+.qtag-result-inner{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--td);
+  line-height:1.8;padding:20px 0;border-top:1px solid rgba(168,62,62,.1);
+  animation:fu .5s both}
+.qtag-result-inner .qtag-cta{display:inline-block;margin-top:12px;font-family:'Playfair',serif;
+  font-size:.88rem;font-style:italic;color:var(--cr);border-bottom:1px solid var(--cr);
+  transition:color .3s}
+.qtag-result-inner .qtag-cta:hover{color:var(--cr-l)}
+
+/* ===== BOOK QUIZ ===== */
+.bq-wrap{max-width:600px;margin:0 auto 28px;padding:28px 0;border-top:1px solid rgba(115,65,65,.06)}
+.bq-step{display:none}
+.bq-step.active{display:block;animation:fu .4s both}
+.bq-question{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--td);
+  font-weight:500;margin-bottom:14px}
+.bq-btn{display:block;width:100%;text-align:left;font-family:'Cormorant Garamond',serif;
+  font-size:1rem;color:var(--tm);background:none;border:none;border-top:1px solid rgba(115,65,65,.06);
+  padding:12px 0;cursor:pointer;transition:all .3s}
+.bq-btn:hover{color:var(--cr);border-top-color:var(--cr);padding-left:8px}
+.bq-progress{text-align:center;margin-top:12px;font-family:'Raleway',sans-serif;
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tl)}
+.bq-result{display:none;animation:fu .5s both}
+.bq-result.show{display:block}
+.bq-result-book{border-top:1px solid rgba(168,62,62,.1);padding:16px 0;margin-top:16px}
+.bq-result-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;
+  color:var(--td);margin-bottom:4px}
+.bq-result-author{font-family:'Raleway',sans-serif;font-size:.78rem;color:var(--tl);
+  letter-spacing:.1em;margin-bottom:8px}
+.bq-result-desc{font-size:.9rem;color:var(--tm);line-height:1.7}
+.bq-restart{display:inline-block;margin-top:16px;font-family:'Raleway',sans-serif;
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cr);
+  cursor:pointer;border:none;background:none;transition:color .3s}
+.bq-restart:hover{color:var(--cr-l)}
+
+@media(max-width:480px){
+  .qtag{font-size:.82rem;padding:8px 14px}
+  .bq-question{font-size:1rem}
+}

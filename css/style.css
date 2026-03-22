@@ -785,6 +785,22 @@ details summary{transition:all .3s}
   cursor:pointer;border:none;background:none;transition:color .3s}
 .bq-restart:hover{color:var(--cr-l)}
 
+/* ===== PRODUCT PREVIEW ===== */
+.product-card{transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+.product-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,var(--cr),transparent);opacity:0;transition:opacity .4s}
+.product-card:nth-child(2)::after{background:linear-gradient(to right,transparent,var(--gd),transparent)}
+.product-card:hover::after{opacity:1}
+.nav-row{padding:6px 0;border-bottom:1px solid rgba(0,0,0,.04);transition:background .2s}
+.nav-row:hover{background:rgba(168,62,62,.02)}
+.nav-row:last-child{border-bottom:none}
+@media(max-width:580px){
+  .product-grid{grid-template-columns:1fr!important;gap:16px!important}
+  .nav-row{flex-wrap:wrap}
+  .nav-row span:last-child{margin-top:2px}
+}
+
 /* ===== SERIAL HOWTO BOX ===== */
 .serial-howto{position:relative;overflow:hidden}
 .serial-howto::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;

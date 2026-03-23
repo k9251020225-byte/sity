@@ -319,7 +319,7 @@ footer{padding:36px 12px 18px}
 html{font-size:18px}
 body{font-size:18px}
 .hero-text h1{font-size:1.5rem}
-.hero-text .hsl{font-size:1rem}
+.hero-text .hsl{font-size:.82rem}
 .hero-text .hsub{font-size:.9rem}
 .hero-text .hcore{font-size:.9rem;line-height:1.7}
 .st{font-size:1.1rem}
@@ -417,7 +417,7 @@ p.sap{font-size:.92rem;line-height:1.8}
 @media(max-width:480px){
   .hero-inner{gap:20px}
   .hero-text h1{font-size:1.8rem}
-  .hero-text .hsl{font-size:1.1rem}
+  .hero-text .hsl{font-size:.92rem}
   .hero-text .hcore{font-size:.8rem}
   .hbtn,.route-btn{padding:12px 24px!important;font-size:.8rem!important}
   /* ORBIT small */

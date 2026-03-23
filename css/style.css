@@ -1,6 +1,6 @@
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--cream:#fff2e6;--cream-d:#f5e6d3;--art:#586357;--art-l:#6e7a6d;--gd:#1a5c18;--cr:#734141;--cr-l:#8f5555;--cab:#3d0000;--mul:#280d08;--td:#1a0f0a;--tb:#3d2a22;--tm:#7a6058;--tl:#7d6a5c;--bd:rgba(115,65,65,.12)}
+:root{--cream:#fff2e6;--cream-d:#f5e6d3;--art:#586357;--art-l:#6e7a6d;--gd:#1a5c18;--cr:#800020;--cr-l:#9B1B30;--cab:#4A0011;--mul:#2B0010;--td:#1a0f0a;--tb:#3d2a22;--tm:#7a6058;--tl:#7d6a5c;--bd:rgba(128,0,32,.12)}
 html{scroll-behavior:smooth;font-size:20px}
 body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);color:var(--tb);overflow-x:hidden;font-size:1rem;line-height:1.7}
 @media(min-width:1400px){html{font-size:22px}}

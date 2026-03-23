@@ -154,50 +154,6 @@ document.querySelectorAll('details.ex').forEach(function(details){
   });
 });
 
-// ========== Counter animation for numbers ==========
-function animateCounter(el){
-  var text=el.textContent.trim();
-  var match=text.match(/^([\d\s]+)(\+?)(.*)$/);
-  if(!match)return;
-  var target=parseInt(match[1].replace(/\s/g,''),10);
-  if(isNaN(target)||target<2)return;
-  var suffix=(match[2]||'')+(match[3]||'');
-  var duration=1400;
-  var start=performance.now();
-
-  function step(now){
-    var elapsed=now-start;
-    var progress=Math.min(elapsed/duration,1);
-    // Ease out cubic
-    var eased=1-Math.pow(1-progress,3);
-    var current=Math.round(target*eased);
-    el.textContent=current+suffix;
-    if(progress<1)requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-var counterObserver=new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-    if(entry.isIntersecting){
-      animateCounter(entry.target);
-      counterObserver.unobserve(entry.target);
-    }
-  });
-},{threshold:0.5});
-
-// Support both [data-counter] attribute and .counter class
-document.querySelectorAll('[data-counter], .counter').forEach(function(el){
-  counterObserver.observe(el);
-});
-
-// Auto-detect price numbers in .pp elements and step numbers in .cn
-document.querySelectorAll('.pp, .cn').forEach(function(el){
-  var text=el.textContent.trim();
-  if(/^\d/.test(text)){
-    counterObserver.observe(el);
-  }
-});
 
 // === INTERACTIVE: Что вас привело ===
 var qtags=document.querySelectorAll('.qtag');

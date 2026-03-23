@@ -775,13 +775,18 @@
   }
   seed();
 
-  // === NEURAL NET connections ===
+  // === NEURAL NET connections — appear and fade ===
   var nets=[];
   function buildNet(){
     nets=[];
     for(var i=0;i<nodes.length;i++){
       for(var j=i+1;j<nodes.length;j++){
-        if(Math.random()<.15) nets.push([i,j]);
+        if(Math.random()<.15) nets.push({
+          a:i,b:j,
+          life:Math.random()*600+200,
+          age:Math.floor(Math.random()*800),
+          maxLife:Math.random()*600+200
+        });
       }
     }
   }
@@ -908,22 +913,39 @@
       pos.push({x:nodes[i].x*W,y:nodes[i].y*H});
     }
 
-    // Draw neural network — persistent lines
+    // Draw neural network — lines appear and fade like real synapses
     ctx.lineWidth=.5;
-    for(var i=0;i<nets.length;i++){
-      var a=pos[nets[i][0]],b=pos[nets[i][1]];
+    for(var i=nets.length-1;i>=0;i--){
+      var net=nets[i];
+      net.age++;
+      // Fade in then fade out
+      var lifeRatio=net.age/net.maxLife;
+      var fade;
+      if(lifeRatio<.2) fade=lifeRatio/.2;
+      else if(lifeRatio>.8) fade=(1-lifeRatio)/.2;
+      else fade=1;
+      // Respawn when dead
+      if(net.age>=net.maxLife){
+        net.a=Math.floor(Math.random()*nodes.length);
+        net.b=Math.floor(Math.random()*nodes.length);
+        if(net.a===net.b) net.b=(net.a+1)%nodes.length;
+        net.age=0;
+        net.maxLife=Math.random()*600+200;
+        continue;
+      }
+      var a=pos[net.a],b=pos[net.b];
       var dx=b.x-a.x,dy=b.y-a.y;
       var dist=Math.sqrt(dx*dx+dy*dy);
-      var maxD=s*.6;
+      var maxD=s*.65;
       if(dist<maxD){
-        var alpha=.06+.1*(1-dist/maxD);
+        var alpha=(.08+.12*(1-dist/maxD))*fade;
         ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
         ctx.strokeStyle='rgba(80,40,50,'+alpha+')';
         ctx.stroke();
       }
     }
 
-    // Proximity connections
+    // Proximity connections — also pulse
     ctx.lineWidth=.3;
     for(var i=0;i<pos.length;i++){
       for(var j=i+1;j<pos.length;j++){

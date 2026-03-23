@@ -517,8 +517,11 @@
 
 <!-- Book Quiz -->
 <div class="bq-wrap reveal" id="bookQuiz">
-<div class="st" style="margin-bottom:16px">Какая книга — ваша?</div>
-<div class="ss" style="margin-bottom:20px">Ответьте на 3 вопроса — подберу книгу под ваш запрос.</div>
+<div class="st" style="margin-bottom:8px;text-align:center">Какая книга — <em>ваша</em>?</div>
+<div class="ss" style="margin-bottom:24px;text-align:center">Три вопроса — и я подберу книгу под ваш запрос</div>
+<div class="bq-progress" id="bqProgress">
+<span class="bq-progress-dot active"></span><span class="bq-progress-dot"></span><span class="bq-progress-dot"></span>
+</div>
 <div class="bq-steps" id="bqSteps">
 <div class="bq-step active" data-step="1">
 <div class="bq-question">Что сейчас больше всего беспокоит?</div>
@@ -541,7 +544,6 @@
 </div>
 </div>
 <div class="bq-result" id="bqResult"></div>
-<div class="bq-progress" id="bqProgress"></div>
 </div>
 
 <details class="ex">

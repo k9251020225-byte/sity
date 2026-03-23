@@ -751,7 +751,7 @@
   if(!c)return;
   var ctx=c.getContext('2d');
   var dpr=window.devicePixelRatio||1;
-  var W,H,cx,cy;
+  var W,H;
 
   function resize(){
     var r=c.parentElement.getBoundingClientRect();
@@ -759,185 +759,171 @@
     c.width=W*dpr;c.height=H*dpr;
     c.style.width=W+'px';c.style.height=H+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
-    cx=W*.45;cy=H*.48;
   }
   resize();
   window.addEventListener('resize',resize);
 
-  // Orbits
-  var orbits=[
-    {r:Math.min(W,H)*.18,w:.0003,color:'rgba(107,29,58,.6)',lw:1.2},
-    {r:Math.min(W,H)*.32,w:-.0002,color:'rgba(107,29,58,.25)',lw:.8},
-    {r:Math.min(W,H)*.46,w:.00015,color:'rgba(107,29,58,.12)',lw:.5}
+  // Three offset circles — like the screenshot
+  // Outer: large, light gray, center-left
+  // Middle: medium, warm gray, slightly right
+  // Inner: small, dark, offset right-down
+  var circles=[
+    {xr:.42,yr:.44,rr:.36,speed:.00012,angle:0,color:'rgba(160,140,130,.18)',lw:.7},
+    {xr:.48,yr:.46,rr:.26,speed:-.00018,angle:0,color:'rgba(107,29,58,.2)',lw:.9},
+    {xr:.54,yr:.52,rr:.17,speed:.00025,angle:0,color:'rgba(45,10,30,.35)',lw:1.1}
   ];
-  function updateOrbits(){
-    var s=Math.min(W,H);
-    orbits[0].r=s*.18;orbits[1].r=s*.32;orbits[2].r=s*.46;
-  }
 
-  // Particles
-  var particles=[];
-  var colors=['#6B1D3A','#8A2E50','#4A0E28','#1a5c18','#586357','#2D0A1E','#a83e3e','#3a1a0e'];
-  for(var i=0;i<45;i++){
-    var oi=Math.floor(Math.random()*3);
-    particles.push({
-      orbit:oi,
-      angle:Math.random()*Math.PI*2,
-      speed:(.0002+Math.random()*.0006)*(Math.random()>.5?1:-1),
-      offset:(Math.random()-.5)*40,
-      size:1+Math.random()*4.5,
-      color:colors[Math.floor(Math.random()*colors.length)],
-      opacity:.3+Math.random()*.7,
-      pulse:Math.random()*Math.PI*2,
-      pulseSpeed:.001+Math.random()*.003
-    });
-  }
+  // Nodes — scattered across the canvas, different sizes/colors
+  var nodes=[];
+  var palette=[
+    {c:'#6B1D3A',w:4},{c:'#6B1D3A',w:3},{c:'#8A2E50',w:3},
+    {c:'#4A0E28',w:5},{c:'#2D0A1E',w:2},{c:'#1a5c18',w:2},
+    {c:'#586357',w:1},{c:'#a83e3e',w:3},{c:'#3a1a0e',w:2},
+    {c:'#4a3830',w:1},{c:'#6B1D3A',w:1},{c:'#1a5c18',w:1}
+  ];
 
-  // Neural connections
-  var connections=[];
-  function buildConnections(){
-    connections=[];
-    for(var i=0;i<particles.length;i++){
-      for(var j=i+1;j<particles.length;j++){
-        if(Math.random()<.08){
-          connections.push([i,j]);
+  // Seed deterministic but organic placement
+  function seed(){
+    nodes=[];
+    // Nodes on/near circle paths
+    for(var ci=0;ci<circles.length;ci++){
+      var count=8+ci*4;
+      for(var i=0;i<count;i++){
+        var a=Math.random()*Math.PI*2;
+        var cr=circles[ci];
+        var s=Math.min(W,H);
+        var rx=cr.rr*s;
+        var drift=(Math.random()-.5)*s*.06;
+        var pc=palette[Math.floor(Math.random()*palette.length)];
+        nodes.push({
+          cx:cr.xr,cy:cr.yr,
+          orbitR:rx+drift,
+          angle:a,
+          speed:(.00008+Math.random()*.0004)*(Math.random()>.5?1:-1),
+          size:.8+Math.random()*pc.w,
+          color:pc.c,
+          opacity:.35+Math.random()*.6
+        });
+      }
+    }
+    // Free-floating nodes across entire canvas
+    for(var i=0;i<20;i++){
+      var pc=palette[Math.floor(Math.random()*palette.length)];
+      nodes.push({
+        fx:Math.random()*W,fy:Math.random()*H,
+        vx:(Math.random()-.5)*.08,vy:(Math.random()-.5)*.08,
+        size:.4+Math.random()*1.8,
+        color:pc.c,
+        opacity:.15+Math.random()*.3,
+        free:true
+      });
+    }
+  }
+  seed();
+
+  // Build neural network — persistent connections
+  var nets=[];
+  function buildNet(){
+    nets=[];
+    for(var i=0;i<nodes.length;i++){
+      for(var j=i+1;j<nodes.length;j++){
+        if(Math.random()<.12){
+          nets.push([i,j]);
         }
       }
     }
   }
-  buildConnections();
+  buildNet();
 
-  // Floating dust
-  var dust=[];
-  for(var i=0;i<60;i++){
-    dust.push({
-      x:Math.random()*W,y:Math.random()*H,
-      vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15,
-      size:.5+Math.random()*1.5,
-      opacity:.1+Math.random()*.25
-    });
-  }
-
-  var time=0;
-  var mouse={x:cx,y:cy};
-  c.parentElement.addEventListener('mousemove',function(e){
-    var r=c.getBoundingClientRect();
-    mouse.x=e.clientX-r.left;
-    mouse.y=e.clientY-r.top;
-  });
-
-  function getPos(p){
-    var o=orbits[p.orbit];
-    var r=o.r+p.offset;
+  function nodePos(n){
+    if(n.free){
+      return{x:n.fx,y:n.fy};
+    }
+    var s=Math.min(W,H);
+    var cx=n.cx*W,cy=n.cy*H;
     return{
-      x:cx+Math.cos(p.angle)*r,
-      y:cy+Math.sin(p.angle)*r*.75
+      x:cx+Math.cos(n.angle)*n.orbitR,
+      y:cy+Math.sin(n.angle)*n.orbitR*.72
     };
   }
 
   function draw(){
-    time++;
     ctx.clearRect(0,0,W,H);
-    updateOrbits();
+    var s=Math.min(W,H);
 
-    // Draw orbit rings
-    for(var i=0;i<orbits.length;i++){
-      var o=orbits[i];
+    // Draw circles — thin, elegant, slowly rotating offset
+    for(var i=0;i<circles.length;i++){
+      var cr=circles[i];
+      cr.angle+=cr.speed;
+      var cx=cr.xr*W+Math.cos(cr.angle)*s*.01;
+      var cy=cr.yr*H+Math.sin(cr.angle)*s*.008;
+      var r=cr.rr*s;
       ctx.beginPath();
-      ctx.ellipse(cx,cy,o.r,o.r*.75,0,0,Math.PI*2);
-      ctx.strokeStyle=o.color;
-      ctx.lineWidth=o.lw;
+      ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=cr.color;
+      ctx.lineWidth=cr.lw;
       ctx.stroke();
     }
 
-    // Update particle positions
-    for(var i=0;i<particles.length;i++){
-      var p=particles[i];
-      p.angle+=p.speed;
-      p.pulse+=p.pulseSpeed;
+    // Update nodes
+    var pos=[];
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i];
+      if(n.free){
+        n.fx+=n.vx;n.fy+=n.vy;
+        if(n.fx<0||n.fx>W)n.vx*=-1;
+        if(n.fy<0||n.fy>H)n.vy*=-1;
+      }else{
+        n.angle+=n.speed;
+      }
+      pos.push(nodePos(n));
     }
 
-    // Draw neural connections
-    for(var i=0;i<connections.length;i++){
-      var a=getPos(particles[connections[i][0]]);
-      var b=getPos(particles[connections[i][1]]);
+    // Draw neural network lines — visible, thin, like constellation map
+    ctx.lineWidth=.4;
+    for(var i=0;i<nets.length;i++){
+      var a=pos[nets[i][0]];
+      var b=pos[nets[i][1]];
       var dx=b.x-a.x,dy=b.y-a.y;
       var dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<280){
-        var alpha=.06*(1-dist/280);
+      var maxDist=s*.55;
+      if(dist<maxDist){
+        var alpha=.08+.07*(1-dist/maxDist);
         ctx.beginPath();
         ctx.moveTo(a.x,a.y);
         ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle='rgba(107,29,58,'+alpha+')';
-        ctx.lineWidth=.5;
+        ctx.strokeStyle='rgba(80,40,50,'+alpha+')';
         ctx.stroke();
       }
     }
 
-    // Dynamic connections near mouse
-    var positions=[];
-    for(var i=0;i<particles.length;i++){
-      positions.push(getPos(particles[i]));
-    }
-    for(var i=0;i<positions.length;i++){
-      var dx=positions[i].x-mouse.x;
-      var dy=positions[i].y-mouse.y;
-      var dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<180){
-        for(var j=i+1;j<positions.length;j++){
-          var dx2=positions[j].x-mouse.x;
-          var dy2=positions[j].y-mouse.y;
-          var dist2=Math.sqrt(dx2*dx2+dy2*dy2);
-          if(dist2<180){
-            var dd=Math.sqrt(Math.pow(positions[i].x-positions[j].x,2)+Math.pow(positions[i].y-positions[j].y,2));
-            if(dd<200){
-              var alpha=.1*(1-dd/200)*(1-dist/180);
-              ctx.beginPath();
-              ctx.moveTo(positions[i].x,positions[i].y);
-              ctx.lineTo(positions[j].x,positions[j].y);
-              ctx.strokeStyle='rgba(107,29,58,'+alpha+')';
-              ctx.lineWidth=.6;
-              ctx.stroke();
-            }
-          }
+    // Proximity connections — dynamic, finer
+    ctx.lineWidth=.3;
+    for(var i=0;i<pos.length;i++){
+      for(var j=i+1;j<pos.length;j++){
+        var dx=pos[j].x-pos[i].x,dy=pos[j].y-pos[i].y;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<s*.18){
+          var alpha=.04*(1-dist/(s*.18));
+          ctx.beginPath();
+          ctx.moveTo(pos[i].x,pos[i].y);
+          ctx.lineTo(pos[j].x,pos[j].y);
+          ctx.strokeStyle='rgba(80,40,50,'+alpha+')';
+          ctx.stroke();
         }
       }
     }
 
-    // Draw particles
-    for(var i=0;i<particles.length;i++){
-      var p=particles[i];
-      var pos=positions[i];
-      var s=p.size*(1+Math.sin(p.pulse)*.2);
+    // Draw nodes
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i];
+      var p=pos[i];
       ctx.beginPath();
-      ctx.arc(pos.x,pos.y,s,0,Math.PI*2);
-      ctx.fillStyle=p.color;
-      ctx.globalAlpha=p.opacity*(1+Math.sin(p.pulse)*.15);
+      ctx.arc(p.x,p.y,n.size,0,Math.PI*2);
+      ctx.globalAlpha=n.opacity;
+      ctx.fillStyle=n.color;
       ctx.fill();
-      // Glow for larger particles
-      if(p.size>3){
-        ctx.beginPath();
-        ctx.arc(pos.x,pos.y,s*2.5,0,Math.PI*2);
-        var g=ctx.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,s*2.5);
-        g.addColorStop(0,p.color.replace(')',',0.15)').replace('rgb','rgba'));
-        g.addColorStop(1,'rgba(107,29,58,0)');
-        ctx.fillStyle=g;
-        ctx.globalAlpha=.4;
-        ctx.fill();
-      }
       ctx.globalAlpha=1;
-    }
-
-    // Draw dust
-    for(var i=0;i<dust.length;i++){
-      var d=dust[i];
-      d.x+=d.vx;d.y+=d.vy;
-      if(d.x<0)d.x=W;if(d.x>W)d.x=0;
-      if(d.y<0)d.y=H;if(d.y>H)d.y=0;
-      ctx.beginPath();
-      ctx.arc(d.x,d.y,d.size,0,Math.PI*2);
-      ctx.fillStyle='rgba(107,29,58,'+d.opacity+')';
-      ctx.fill();
     }
 
     requestAnimationFrame(draw);
@@ -945,11 +931,7 @@
   draw();
 
   window.addEventListener('resize',function(){
-    resize();
-    for(var i=0;i<dust.length;i++){
-      dust[i].x=Math.random()*W;
-      dust[i].y=Math.random()*H;
-    }
+    resize();seed();buildNet();
   });
 })();
 </script>

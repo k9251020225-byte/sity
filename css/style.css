@@ -1023,7 +1023,8 @@ details summary{transition:all .3s}
 #serial details.ex{background:none;border-radius:0;padding:0;box-shadow:none;max-width:100%}
 #serial details.ex[open]{background:none;box-shadow:none}
 #serial details.ex summary{font-size:inherit;letter-spacing:0;padding:0}
-#serial p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--cr);line-height:2;margin:0 0 4px}
+#serial p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2;margin:0 0 4px}
+#serial .trig{color:var(--cr);font-weight:600;border-bottom:1.5px dotted rgba(107,29,58,.5)}
 #serial .eb{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td);line-height:2}
 #serial .tn{font-size:.95rem;margin:12px 0}
 #serial .tn p{font-size:.95rem}

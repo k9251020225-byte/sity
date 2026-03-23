@@ -789,17 +789,25 @@
 
   // === CARDS: 8 floating cards on the orbit field ===
   var cards=document.querySelectorAll('.ocard');
-  var cardPositions=[
-    {x:.06,y:.26},{x:.55,y:.16},{x:.04,y:.55},{x:.30,y:.72},
-    {x:.58,y:.40},{x:.52,y:.66},{x:.22,y:.40},{x:.38,y:.26}
+  // Positions: 2 columns, 4 rows — evenly spread, safe for mobile
+  var isMobile=W<600;
+  var cardPositions=isMobile?[
+    {x:.03,y:.14},{x:.45,y:.14},
+    {x:.03,y:.30},{x:.45,y:.30},
+    {x:.03,y:.46},{x:.45,y:.46},
+    {x:.03,y:.62},{x:.45,y:.62}
+  ]:[
+    {x:.06,y:.22},{x:.50,y:.16},{x:.04,y:.42},{x:.30,y:.68},
+    {x:.54,y:.38},{x:.48,y:.62},{x:.22,y:.54},{x:.34,y:.28}
   ];
   var cardDrift=[];
   for(var i=0;i<cards.length;i++){
+    var driftR=isMobile?3:10;
     cardDrift.push({
       bx:cardPositions[i].x, by:cardPositions[i].y,
       angle:Math.random()*Math.PI*2,
       speed:.0006+Math.random()*.001,
-      rx:8+Math.random()*12, ry:5+Math.random()*8
+      rx:driftR+Math.random()*driftR, ry:driftR*.6+Math.random()*driftR*.6
     });
   }
 

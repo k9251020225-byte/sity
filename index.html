@@ -768,9 +768,9 @@
   // Middle: medium, warm gray, slightly right
   // Inner: small, dark, offset right-down
   var circles=[
-    {xr:.42,yr:.44,rr:.36,speed:.00012,angle:0,color:'rgba(140,120,110,.45)',lw:1.2},
-    {xr:.48,yr:.46,rr:.26,speed:-.00018,angle:0,color:'rgba(107,29,58,.5)',lw:1.4},
-    {xr:.54,yr:.52,rr:.17,speed:.00025,angle:0,color:'rgba(45,10,30,.7)',lw:1.6}
+    {xr:.42,yr:.44,rr:.36,speed:.00012,angle:0,orbitSpeed:.0003,orbitR:12,color:'rgba(120,100,90,.7)',lw:1.6},
+    {xr:.48,yr:.46,rr:.26,speed:-.00018,angle:0,orbitSpeed:-.00025,orbitR:8,color:'rgba(107,29,58,.75)',lw:1.8},
+    {xr:.54,yr:.52,rr:.17,speed:.00025,angle:0,orbitSpeed:.0004,orbitR:6,color:'rgba(45,10,30,.85)',lw:2}
   ];
 
   // Nodes — scattered across the canvas, different sizes/colors
@@ -854,9 +854,9 @@
     // Draw circles — thin, elegant, slowly rotating offset
     for(var i=0;i<circles.length;i++){
       var cr=circles[i];
-      cr.angle+=cr.speed;
-      var cx=cr.xr*W+Math.cos(cr.angle)*s*.01;
-      var cy=cr.yr*H+Math.sin(cr.angle)*s*.008;
+      cr.angle+=cr.orbitSpeed;
+      var cx=cr.xr*W+Math.cos(cr.angle)*cr.orbitR;
+      var cy=cr.yr*H+Math.sin(cr.angle)*cr.orbitR;
       var r=cr.rr*s;
       ctx.beginPath();
       ctx.arc(cx,cy,r,0,Math.PI*2);

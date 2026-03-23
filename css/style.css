@@ -1002,13 +1002,8 @@ details summary{transition:all .3s}
 .serial-progress{position:sticky;top:68px;z-index:50;height:3px;background:rgba(107,29,58,.08);margin:0 -16px 16px;overflow:hidden}
 .serial-progress-bar{height:100%;width:0%;background:linear-gradient(to right,var(--cr),var(--gd));transition:width .1s linear;border-radius:0 2px 2px 0}
 
-/* === PRODUCTS: градиентный блик === */
-.prod{position:relative;overflow:hidden}
-.prod::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .6s ease;pointer-events:none}
-.prod:hover::after{left:120%}
-.prod::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--cr),var(--gd));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:1}
-.prod:hover::before{transform:scaleX(1)}
-.prod:hover .pp{color:var(--cr);text-shadow:0 0 8px rgba(168,62,62,.15)}
+/* === PRODUCTS === */
+.prod{position:relative}
 
 /* === QTAG: активный стиль === */
 .qtag.active{background:var(--cr)!important;color:var(--cream)!important;transform:scale(1.08);box-shadow:0 6px 20px rgba(107,29,58,.25)}

@@ -88,8 +88,8 @@
 <div class="ocard" data-info="Когда боль была слишком сильна или слишком привычна — тело отключается. Вы перестаёте чувствовать. Не потому что «холодный человек». Потому что чувствовать было опасно. Лоуэн называл это предательством тела.">Не чувствую себя</div>
 <div class="ocard" data-info="Финансовый потолок может быть связан не только с внешними обстоятельствами. Иногда за ним стоит бессознательный запрет: «нельзя больше, чем у мамы/папы». Исследование этих установок помогает обнаружить, что именно ограничивает.">Потолок в доходе</div>
 </div>
-<div class="ocard-popup" id="ocardPopup"><div class="ocard-popup-inner"><div class="ocard-popup-text" id="ocardText"></div><button class="ocard-popup-close" id="ocardClose">&times;</button></div></div>
 </section>
+<div class="ocard-popup" id="ocardPopup"><div class="ocard-popup-inner"><div class="ocard-popup-text" id="ocardText"></div><button class="ocard-popup-close" id="ocardClose">&times;</button></div></div>
 
 
 
@@ -818,12 +818,15 @@
   var popup=document.getElementById('ocardPopup');
   var popupText=document.getElementById('ocardText');
   var popupClose=document.getElementById('ocardClose');
-  cards.forEach(function(card){
-    card.addEventListener('click',function(){
-      popupText.textContent=card.getAttribute('data-info');
-      popup.classList.add('active');
-    });
-  });
+  for(var i=0;i<cards.length;i++){
+    (function(card){
+      card.addEventListener('click',function(e){
+        e.stopPropagation();
+        popupText.textContent=card.getAttribute('data-info');
+        popup.classList.add('active');
+      });
+    })(cards[i]);
+  }
   popupClose.addEventListener('click',function(){popup.classList.remove('active');});
   popup.addEventListener('click',function(e){if(e.target===popup)popup.classList.remove('active');});
 

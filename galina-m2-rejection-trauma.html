@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>М2 — Травма отвержения · Инструкция к себе</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#fff2e6;--cream-d:#f5e6d3;--gd:#052102;--gd-soft:#586357;--cr:#7A1E42;--cr-l:#9A3058;--td:#1a0f0a;--tb:#3d1a2a;--tm:#7a4058;--tl:#a07888}
+html{font-size:18px}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);color:var(--tb);line-height:1.75;padding:0;margin:0}
+@media(max-width:480px){html{font-size:17px}}
+
+.page{max-width:620px;margin:0 auto;padding:40px 24px 60px}
+
+.page-header{text-align:center;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid rgba(122,30,66,.12)}
+.page-label{font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gd-soft);margin-bottom:28px}
+.page-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:500;color:var(--td);line-height:1.3;margin-bottom:12px}
+.page-subtitle{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;font-style:italic;color:var(--cr);line-height:1.6;margin-bottom:8px}
+.page-desc{font-size:.88rem;color:var(--tm);line-height:1.7;max-width:480px;margin:0 auto}
+
+.insight{background:#586357;color:#fff2e6;padding:28px 24px;margin:36px 0;text-align:center;line-height:1.7}
+.insight p{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:400;margin-bottom:6px}
+.insight p:last-child{margin-bottom:0}
+.insight strong{font-weight:600}
+
+.section-title{font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gd-soft);margin-bottom:20px;padding-top:36px;border-top:1px solid rgba(88,99,87,.1)}
+
+.body-text{font-size:.92rem;color:var(--tb);line-height:1.8;margin-bottom:16px}
+.body-text strong{color:var(--td);font-weight:600}
+
+.mechanism{background:rgba(88,99,87,.04);border-left:3px solid var(--gd-soft);padding:22px 20px;margin:24px 0}
+.mechanism-title{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gd-soft);font-weight:600;margin-bottom:12px}
+.mechanism p{font-size:.88rem;color:var(--tb);line-height:1.8;margin-bottom:10px}
+.mechanism p:last-child{margin-bottom:0}
+
+.symptom-table{width:100%;border-collapse:collapse;margin:24px 0}
+.symptom-table th{font-family:'Raleway',sans-serif;font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);background:var(--gd-soft);padding:12px 14px;text-align:left;font-weight:600}
+.symptom-table td{font-size:.84rem;color:var(--tb);padding:14px;border-bottom:1px solid rgba(88,99,87,.1);vertical-align:top;line-height:1.65}
+.symptom-table tr:nth-child(even) td{background:rgba(88,99,87,.02)}
+.symptom-table td:first-child{font-weight:500;color:var(--td);width:40%}
+
+.two-types{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+@media(max-width:520px){.two-types{grid-template-columns:1fr}}
+.type-card{padding:20px;line-height:1.7}
+.type-card.fawn{background:rgba(162,41,82,.04);border-top:3px solid var(--cr)}
+.type-card.avoid{background:rgba(88,99,87,.04);border-top:3px solid var(--gd-soft)}
+.type-num{font-family:'Raleway',sans-serif;font-size:.64rem;letter-spacing:.15em;text-transform:uppercase;color:var(--tl);margin-bottom:8px;font-weight:600}
+.type-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--td);margin-bottom:8px}
+.type-desc{font-size:.84rem;color:var(--tm);line-height:1.7}
+
+.accent-quote{text-align:center;padding:28px 20px;margin:32px 0}
+.accent-quote p{font-family:'Playfair Display',serif;font-size:1.05rem;font-style:italic;color:var(--cr);line-height:1.7}
+
+.steps{margin:24px 0}
+.step{display:flex;gap:14px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(88,99,87,.06)}
+.step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.step-num{font-family:'Raleway',sans-serif;font-weight:700;color:var(--cr);min-width:60px;font-size:.72rem;letter-spacing:.1em;padding-top:4px}
+.step-content{font-size:.88rem;color:var(--tb);line-height:1.8}
+.step-content strong{color:var(--td)}
+
+.practice-table{width:100%;border-collapse:collapse;margin:24px 0}
+.practice-table th{font-family:'Raleway',sans-serif;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);background:var(--cr);padding:10px 12px;text-align:left;font-weight:600}
+.practice-table td{font-size:.82rem;color:var(--tl);padding:16px 12px;border-bottom:1px solid rgba(122,30,66,.08);vertical-align:top;line-height:1.5;font-style:italic}
+.practice-table tr:nth-child(even) td{background:rgba(162,41,82,.015)}
+
+.author-card{background:var(--gd-soft);color:var(--cream);padding:20px 24px;margin:36px 0;text-align:center}
+.author-card .name{font-family:'Raleway',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px}
+.author-card .desc{font-size:.76rem;color:rgba(255,242,230,.7);line-height:1.6}
+
+.page-footer{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:16px;border-top:1px solid rgba(88,99,87,.1);font-size:.72rem;color:var(--tl)}
+.page-footer .author{font-family:'Raleway',sans-serif;letter-spacing:.1em}
+.page-footer .page-num{font-family:'Raleway',sans-serif}
+
+@media(max-width:400px){
+  html{font-size:15px}
+  .page{padding:28px 12px 40px}
+  .page-title{font-size:1.3rem}
+  .page-subtitle{font-size:.88rem}
+  .page-desc{font-size:.78rem}
+  .body-text{font-size:.82rem;line-height:1.7}
+  .section-title{font-size:.6rem}
+  .mechanism p{font-size:.78rem;line-height:1.7}
+  .mechanism-title{font-size:.58rem}
+  .insight p{font-size:.88rem}
+  .symptom-table td{font-size:.76rem;padding:10px}
+  .symptom-table th{font-size:.58rem;padding:8px 10px}
+  .type-name{font-size:.88rem}
+  .type-desc{font-size:.76rem}
+  .type-num{font-size:.56rem}
+  .accent-quote p{font-size:.88rem}
+  .step-num{font-size:.64rem}
+  .step-content{font-size:.78rem;line-height:1.7}
+  .practice-table td{font-size:.72rem;padding:10px 8px}
+  .practice-table th{font-size:.54rem;padding:8px}
+  .author-card .name{font-size:.68rem}
+  .author-card .desc{font-size:.66rem}
+  .page-label{font-size:.52rem}
+}
+
+@media print{
+  body{background:#fff}
+  .page{padding:20px}
+  .insight,.author-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- Header -->
+<div class="page-header">
+<div class="page-label">Инструкция к себе &middot; Екатерина Судас</div>
+<h1 class="page-title">Травма отвержения</h1>
+<div class="page-subtitle">Почему ты не можешь сказать «нет»</div>
+<p class="page-desc">Это не слабость характера. Это программа выживания, записанная в&nbsp;детстве.</p>
+</div>
+
+<!-- Key insight -->
+<div class="insight">
+<p>Ты соглашаешься не потому, что хочешь помочь.</p>
+<p><strong>А потому что тело помнит:<br>отказ = опасность. Отказ = «меня бросят».</strong></p>
+</div>
+
+<!-- Author card -->
+<div class="author-card">
+<div class="name">Екатерина Судас</div>
+<div class="desc">МГУ &middot; Проживание травм<br>Telegram: @psyMuza &middot; Запись: @sudas_psy</div>
+</div>
+
+<!-- Section: What is it -->
+<div class="section-title">Что такое травма отвержения &mdash; и как она формируется</div>
+
+<p class="body-text">Каждый ребёнок рождается с одной базовой потребностью: <strong>быть принятым</strong>. Не за что-то. Просто так. Безусловно.</p>
+
+<p class="body-text">Когда эта потребность не закрывается &mdash; когда мама принимает только «удобного» ребёнка, только послушного, только полезного &mdash; формируется вывод:</p>
+
+<p class="body-text"><strong>Я = то, что я делаю для других. Перестану делать = перестану существовать.</strong></p>
+
+<p class="body-text">Этот вывод записывается не в сознании &mdash; в теле. В нервной системе. И дальше он работает автоматически, без твоего участия.</p>
+
+<!-- Mechanism -->
+<div class="mechanism">
+<div class="mechanism-title">Механизм триггера</div>
+<p>Кто-то просит тебя о помощи. В этот момент активируется не взрослое решение &mdash; а детская программа:</p>
+<p><strong>Просьба &rarr; тело распознаёт знакомую ситуацию &rarr; миндалина (центр страха) посылает сигнал &rarr; ты чувствуешь тревогу &rarr; автоматическое «да»</strong></p>
+<p>Всё это занимает миллисекунды. Ты даже не успеваешь подумать. Решение уже принято &mdash; телом, не разумом.</p>
+<p>Это не выбор. Это рефлекс.</p>
+</div>
+
+<!-- Table -->
+<div class="section-title">Как это выглядит: симптомы</div>
+
+<table class="symptom-table">
+<thead>
+<tr>
+<th>Что ты говоришь / делаешь</th>
+<th>Что на самом деле за этим стоит</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>«Да, конечно, помогу» (когда сил нет)</td>
+<td>Страх: если откажу &mdash; меня отвергнут, я останусь одна</td>
+</tr>
+<tr>
+<td>«Мне не трудно» (когда трудно)</td>
+<td>Мои потребности &mdash; менее важны. Так было всегда. Так научила мама</td>
+</tr>
+<tr>
+<td>Берёшь троих чужих детей, когда своих двое</td>
+<td>Чужая беда = невозможность отказать. Отказать = быть «плохой» = быть отвергнутой</td>
+</tr>
+<tr>
+<td>Злишься на себя после того, как согласилась</td>
+<td>Взрослая часть знает, что это было лишнее. Но детская часть не дала сказать «нет»</td>
+</tr>
+<tr>
+<td>Чувствуешь вину, когда думаешь о себе</td>
+<td>Внутренний голос матери: «Думать о себе = эгоизм». Но это не твой голос. Это интроект</td>
+</tr>
+</tbody>
+</table>
+
+<!-- Two types -->
+<div class="section-title">Два типа реакции на отвержение</div>
+
+<div class="two-types">
+<div class="type-card fawn">
+<div class="type-num">1. Твой тип</div>
+<div class="type-name">Услужливость (fawn)</div>
+<div class="type-desc">Ты делаешь всё, чтобы тебя не бросили. Угадываешь, что нужно другим. Предвосхищаешь. Обслуживаешь. Становишься незаменимой.</div>
+</div>
+<div class="type-card avoid">
+<div class="type-num">2. Другой полюс</div>
+<div class="type-name">Отталкивание (избегание)</div>
+<div class="type-desc">«Мне никто не нужен. Я сама.» Та же травма, другой полюс. Иногда ты в нём тоже оказываешься &mdash; когда устаёшь обслуживать и закрываешься.</div>
+</div>
+</div>
+
+<!-- Accent quote -->
+<div class="accent-quote">
+<p>Настоящий выбор &mdash; это не «да» и не «нет».</p>
+<p><strong>Настоящий выбор &mdash; это пауза<br>между просьбой и ответом.</strong></p>
+</div>
+
+<!-- Steps in trigger -->
+<div class="section-title">Что делать в триггерный момент</div>
+
+<p class="body-text">Когда кто-то просит &mdash; и ты чувствуешь, что <strong>не можешь отказать</strong>:</p>
+
+<div class="steps">
+<div class="step">
+<span class="step-num">Шаг 1</span>
+<div class="step-content"><strong>Пауза.</strong> Скажи: «Мне нужно подумать. Отвечу через час.» Это не грубость. Это разрыв между стимулом и реакцией. Без этой паузы отвечает не взрослая ты &mdash; отвечает испуганная девочка.</div>
+</div>
+<div class="step">
+<span class="step-num">Шаг 2</span>
+<div class="step-content"><strong>Назови.</strong> Скажи себе: «Сейчас мне страшно отказать. Я боюсь, что меня отвергнут. Это старый страх. Он не про сейчас.» Называние эмоции снижает активность миндалины &mdash; это доказано нейробиологически (Либерман, UCLA, 2007).</div>
+</div>
+<div class="step">
+<span class="step-num">Шаг 3</span>
+<div class="step-content"><strong>Проверь.</strong> Спроси себя: «Если бы я точно знала, что меня не бросят после отказа &mdash; я бы согласилась?» Если нет &mdash; значит, твоё «да» было не выбором, а автоматизмом.</div>
+</div>
+<div class="step">
+<span class="step-num">Шаг 4</span>
+<div class="step-content"><strong>Выдержи.</strong> После «нет» внутри поднимется тревога, вина, ощущение «я плохая». Это нормально. Это не правда о тебе &mdash; это эхо детского опыта. Оно пройдёт. Но только если ты не побежишь его заглушать очередным «да».</div>
+</div>
+</div>
+
+<!-- Practice table -->
+<div class="section-title">Письменная практика</div>
+
+<p class="body-text">Запиши три ситуации за последнюю неделю, когда ты сказала «да», а хотела сказать «нет»:</p>
+
+<table class="practice-table">
+<thead>
+<tr>
+<th>Ситуация</th>
+<th>Что сказала</th>
+<th>Что хотела сказать</th>
+<th>Что почувствовала бы, если бы отказала</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>___</td>
+<td>___</td>
+<td>___</td>
+<td>___</td>
+</tr>
+<tr>
+<td>___</td>
+<td>___</td>
+<td>___</td>
+<td>___</td>
+</tr>
+<tr>
+<td>___</td>
+<td>___</td>
+<td>___</td>
+<td>___</td>
+</tr>
+</tbody>
+</table>
+
+<p class="body-text" style="font-style:italic;color:var(--tm)">Последний столбец &mdash; самый важный. Там живёт твой страх. И когда ты его увидишь &mdash; он начнёт терять власть.</p>
+
+<!-- Final insight -->
+<div class="insight">
+<p>Ты не обязана заслуживать присутствие рядом.</p>
+<p><strong>Ты имеешь право быть &mdash;<br>даже когда ничего не делаешь для других.</strong></p>
+</div>
+
+<!-- Footer -->
+<div class="page-footer">
+<span class="author">Екатерина Судас &middot; @psyMuza</span>
+<span class="page-num">Травма отвержения &middot; М2</span>
+</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

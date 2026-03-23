@@ -7,7 +7,7 @@
   --text:#2A1A22;--text-m:#6A4A58;--text-l:#9A7A88;
   --border:rgba(107,29,58,.08);
 }
-html{scroll-behavior:smooth;font-size:18px}
+html{scroll-behavior:smooth;font-size:20px}
 body{font-family:'EB Garamond',Georgia,serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:var(--wine);text-decoration:none}
@@ -171,7 +171,7 @@ footer{background:var(--wine-d);color:rgba(255,255,255,.6);padding:40px 24px 20p
   .transform-arrow{transform:rotate(90deg)}
 }
 @media(max-width:480px){
-  html{font-size:17px}
+  html{font-size:20px}
   .c,.cw{padding:0 14px}
   .hero{padding:80px 14px 30px}
   .hero-text h1{font-size:1.7rem}
@@ -181,7 +181,7 @@ footer{background:var(--wine-d);color:rgba(255,255,255,.6);padding:40px 24px 20p
   footer{padding:30px 14px 16px}
 }
 @media(max-width:400px){
-  html{font-size:16px}
+  html{font-size:18px}
   .hbtn{padding:14px 28px;font-size:.9rem}
 }
 

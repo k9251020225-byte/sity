@@ -1037,14 +1037,12 @@ details summary{transition:all .3s}
 .orbit-cards{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2}
 .ocard{position:absolute;font-family:'Playfair Display',serif;font-size:.82rem;font-weight:500;color:var(--td);background:rgba(255,242,230,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(107,29,58,.12);padding:10px 18px;border-radius:20px;cursor:pointer;user-select:none;transition:background .3s,border-color .3s,box-shadow .3s;letter-spacing:.02em;white-space:nowrap}
 .ocard:hover{background:rgba(255,242,230,.95);border-color:rgba(107,29,58,.3);box-shadow:0 4px 20px rgba(107,29,58,.1)}
-.ocard-popup{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;background:rgba(15,8,6,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
-.ocard-popup.active{display:flex}
-.ocard-popup-inner{position:relative;max-width:480px;width:100%;background:var(--cream);border:1px solid var(--bd);border-radius:16px;padding:36px 32px;box-shadow:0 20px 60px rgba(107,29,58,.15);font-family:'Inter',sans-serif;font-size:.9rem;line-height:1.7;color:var(--tb)}
-.ocard-popup-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;color:var(--tm);cursor:pointer}
+.ocard-desc{position:absolute;z-index:10;max-width:380px;width:90%;background:rgba(255,242,230,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(107,29,58,.15);border-radius:14px;padding:22px 24px;box-shadow:0 12px 40px rgba(107,29,58,.12);font-family:'Inter',sans-serif;font-size:.85rem;line-height:1.7;color:var(--tb);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.ocard-desc.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
 @media(max-width:768px){
 .orbit-section{height:100vh;min-height:600px}
 .ocard{font-size:.72rem;padding:7px 13px}
-.ocard-popup-inner{padding:24px 20px;font-size:.85rem}
+.ocard-desc{max-width:280px;font-size:.8rem;padding:16px 18px}
 }
 
 /* ACCESSIBILITY */

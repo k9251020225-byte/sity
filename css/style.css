@@ -796,29 +796,42 @@ details summary{transition:all .3s}
 .qtag-result-inner .qtag-cta:hover{color:var(--cr-l)}
 
 /* ===== BOOK QUIZ ===== */
-.bq-wrap{max-width:600px;margin:0 auto 28px;padding:28px 0;border-top:1px solid rgba(115,65,65,.06)}
+.bq-wrap{max-width:560px;margin:0 auto 32px;padding:32px 28px;
+  background:linear-gradient(135deg,rgba(115,65,65,.03),rgba(88,99,87,.03));
+  border-radius:20px;border:1px solid rgba(115,65,65,.08);
+  box-shadow:0 4px 24px rgba(115,65,65,.04)}
 .bq-step{display:none}
 .bq-step.active{display:block;animation:fu .4s both}
-.bq-question{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--td);
-  font-weight:500;margin-bottom:14px}
-.bq-btn{display:block;width:100%;text-align:left;font-family:'Lora',serif;
-  font-size:1rem;color:var(--tm);background:none;border:none;border-top:1px solid rgba(115,65,65,.06);
-  padding:12px 0;cursor:pointer;transition:all .3s}
-.bq-btn:hover{color:var(--cr);border-top-color:var(--cr);padding-left:8px}
-.bq-progress{text-align:center;margin-top:12px;font-family:'Raleway',sans-serif;
-  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tl)}
+.bq-question{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--td);
+  font-weight:500;margin-bottom:20px;text-align:center;line-height:1.5}
+.bq-btn{display:block;width:100%;text-align:center;font-family:'Lora',serif;
+  font-size:.95rem;color:var(--tm);background:rgba(255,242,230,.6);
+  border:1px solid rgba(115,65,65,.08);border-radius:12px;
+  padding:14px 20px;margin-bottom:10px;cursor:pointer;
+  transition:all .35s cubic-bezier(.4,0,.2,1)}
+.bq-btn:hover{color:var(--cream);background:var(--cr);border-color:var(--cr);
+  transform:translateY(-1px);box-shadow:0 4px 16px rgba(115,65,65,.18)}
+.bq-btn:active{transform:scale(.97)}
+.bq-progress{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
+.bq-progress-dot{width:8px;height:8px;border-radius:50%;background:rgba(115,65,65,.12);
+  transition:all .3s}.bq-progress-dot.active{background:var(--cr);transform:scale(1.2)}
 .bq-result{display:none;animation:fu .5s both}
 .bq-result.show{display:block}
-.bq-result-book{border-top:1px solid rgba(168,62,62,.1);padding:16px 0;margin-top:16px}
-.bq-result-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;
-  color:var(--td);margin-bottom:4px}
+.bq-result-book{background:rgba(255,242,230,.5);border-radius:16px;padding:24px;
+  margin-top:20px;border:1px solid rgba(115,65,65,.06);text-align:center;
+  box-shadow:0 2px 12px rgba(115,65,65,.04)}
+.bq-result-label{font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--cr);margin-bottom:10px}
+.bq-result-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;
+  color:var(--td);margin-bottom:6px}
 .bq-result-author{font-family:'Raleway',sans-serif;font-size:.78rem;color:var(--tl);
-  letter-spacing:.1em;margin-bottom:8px}
-.bq-result-desc{font-size:.9rem;color:var(--tm);line-height:1.7}
-.bq-restart{display:inline-block;margin-top:16px;font-family:'Raleway',sans-serif;
+  letter-spacing:.1em;margin-bottom:12px}
+.bq-result-desc{font-size:.92rem;color:var(--tm);line-height:1.75;text-align:left}
+.bq-restart{display:inline-block;margin-top:18px;font-family:'Raleway',sans-serif;
   font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cr);
-  cursor:pointer;border:none;background:none;transition:color .3s}
-.bq-restart:hover{color:var(--cr-l)}
+  cursor:pointer;border:none;background:none;padding:10px 24px;
+  border-radius:20px;border:1px solid rgba(115,65,65,.15);transition:all .3s}
+.bq-restart:hover{color:var(--cream);background:var(--cr);border-color:var(--cr)}
 
 /* ===== PRODUCT PREVIEW ===== */
 .pp-situation{border-left:3px solid var(--cr)}
@@ -861,17 +874,17 @@ details summary{transition:all .3s}
   width:40px;height:1px;background:linear-gradient(to right,transparent,var(--cr),transparent)}
 
 /* ===== BOOK QUIZ PREMIUM ===== */
-.bq-btn{position:relative;overflow:hidden}
-.bq-btn::after{content:'→';position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  opacity:0;color:var(--cr);transition:all .3s;font-family:'Playfair Display',serif}
-.bq-btn:hover::after{opacity:1;right:0}
-.bq-result-book{position:relative;padding-left:14px}
-.bq-result-book::before{content:'';position:absolute;top:16px;left:0;bottom:0;width:2px;
-  background:linear-gradient(to bottom,var(--cr),var(--art))}
+.bq-result-book{position:relative;overflow:hidden}
+.bq-result-book::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:40px;height:2px;border-radius:1px;
+  background:linear-gradient(to right,transparent,var(--cr),transparent)}
 
 @media(max-width:480px){
   .qtag{font-size:.82rem;padding:8px 14px}
+  .bq-wrap{padding:24px 18px}
   .bq-question{font-size:1rem}
+  .bq-btn{font-size:.9rem;padding:12px 16px}
+  .bq-result-book{padding:18px 16px}
   .serial-howto{padding:16px 14px!important}
 }
 

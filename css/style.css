@@ -198,7 +198,7 @@ p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td)
 .tn{display:block;background:rgba(162,41,82,.03);border-left:3px solid var(--cr);padding:16px 16px;margin:8px 0 4px;font-family:'Raleway',sans-serif;font-size:.95rem;color:var(--td);line-height:1.8;border-radius:0 12px 12px 0}
 .tn p{margin-bottom:8px;font-family:'Raleway',sans-serif;font-size:.95rem}
 .tn .nb{font-size:.85rem;color:var(--cr);margin-top:10px}
-.trig{background:rgba(122,30,66,.06);color:var(--cr);padding:1px 4px;border-radius:3px;font-weight:500;border-bottom:1px dotted rgba(122,30,66,.3)}
+.trig{background:rgba(122,30,66,.12);color:var(--cr);padding:2px 6px;border-radius:4px;font-weight:600;border-bottom:1.5px dotted rgba(122,30,66,.45)}
 @media(max-width:480px){p.sap{font-size:1rem;line-height:1.85}}
 /* LETTER BUTTON — sparkle */
 .letter-btn{list-style:none;cursor:pointer;display:block;text-align:center;padding:20px 0;border:none;font-family:'Playfair Display',serif;font-size:clamp(1rem,2.5vw,1.3rem);font-weight:500;color:var(--cr);transition:color .3s,text-shadow .3s;font-style:italic}
@@ -286,8 +286,9 @@ body{font-size:20px}
 .hero{padding:80px 12px 30px}
 section{padding:36px 0}
 .ss{font-size:1.05rem;max-width:100%!important}
-.sl{font-size:.72rem}
-.st{font-size:1.15rem}
+.sl{font-size:.75rem}
+.st{font-size:1.2rem}
+.trig{background:rgba(122,30,66,.14);padding:2px 6px;font-weight:600}
 /* Убираем узкие max-width — контент на всю ширину */
 .prod,.caseblk,.ep,.serial-entry,.ctat,
 div[style*="max-width:700"],div[style*="max-width:640"],
@@ -303,30 +304,31 @@ footer{padding:36px 12px 18px}
 }
 
 @media(max-width:400px){
-html{font-size:16px}
-body{font-size:16px}
-.hero-text h1{font-size:1.4rem}
-.hero-text .hsl{font-size:.9rem}
-.hero-text .hsub{font-size:.82rem}
-.hero-text .hcore{font-size:.82rem;line-height:1.65}
-.st{font-size:1rem}
-.ss{font-size:.88rem}
-.sl{font-size:.6rem}
-.card .ct{font-size:.82rem}
-.card .cd{font-size:.72rem}
-.prod .pn{font-size:.95rem}
-.prod .pd{font-size:.78rem}
-.prod .pp{font-size:.74rem}
-.hbtn{padding:10px 22px;font-size:.82rem}
-p.sap{font-size:.86rem;line-height:1.75}
-.letter-text{font-size:.9rem;line-height:1.8}
-.tn{font-size:.82rem}
-.tn p{font-size:.82rem}
-.scene-text{font-size:.86rem}
+html{font-size:18px}
+body{font-size:18px}
+.hero-text h1{font-size:1.5rem}
+.hero-text .hsl{font-size:1rem}
+.hero-text .hsub{font-size:.9rem}
+.hero-text .hcore{font-size:.9rem;line-height:1.7}
+.st{font-size:1.1rem}
+.ss{font-size:.95rem}
+.sl{font-size:.68rem}
+.card .ct{font-size:.9rem}
+.card .cd{font-size:.8rem}
+.prod .pn{font-size:1rem}
+.prod .pd{font-size:.85rem}
+.prod .pp{font-size:.8rem}
+.hbtn{padding:12px 24px;font-size:.9rem}
+p.sap{font-size:.92rem;line-height:1.8}
+.letter-text{font-size:.95rem;line-height:1.85}
+.tn{font-size:.88rem}
+.tn p{font-size:.88rem}
+.scene-text{font-size:.92rem}
+.trig{padding:2px 5px;font-size:inherit}
 .nav{padding:12px 16px}
 .nav.sc{padding:10px 16px}
-.nl{font-size:.85rem}
-.nc{font-size:.68rem!important;padding:8px 16px}
+.nl{font-size:.9rem}
+.nc{font-size:.72rem!important;padding:8px 16px}
 }
 
 /* orphan keyframe removed */

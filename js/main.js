@@ -19,6 +19,10 @@ if(logoLink){
   });
 }
 
+// Hero parallax reference (declared before scroll handler uses it)
+var heroPhoto=document.querySelector('.hero-photo');
+if(heroPhoto)heroPhoto.style.willChange='transform';
+
 var lastScrollY=0;
 var ticking=false;
 
@@ -56,17 +60,21 @@ function onScroll(){
 }
 window.addEventListener('scroll',onScroll,{passive:true});
 
-// Hero parallax reference
-var heroPhoto=document.querySelector('.hero-photo');
-if(heroPhoto)heroPhoto.style.willChange='transform';
-
-// Hamburger
+// Hamburger with ARIA
 var mtb=document.getElementById('mtb');
 var mo=document.getElementById('mo');
 if(mtb&&mo){
-  mtb.onclick=function(){mo.classList.toggle('open')};
+  mtb.onclick=function(){
+    var isOpen=mo.classList.toggle('open');
+    mtb.setAttribute('aria-expanded',isOpen?'true':'false');
+    mtb.setAttribute('aria-label',isOpen?'Закрыть меню':'Открыть меню');
+  };
   var links=mo.getElementsByTagName('a');
-  for(var i=0;i<links.length;i++){links[i].onclick=function(){mo.classList.remove('open')}}
+  for(var i=0;i<links.length;i++){links[i].onclick=function(){
+    mo.classList.remove('open');
+    mtb.setAttribute('aria-expanded','false');
+    mtb.setAttribute('aria-label','Открыть меню');
+  }}
 }
 
 // ========== Staggered Reveal with IntersectionObserver ==========
@@ -202,11 +210,14 @@ document.querySelectorAll('.pp, .cn').forEach(function(el){
 // === INTERACTIVE: Что вас привело ===
 var qtags=document.querySelectorAll('.qtag');
 var qresult=document.getElementById('qtagResult');
+var qtagWrap=document.getElementById('qtagWrap');
 if(qtags.length&&qresult){
   for(var q=0;q<qtags.length;q++){
     qtags[q].onclick=function(){
-      for(var j=0;j<qtags.length;j++){qtags[j].classList.remove('active')}
+      for(var j=0;j<qtags.length;j++){qtags[j].classList.remove('active');qtags[j].setAttribute('aria-pressed','false')}
       this.classList.add('active');
+      this.setAttribute('aria-pressed','true');
+      if(qtagWrap)qtagWrap.classList.add('has-active');
       var info=this.getAttribute('data-info');
       qresult.className='qtag-result show';
       qresult.innerHTML='<div class="qtag-result-inner">'+info+
@@ -311,33 +322,38 @@ window.resetQuiz=function(){
   if(steps[0])steps[0].classList.add('active');
 };
 
-// === SERIAL READING PROGRESS ===
+// === SERIAL READING PROGRESS (single delegating scroll handler) ===
+var serialProgressBars = [];
 document.querySelectorAll('.episode .eb, details.ex > .eb').forEach(function(eb) {
   var parent = eb.closest('details');
   if (!parent) return;
   var summary = parent.querySelector('summary');
   if (!summary) return;
-  // Only for serial episodes (long content)
   if (eb.children.length < 5) return;
 
   var bar = document.createElement('div');
   bar.className = 'serial-progress';
   bar.innerHTML = '<div class="serial-progress-bar"></div>';
   eb.insertBefore(bar, eb.firstChild);
-  var progressBar = bar.querySelector('.serial-progress-bar');
+  serialProgressBars.push({ eb: eb, parent: parent, bar: bar.querySelector('.serial-progress-bar') });
+});
 
+if (serialProgressBars.length) {
   window.addEventListener('scroll', function() {
-    if (!parent.open) return;
     requestAnimationFrame(function() {
-      var rect = eb.getBoundingClientRect();
-      var total = eb.scrollHeight;
-      var visible = window.innerHeight;
-      var scrolled = -rect.top + 68;
-      var pct = Math.max(0, Math.min(100, (scrolled / (total - visible)) * 100));
-      progressBar.style.width = pct + '%';
+      for (var i = 0; i < serialProgressBars.length; i++) {
+        var item = serialProgressBars[i];
+        if (!item.parent.open) continue;
+        var rect = item.eb.getBoundingClientRect();
+        var total = item.eb.scrollHeight;
+        var visible = window.innerHeight;
+        var scrolled = -rect.top + 68;
+        var pct = Math.max(0, Math.min(100, (scrolled / (total - visible)) * 100));
+        item.bar.style.width = pct + '%';
+      }
     });
   }, { passive: true });
-});
+}
 
 // === PRODUCT COMPARISON TABLE ===
 var productsSection = document.getElementById('products');
@@ -399,23 +415,53 @@ document.querySelectorAll('.episode').forEach(function(ep, idx, all) {
   });
 });
 
-// === TRIG CLICK → TOGGLE .tn ===
+// === TRIG CLICK → TOGGLE .tn (with keyboard support) ===
+function handleTrigAction(trig) {
+  var p = trig.closest('.sap') || trig.closest('p');
+  if (!p) return;
+  var tn = p.nextElementSibling;
+  if (!tn || !tn.classList.contains('tn')) return;
+  if (tn.style.display === 'none' || !tn.style.display) {
+    tn.style.display = 'block';
+    tn.style.animation = 'tnReveal .4s ease both';
+  } else {
+    tn.style.display = 'none';
+  }
+}
 document.querySelectorAll('.trig').forEach(function(trig) {
-  trig.addEventListener('click', function() {
-    var p = this.closest('.sap') || this.closest('p');
-    if (!p) return;
-    var tn = p.nextElementSibling;
-    if (!tn || !tn.classList.contains('tn')) return;
-    if (tn.style.display === 'none' || !tn.style.display) {
-      tn.style.display = 'block';
-      tn.style.animation = 'tnReveal .4s ease both';
-    } else {
-      tn.style.display = 'none';
-    }
+  trig.addEventListener('click', function() { handleTrigAction(this); });
+  trig.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTrigAction(this); }
   });
 });
 
+// === PERSPECTIVE TABS (Galina / Petr) ===
+var perspectiveTabs = document.querySelectorAll('.perspective-tab');
+if (perspectiveTabs.length) {
+  perspectiveTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = this.getAttribute('data-perspective');
+      perspectiveTabs.forEach(function(t) {
+        var isActive = t.getAttribute('data-perspective') === target;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        if (isActive) {
+          t.style.background = t.getAttribute('data-perspective') === 'galina' ? 'var(--cr)' : 'var(--gd)';
+          t.style.color = 'var(--cream)';
+        } else {
+          t.style.background = 'transparent';
+          t.style.color = t.getAttribute('data-perspective') === 'galina' ? 'var(--cr)' : 'var(--gd)';
+        }
+      });
+      document.querySelectorAll('.perspective-content').forEach(function(c) {
+        c.style.display = c.id === 'perspective-' + target ? '' : 'none';
+      });
+    });
+  });
+}
+
 }catch(e){
+console.error('Main JS error:',e);
 var f=document.querySelectorAll('.reveal');
 for(var fi=0;fi<f.length;fi++){f[fi].classList.add('v')}
 }

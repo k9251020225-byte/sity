@@ -1030,6 +1030,28 @@ details summary{transition:all .3s}
 @keyframes ncPulse{0%,100%{box-shadow:0 0 0 0 rgba(107,29,58,.2)}50%{box-shadow:0 0 0 8px rgba(107,29,58,0)}}
 
 
+/* === ORBITAL SYSTEM === */
+.orbit-section{position:relative;width:100%;height:100vh;min-height:700px;max-height:1000px;overflow:hidden;background:var(--cream)}
+#orbitCanvas{position:absolute;top:0;left:0;width:100%;height:100%}
+.orbit-words{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.ow{position:absolute;font-family:'Playfair Display',serif;font-style:italic;color:var(--cr);opacity:.85;letter-spacing:.04em;transition:opacity 1.5s}
+.ow-state{top:38%;left:8%;font-size:1.4rem}
+.ow-image{top:18%;right:10%;font-size:1.5rem;font-weight:600}
+.ow-voice{top:62%;left:6%;font-size:1.5rem;font-weight:600}
+.ow-depth{bottom:10%;left:50%;transform:translateX(-50%);font-size:1.6rem;font-weight:600}
+.ow-unconscious{bottom:18%;right:8%;font-size:1rem}
+.ow-body{bottom:12%;right:12%;font-size:1.3rem;font-weight:600}
+@media(max-width:768px){
+.orbit-section{height:80vh;min-height:500px}
+.ow{font-size:.9rem!important}
+.ow-state{top:35%;left:4%}
+.ow-image{top:15%;right:4%}
+.ow-voice{top:65%;left:4%}
+.ow-depth{bottom:6%}
+.ow-unconscious{bottom:16%;right:4%;font-size:.75rem!important}
+.ow-body{bottom:8%;right:6%}
+}
+
 /* ACCESSIBILITY */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}

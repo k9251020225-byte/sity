@@ -339,42 +339,6 @@ document.querySelectorAll('.episode .eb, details.ex > .eb').forEach(function(eb)
   }, { passive: true });
 });
 
-// === PRODUCT COMPARISON TABLE ===
-var productsSection = document.getElementById('products');
-if (productsSection) {
-  var g3 = productsSection.querySelector('.g3');
-  if (g3) {
-    var toggleBtn = document.createElement('button');
-    toggleBtn.className = 'compare-toggle';
-    toggleBtn.textContent = 'Сравнить форматы';
-    g3.parentNode.insertBefore(toggleBtn, g3.nextSibling);
-
-    var tableWrap = document.createElement('div');
-    tableWrap.style.display = 'none';
-    tableWrap.style.overflow = 'auto';
-    tableWrap.innerHTML =
-      '<table class="compare-table">' +
-      '<tr><th></th><th>Вход</th><th class="highlight-col">Экспресс</th><th>Маршрут</th></tr>' +
-      '<tr><td>Сессии</td><td>1</td><td class="highlight-col">2</td><td>20</td></tr>' +
-      '<tr><td>Длительность</td><td>1,5 часа</td><td class="highlight-col">3 часа</td><td>5 месяцев</td></tr>' +
-      '<tr><td>Диагностика</td><td><span class="check">&#10003;</span></td><td class="highlight-col"><span class="check">&#10003;</span></td><td><span class="check">&#10003;</span></td></tr>' +
-      '<tr><td>Письменный отчёт</td><td>&mdash;</td><td class="highlight-col"><span class="check">&#10003;</span></td><td><span class="check">&#10003;</span></td></tr>' +
-      '<tr><td>Рекомендации</td><td>Устно</td><td class="highlight-col">Письменно</td><td>Письменно</td></tr>' +
-      '<tr><td>Сопровождение</td><td>&mdash;</td><td class="highlight-col">&mdash;</td><td><span class="check">&#10003;</span></td></tr>' +
-      '</table>';
-    g3.parentNode.insertBefore(tableWrap, toggleBtn.nextSibling);
-
-    toggleBtn.addEventListener('click', function() {
-      if (tableWrap.style.display === 'none') {
-        tableWrap.style.display = 'block';
-        toggleBtn.textContent = 'Скрыть сравнение';
-      } else {
-        tableWrap.style.display = 'none';
-        toggleBtn.textContent = 'Сравнить форматы';
-      }
-    });
-  }
-}
 
 // === SERIAL NAVIGATION (prev/next) ===
 document.querySelectorAll('.episode').forEach(function(ep, idx, all) {

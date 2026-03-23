@@ -88,8 +88,8 @@
 <div class="ocard" data-info="Когда боль была слишком сильна или слишком привычна — тело отключается. Вы перестаёте чувствовать. Не потому что «холодный человек». Потому что чувствовать было опасно. Лоуэн называл это предательством тела.">Не чувствую себя</div>
 <div class="ocard" data-info="Финансовый потолок может быть связан не только с внешними обстоятельствами. Иногда за ним стоит бессознательный запрет: «нельзя больше, чем у мамы/папы». Исследование этих установок помогает обнаружить, что именно ограничивает.">Потолок в доходе</div>
 </div>
+<div class="ocard-desc" id="ocardDesc"><div class="ocard-desc-text" id="ocardDescText"></div></div>
 </section>
-<div class="ocard-popup" id="ocardPopup"><div class="ocard-popup-inner"><div class="ocard-popup-text" id="ocardText"></div><button class="ocard-popup-close" id="ocardClose">&times;</button></div></div>
 
 
 
@@ -814,21 +814,42 @@
     }
   }
 
-  // === POPUP logic ===
-  var popup=document.getElementById('ocardPopup');
-  var popupText=document.getElementById('ocardText');
-  var popupClose=document.getElementById('ocardClose');
+  // === INLINE DESC logic ===
+  var desc=document.getElementById('ocardDesc');
+  var descText=document.getElementById('ocardDescText');
+  var activeCard=null;
+
   for(var i=0;i<cards.length;i++){
-    (function(card){
+    (function(card,idx){
       card.addEventListener('click',function(e){
         e.stopPropagation();
-        popupText.textContent=card.getAttribute('data-info');
-        popup.classList.add('active');
+        if(activeCard===card){
+          desc.classList.remove('visible');
+          activeCard=null;
+          return;
+        }
+        descText.textContent=card.getAttribute('data-info');
+        // Position near the card
+        var d=cardDrift[idx];
+        var cx=d.bx*W, cy=d.by*H;
+        // Keep desc within viewport
+        var left=Math.min(Math.max(cx-140,16),W-320);
+        var top=cy+36;
+        if(top+180>H) top=cy-180;
+        desc.style.left=left+'px';
+        desc.style.top=top+'px';
+        desc.classList.add('visible');
+        activeCard=card;
       });
-    })(cards[i]);
+    })(cards[i],i);
   }
-  popupClose.addEventListener('click',function(){popup.classList.remove('active');});
-  popup.addEventListener('click',function(e){if(e.target===popup)popup.classList.remove('active');});
+
+  document.addEventListener('click',function(e){
+    if(!e.target.classList.contains('ocard')&&!desc.contains(e.target)){
+      desc.classList.remove('visible');
+      activeCard=null;
+    }
+  });
 
   // === DRAW ===
   function draw(){

@@ -381,7 +381,7 @@ document.querySelectorAll('.episode').forEach(function(ep, idx, all) {
   var eb = ep.querySelector('.eb');
   if (!eb) return;
   var nav = document.createElement('div');
-  nav.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:16px;border-top:1px solid rgba(128,0,32,.08)';
+  nav.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:16px;border-top:1px solid rgba(107,29,58,.08)';
   var prevHtml = idx > 0 ? '<button class="compare-toggle" data-dir="prev" style="padding:8px 20px">&larr; Предыдущая</button>' : '<span></span>';
   var nextHtml = idx < all.length - 1 ? '<button class="compare-toggle" data-dir="next" style="padding:8px 20px;background:var(--cr);color:var(--cream);border-color:var(--cr)">Следующая &rarr;</button>' : '<span></span>';
   nav.innerHTML = '<div>' + prevHtml + '</div><div>' + nextHtml + '</div>';

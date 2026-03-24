@@ -1041,11 +1041,18 @@ details summary{transition:all .3s}
 .ocard-desc.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
 
 /* Orbit bottom message */
-.orbit-msg{position:absolute;bottom:32px;left:0;width:100%;text-align:center;z-index:3;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity 2s ease,transform 2s ease;filter:blur(8px)}
-.orbit-msg.revealed{opacity:1;transform:translateY(0);pointer-events:auto;filter:blur(0)}
-.orbit-msg-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin:0 auto;max-width:600px;line-height:1.6;text-align:center}
+.orbit-msg{position:absolute;bottom:32px;left:0;width:100%;text-align:center;z-index:3;opacity:0;transform:translateY(20px) scale(.96);pointer-events:none;transition:opacity 2.5s ease,transform 2.5s ease,filter 2.5s ease;filter:blur(12px)}
+.orbit-msg.revealed{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;filter:blur(0)}
+.orbit-msg::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:500px;height:120px;background:radial-gradient(ellipse,rgba(255,242,230,.6) 0%,rgba(255,242,230,.3) 40%,transparent 70%);pointer-events:none;z-index:-1;opacity:0;transition:opacity 3s ease .5s}
+.orbit-msg.revealed::before{opacity:1}
+.orbit-msg-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin:0 auto;max-width:600px;line-height:1.6;text-align:center;position:relative}
 .orbit-msg-link{font-family:'Playfair Display',serif;font-size:inherit;font-weight:700;color:var(--accent);text-decoration:underline;text-decoration-color:rgba(107,29,58,.3);text-underline-offset:4px;transition:text-decoration-color .4s}
 .orbit-msg-link:hover{text-decoration-color:var(--accent)}
+
+/* Sparkle stars around message */
+@keyframes msg-sparkle{0%{opacity:0;transform:translate(0,0) scale(0)}30%{opacity:1;transform:translate(var(--sx),var(--sy)) scale(1)}100%{opacity:0;transform:translate(var(--ex),var(--ey)) scale(0)}}
+.orbit-msg-star{position:absolute;width:4px;height:4px;background:var(--accent);border-radius:50%;opacity:0;pointer-events:none;box-shadow:0 0 6px rgba(107,29,58,.4),0 0 12px rgba(107,29,58,.2)}
+.orbit-msg.revealed .orbit-msg-star{animation:msg-sparkle 2.5s ease-out forwards}
 
 @media(max-width:768px){
 .orbit-section{height:100vh;min-height:600px}
@@ -1053,6 +1060,7 @@ details summary{transition:all .3s}
 .ocard-desc{max-width:280px;font-size:.8rem;padding:16px 18px}
 .orbit-msg{bottom:24px}
 .orbit-msg-text{font-size:.95rem;max-width:300px;white-space:normal}
+.orbit-msg::before{width:300px;height:80px}
 }
 
 /* ACCESSIBILITY */

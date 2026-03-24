@@ -58,48 +58,71 @@ z-index:1;animation:fogBreathe 12s ease-in-out infinite alternate}
 .s-particles{position:absolute;inset:0;z-index:0}
 
 /* ===== STAGE SPOTLIGHTS ===== */
-.s-spots{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.s-spots{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
 
-/* Left spotlight — warm, from upper-left */
-.s-spot{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen}
+/* Spotlight cone — triangle of light from top to center */
+.s-spot{position:absolute;top:-5%;filter:blur(1px)}
+
+/* Left spot — warm amber cone */
 .s-spot-1{
-  width:600px;height:900px;top:-20%;left:-8%;
-  background:radial-gradient(ellipse at center,rgba(160,100,60,.07) 0%,rgba(138,53,53,.03) 40%,transparent 70%);
-  animation:spotDrift1 20s ease-in-out infinite alternate;
-  transform-origin:top left}
-@keyframes spotDrift1{
-  0%{transform:rotate(-8deg) translateY(0)}
-  50%{transform:rotate(-2deg) translateY(20px)}
-  100%{transform:rotate(-12deg) translateY(-15px)}}
+  left:18%;
+  width:0;height:0;
+  border-left:80px solid transparent;
+  border-right:80px solid transparent;
+  border-top:110vh solid rgba(180,140,80,.07);
+  transform:rotate(-6deg);
+  transform-origin:top center;
+  animation:spotSwing1 15s ease-in-out infinite alternate;
+  filter:blur(30px)}
+@keyframes spotSwing1{
+  0%{transform:rotate(-6deg)}
+  100%{transform:rotate(2deg)}}
 
-/* Right spotlight — cool, from upper-right */
+/* Right spot — cool blue-ish cone */
 .s-spot-2{
-  width:500px;height:800px;top:-15%;right:-5%;
-  background:radial-gradient(ellipse at center,rgba(100,80,120,.06) 0%,rgba(60,50,80,.03) 40%,transparent 70%);
-  animation:spotDrift2 25s ease-in-out infinite alternate;
-  transform-origin:top right}
-@keyframes spotDrift2{
-  0%{transform:rotate(10deg) translateY(0)}
-  50%{transform:rotate(4deg) translateY(15px)}
-  100%{transform:rotate(14deg) translateY(-20px)}}
+  right:18%;
+  width:0;height:0;
+  border-left:70px solid transparent;
+  border-right:70px solid transparent;
+  border-top:105vh solid rgba(140,130,170,.06);
+  transform:rotate(5deg);
+  transform-origin:top center;
+  animation:spotSwing2 18s ease-in-out infinite alternate;
+  filter:blur(25px)}
+@keyframes spotSwing2{
+  0%{transform:rotate(5deg)}
+  100%{transform:rotate(-3deg)}}
 
-/* Center overhead spot — the main stage light */
+/* Center main spot — the hero light, wider, brighter */
 .s-spot-3{
-  width:700px;height:500px;top:-10%;left:50%;margin-left:-350px;
-  background:radial-gradient(ellipse 100% 150% at 50% 0%,rgba(200,180,150,.05) 0%,rgba(160,140,110,.02) 30%,transparent 65%);
-  animation:spotBreathe 8s ease-in-out infinite alternate}
+  left:50%;margin-left:-120px;
+  width:0;height:0;
+  border-left:120px solid transparent;
+  border-right:120px solid transparent;
+  border-top:115vh solid rgba(200,170,120,.09);
+  transform-origin:top center;
+  animation:spotBreathe 8s ease-in-out infinite alternate;
+  filter:blur(40px)}
 @keyframes spotBreathe{
-  0%{opacity:.6;transform:scaleX(1)}
-  100%{opacity:1;transform:scaleX(1.1)}}
+  0%{opacity:.7}
+  100%{opacity:1}}
 
-/* Subtle floor reflection — light pooling at the bottom of stage */
+/* Light source glow — small bright dot at top of each cone */
+.s-spot-src{position:absolute;width:8px;height:8px;border-radius:50%;top:8px;filter:blur(3px)}
+.s-spot-src-1{left:calc(18% + 76px);background:rgba(220,180,100,.5);box-shadow:0 0 20px 8px rgba(220,180,100,.2)}
+.s-spot-src-2{right:calc(18% + 66px);background:rgba(160,150,200,.4);box-shadow:0 0 20px 8px rgba(160,150,200,.15)}
+.s-spot-src-3{left:50%;margin-left:-4px;background:rgba(230,200,140,.5);box-shadow:0 0 30px 12px rgba(230,200,140,.2)}
+
+/* Floor pool of light — where spots land */
 .s-spot-floor{
-  position:absolute;bottom:0;left:50%;width:80%;margin-left:-40%;height:120px;
-  background:radial-gradient(ellipse at 50% 100%,rgba(180,150,120,.04) 0%,transparent 70%);
-  animation:floorGlow 10s ease-in-out infinite alternate}
+  position:absolute;bottom:8%;left:50%;width:60%;margin-left:-30%;height:80px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(200,170,120,.08) 0%,transparent 70%);
+  border-radius:50%;
+  animation:floorGlow 10s ease-in-out infinite alternate;
+  filter:blur(20px)}
 @keyframes floorGlow{
-  0%{opacity:.5;transform:scaleX(.9)}
-  100%{opacity:1;transform:scaleX(1.1)}}
+  0%{opacity:.5;transform:scaleX(.85)}
+  100%{opacity:1;transform:scaleX(1.15)}}
 
 /* Netflix-style logo */
 .s-netflix-logo{font-family:'Bebas Neue',Impact,'Arial Black',sans-serif;font-size:clamp(4rem,12vw,8.5rem);font-weight:700;color:var(--cr);letter-spacing:.08em;text-transform:uppercase;line-height:.85;margin-bottom:8px;text-shadow:0 0 120px rgba(138,53,53,.3),0 0 60px rgba(138,53,53,.15),0 4px 32px rgba(0,0,0,.8);animation:logoIn 2.5s cubic-bezier(.25,.1,.25,1) both}
@@ -268,6 +291,9 @@ p.sap{font-size:.9rem;line-height:1.9}
 <div class="s-spot s-spot-1"></div>
 <div class="s-spot s-spot-2"></div>
 <div class="s-spot s-spot-3"></div>
+<div class="s-spot-src s-spot-src-1"></div>
+<div class="s-spot-src s-spot-src-2"></div>
+<div class="s-spot-src s-spot-src-3"></div>
 <div class="s-spot-floor"></div>
 </div>
 <div class="s-hero-content">

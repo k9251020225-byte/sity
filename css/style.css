@@ -1043,7 +1043,7 @@ details summary{transition:all .3s}
 /* Orbit bottom message */
 .orbit-msg{position:absolute;bottom:32px;left:0;width:100%;text-align:center;z-index:3;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity 2s ease,transform 2s ease;filter:blur(8px)}
 .orbit-msg.revealed{opacity:1;transform:translateY(0);pointer-events:auto;filter:blur(0)}
-.orbit-msg-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin:0 auto;max-width:900px;line-height:1.6;white-space:nowrap}
+.orbit-msg-text{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin:0 auto;max-width:600px;line-height:1.6;text-align:center}
 .orbit-msg-link{font-family:'Playfair Display',serif;font-size:inherit;font-weight:700;color:var(--accent);text-decoration:underline;text-decoration-color:rgba(107,29,58,.3);text-underline-offset:4px;transition:text-decoration-color .4s}
 .orbit-msg-link:hover{text-decoration-color:var(--accent)}
 

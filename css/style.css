@@ -7,7 +7,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 @media(min-width:1800px){html{font-size:24px}}
 @media(max-width:480px){html{font-size:20px}}
 img{max-width:100%;display:block}a{color:var(--cr);text-decoration:none}
-#pc{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none}
+#pc{display:none}
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;transition:all .5s;background:rgba(255,242,230,.6);backdrop-filter:blur(12px)}
 .nav.sc{background:rgba(255,242,230,.95);backdrop-filter:blur(20px);padding:14px 40px;box-shadow:0 2px 20px rgba(40,13,8,.06)}
 .nl{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:500;color:var(--td);letter-spacing:2px;text-transform:uppercase}.nl span{color:var(--cr)}
@@ -1047,7 +1047,7 @@ details summary{transition:all .3s}
 /* Breathing fog — двойной слой дымки */
 .orbit-msg::before,.orbit-msg::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:-1;opacity:0;transition:opacity 2s ease 1s}
 .orbit-msg::before{width:520px;height:100px;background:radial-gradient(ellipse,rgba(255,242,230,.55) 0%,rgba(255,235,220,.25) 45%,transparent 72%);animation:fog-breathe 5s ease-in-out infinite}
-.orbit-msg::after{width:400px;height:80px;background:radial-gradient(ellipse,rgba(107,29,58,.04) 0%,rgba(107,29,58,.02) 40%,transparent 65%);animation:fog-breathe 7s ease-in-out infinite reverse}
+.orbit-msg::after{width:400px;height:80px;background:radial-gradient(ellipse,rgba(255,242,230,.25) 0%,rgba(255,235,220,.1) 40%,transparent 65%);animation:fog-breathe 7s ease-in-out infinite reverse}
 .orbit-msg.revealed::before,.orbit-msg.revealed::after{opacity:1}
 
 @keyframes fog-breathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}}

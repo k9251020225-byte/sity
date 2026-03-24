@@ -57,72 +57,15 @@ z-index:1;animation:fogBreathe 12s ease-in-out infinite alternate}
 /* Floating particles canvas */
 .s-particles{position:absolute;inset:0;z-index:0}
 
-/* ===== STAGE SPOTLIGHTS ===== */
-.s-spots{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+/* ===== DUST / ASH PARTICLES (canvas) ===== */
+.s-particles{position:absolute;inset:0;z-index:2;pointer-events:none}
 
-/* Spotlight cone — triangle of light from top to center */
-.s-spot{position:absolute;top:-5%;filter:blur(1px)}
-
-/* Left spot — warm amber cone */
-.s-spot-1{
-  left:18%;
-  width:0;height:0;
-  border-left:80px solid transparent;
-  border-right:80px solid transparent;
-  border-top:110vh solid rgba(180,140,80,.07);
-  transform:rotate(-6deg);
-  transform-origin:top center;
-  animation:spotSwing1 15s ease-in-out infinite alternate;
-  filter:blur(30px)}
-@keyframes spotSwing1{
-  0%{transform:rotate(-6deg)}
-  100%{transform:rotate(2deg)}}
-
-/* Right spot — cool blue-ish cone */
-.s-spot-2{
-  right:18%;
-  width:0;height:0;
-  border-left:70px solid transparent;
-  border-right:70px solid transparent;
-  border-top:105vh solid rgba(140,130,170,.06);
-  transform:rotate(5deg);
-  transform-origin:top center;
-  animation:spotSwing2 18s ease-in-out infinite alternate;
-  filter:blur(25px)}
-@keyframes spotSwing2{
-  0%{transform:rotate(5deg)}
-  100%{transform:rotate(-3deg)}}
-
-/* Center main spot — the hero light, wider, brighter */
-.s-spot-3{
-  left:50%;margin-left:-120px;
-  width:0;height:0;
-  border-left:120px solid transparent;
-  border-right:120px solid transparent;
-  border-top:115vh solid rgba(200,170,120,.09);
-  transform-origin:top center;
-  animation:spotBreathe 8s ease-in-out infinite alternate;
-  filter:blur(40px)}
-@keyframes spotBreathe{
-  0%{opacity:.7}
-  100%{opacity:1}}
-
-/* Light source glow — small bright dot at top of each cone */
-.s-spot-src{position:absolute;width:8px;height:8px;border-radius:50%;top:8px;filter:blur(3px)}
-.s-spot-src-1{left:calc(18% + 76px);background:rgba(220,180,100,.5);box-shadow:0 0 20px 8px rgba(220,180,100,.2)}
-.s-spot-src-2{right:calc(18% + 66px);background:rgba(160,150,200,.4);box-shadow:0 0 20px 8px rgba(160,150,200,.15)}
-.s-spot-src-3{left:50%;margin-left:-4px;background:rgba(230,200,140,.5);box-shadow:0 0 30px 12px rgba(230,200,140,.2)}
-
-/* Floor pool of light — where spots land */
-.s-spot-floor{
-  position:absolute;bottom:8%;left:50%;width:60%;margin-left:-30%;height:80px;
-  background:radial-gradient(ellipse at 50% 50%,rgba(200,170,120,.08) 0%,transparent 70%);
-  border-radius:50%;
-  animation:floorGlow 10s ease-in-out infinite alternate;
-  filter:blur(20px)}
-@keyframes floorGlow{
-  0%{opacity:.5;transform:scaleX(.85)}
-  100%{opacity:1;transform:scaleX(1.15)}}
+/* Soft overhead light glow — so particles are "visible in the beam" */
+.s-beam{position:absolute;z-index:1;pointer-events:none;
+  top:-5%;left:50%;width:500px;margin-left:-250px;height:110%;
+  background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(200,170,130,.06) 0%,rgba(180,150,110,.03) 25%,transparent 55%);
+  animation:beamBreathe 10s ease-in-out infinite alternate}
+@keyframes beamBreathe{0%{opacity:.6;transform:scaleX(.9)}100%{opacity:1;transform:scaleX(1.1)}}
 
 /* Netflix-style logo */
 .s-netflix-logo{font-family:'Bebas Neue',Impact,'Arial Black',sans-serif;font-size:clamp(4rem,12vw,8.5rem);font-weight:700;color:var(--cr);letter-spacing:.08em;text-transform:uppercase;line-height:.85;margin-bottom:8px;text-shadow:0 0 120px rgba(138,53,53,.3),0 0 60px rgba(138,53,53,.15),0 4px 32px rgba(0,0,0,.8);animation:logoIn 2.5s cubic-bezier(.25,.1,.25,1) both}
@@ -286,16 +229,8 @@ p.sap{font-size:.9rem;line-height:1.9}
 
 <!-- HERO -->
 <section class="s-hero">
+<div class="s-beam"></div>
 <canvas class="s-particles" id="particles"></canvas>
-<div class="s-spots">
-<div class="s-spot s-spot-1"></div>
-<div class="s-spot s-spot-2"></div>
-<div class="s-spot s-spot-3"></div>
-<div class="s-spot-src s-spot-src-1"></div>
-<div class="s-spot-src s-spot-src-2"></div>
-<div class="s-spot-src s-spot-src-3"></div>
-<div class="s-spot-floor"></div>
-</div>
 <div class="s-hero-content">
 
 <h1 class="s-netflix-logo">Галина<br>&amp;<br>Пётр<span>психологический сериал</span></h1>
@@ -621,37 +556,95 @@ p.sap{font-size:.9rem;line-height:1.9}
 </footer>
 
 <script>
-// === Floating dust particles ===
+// === Dust / ash particles — slow, visible, cinematic ===
 (function(){
   var c=document.getElementById('particles');
   if(!c)return;
   var ctx=c.getContext('2d');
   var pts=[];
-  var N=50;
-  function resize(){c.width=c.offsetWidth;c.height=c.offsetHeight}
+  var N=35;
+  var W,H;
+
+  function resize(){
+    W=c.width=c.parentElement.offsetWidth;
+    H=c.height=c.parentElement.offsetHeight;
+  }
   resize();
   window.addEventListener('resize',resize);
+
   for(var i=0;i<N;i++){
-    pts.push({
-      x:Math.random()*c.width,
-      y:Math.random()*c.height,
-      r:Math.random()*1.5+.3,
-      dx:(Math.random()-.5)*.15,
-      dy:-(Math.random()*.12+.03),
-      o:Math.random()*.25+.05
-    });
+    pts.push(make(true));
   }
+
+  function make(init){
+    var size=Math.random()*4+1.5; // 1.5–5.5px — visible
+    return{
+      x:Math.random()*W,
+      y:init?Math.random()*H:H+20,
+      size:size,
+      // slow drift
+      vx:(Math.random()-.5)*.12,
+      vy:-(Math.random()*.15+.08), // float upward
+      // rotation
+      angle:Math.random()*Math.PI*2,
+      spin:(Math.random()-.5)*.008,
+      // opacity pulsing
+      o:Math.random()*.3+.15,
+      oBase:Math.random()*.3+.15,
+      oPhase:Math.random()*Math.PI*2,
+      oSpeed:Math.random()*.003+.001,
+      // shape: 0=circle, 1=elongated (ash flake)
+      shape:Math.random()>.4?1:0,
+      aspect:Math.random()*.5+.3, // how elongated
+      // warm tint
+      r:170+Math.floor(Math.random()*40),
+      g:150+Math.floor(Math.random()*30),
+      b:120+Math.floor(Math.random()*30)
+    };
+  }
+
+  var t=0;
   function draw(){
-    ctx.clearRect(0,0,c.width,c.height);
+    ctx.clearRect(0,0,W,H);
+    t++;
     for(var i=0;i<N;i++){
       var p=pts[i];
-      p.x+=p.dx;p.y+=p.dy;
-      if(p.y<-10){p.y=c.height+10;p.x=Math.random()*c.width}
-      if(p.x<-10||p.x>c.width+10)p.x=Math.random()*c.width;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(180,160,140,'+p.o+')';
-      ctx.fill();
+
+      // move
+      p.x+=p.vx+Math.sin(t*.002+i)*.08; // gentle sway
+      p.y+=p.vy;
+      p.angle+=p.spin;
+
+      // pulse opacity
+      p.o=p.oBase+Math.sin(t*p.oSpeed+p.oPhase)*.12;
+
+      // respawn if off screen
+      if(p.y<-20||p.x<-20||p.x>W+20){
+        pts[i]=make(false);
+        pts[i].x=Math.random()*W;
+        continue;
+      }
+
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.angle);
+      ctx.globalAlpha=Math.max(0,Math.min(1,p.o));
+
+      if(p.shape===0){
+        // circle dust
+        ctx.beginPath();
+        ctx.arc(0,0,p.size,0,Math.PI*2);
+        ctx.fillStyle='rgb('+p.r+','+p.g+','+p.b+')';
+        ctx.fill();
+      }else{
+        // elongated ash flake
+        ctx.beginPath();
+        ctx.ellipse(0,0,p.size,p.size*p.aspect,0,0,Math.PI*2);
+        ctx.fillStyle='rgb('+p.r+','+p.g+','+p.b+')';
+        ctx.fill();
+      }
+
+      ctx.restore();
     }
     requestAnimationFrame(draw);
   }

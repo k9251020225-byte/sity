@@ -57,15 +57,37 @@ z-index:1;animation:fogBreathe 12s ease-in-out infinite alternate}
 /* Floating particles canvas */
 .s-particles{position:absolute;inset:0;z-index:0}
 
-/* ===== DUST / ASH PARTICLES (canvas) ===== */
+/* ===== PARTICLES CANVAS ===== */
 .s-particles{position:absolute;inset:0;z-index:2;pointer-events:none}
 
-/* Soft overhead light glow — so particles are "visible in the beam" */
+/* ===== SPOTLIGHT BEAM — visible cone onto the title ===== */
 .s-beam{position:absolute;z-index:1;pointer-events:none;
-  top:-5%;left:50%;width:500px;margin-left:-250px;height:110%;
-  background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(200,170,130,.06) 0%,rgba(180,150,110,.03) 25%,transparent 55%);
-  animation:beamBreathe 10s ease-in-out infinite alternate}
-@keyframes beamBreathe{0%{opacity:.6;transform:scaleX(.9)}100%{opacity:1;transform:scaleX(1.1)}}
+  top:0;left:50%;
+  width:80px;height:100%;margin-left:-40px;
+  background:linear-gradient(to bottom,
+    rgba(220,195,150,.18) 0%,
+    rgba(200,175,130,.10) 20%,
+    rgba(180,155,110,.04) 50%,
+    transparent 75%);
+  clip-path:polygon(35% 0%,65% 0%,100% 100%,0% 100%);
+  animation:beamBreathe 8s ease-in-out infinite alternate}
+/* Second wider, softer cone */
+.s-beam-soft{position:absolute;z-index:1;pointer-events:none;
+  top:0;left:50%;
+  width:160px;height:100%;margin-left:-80px;
+  background:linear-gradient(to bottom,
+    rgba(200,175,140,.06) 0%,
+    rgba(180,155,120,.03) 30%,
+    transparent 65%);
+  clip-path:polygon(40% 0%,60% 0%,100% 100%,0% 100%);
+  animation:beamBreathe 8s ease-in-out infinite alternate}
+/* Source glow at top */
+.s-beam-src{position:absolute;z-index:1;pointer-events:none;
+  top:-4px;left:50%;margin-left:-6px;
+  width:12px;height:12px;border-radius:50%;
+  background:rgba(230,210,170,.4);
+  box-shadow:0 0 24px 10px rgba(230,210,170,.15),0 0 60px 20px rgba(200,180,140,.08)}
+@keyframes beamBreathe{0%{opacity:.7;transform:scaleX(.85)}100%{opacity:1;transform:scaleX(1.15)}}
 
 /* Netflix-style logo */
 .s-netflix-logo{font-family:'Bebas Neue',Impact,'Arial Black',sans-serif;font-size:clamp(4rem,12vw,8.5rem);font-weight:700;color:var(--cr);letter-spacing:.08em;text-transform:uppercase;line-height:.85;margin-bottom:8px;text-shadow:0 0 120px rgba(138,53,53,.3),0 0 60px rgba(138,53,53,.15),0 4px 32px rgba(0,0,0,.8);animation:logoIn 2.5s cubic-bezier(.25,.1,.25,1) both}
@@ -229,7 +251,9 @@ p.sap{font-size:.9rem;line-height:1.9}
 
 <!-- HERO -->
 <section class="s-hero">
+<div class="s-beam-soft"></div>
 <div class="s-beam"></div>
+<div class="s-beam-src"></div>
 <canvas class="s-particles" id="particles"></canvas>
 <div class="s-hero-content">
 
@@ -556,13 +580,13 @@ p.sap{font-size:.9rem;line-height:1.9}
 </footer>
 
 <script>
-// === Dust / ash particles — slow, visible, cinematic ===
+// === Dust in spotlight beam — small, dense, concentrated in the light ===
 (function(){
   var c=document.getElementById('particles');
   if(!c)return;
   var ctx=c.getContext('2d');
   var pts=[];
-  var N=35;
+  var N=80; // lots of small particles
   var W,H;
 
   function resize(){
@@ -572,34 +596,34 @@ p.sap{font-size:.9rem;line-height:1.9}
   resize();
   window.addEventListener('resize',resize);
 
-  for(var i=0;i<N;i++){
-    pts.push(make(true));
+  // beam cone shape: narrow at top, wide at bottom, centered
+  function beamX(y){
+    // at y=0 beam is ~30px wide, at y=H it's ~half screen
+    var spread=30+(y/H)*(W*.35);
+    var cx=W/2;
+    return cx-spread/2+Math.random()*spread;
   }
 
+  for(var i=0;i<N;i++) pts.push(make(true));
+
   function make(init){
-    var size=Math.random()*4+1.5; // 1.5–5.5px — visible
+    var y=init?Math.random()*H:H+Math.random()*40;
     return{
-      x:Math.random()*W,
-      y:init?Math.random()*H:H+20,
-      size:size,
-      // slow drift
-      vx:(Math.random()-.5)*.12,
-      vy:-(Math.random()*.15+.08), // float upward
-      // rotation
+      x:beamX(y),
+      y:y,
+      size:Math.random()*1.8+.4, // 0.4–2.2px — small dust
+      vx:(Math.random()-.5)*.06,
+      vy:-(Math.random()*.1+.03), // very slow upward
       angle:Math.random()*Math.PI*2,
-      spin:(Math.random()-.5)*.008,
-      // opacity pulsing
-      o:Math.random()*.3+.15,
-      oBase:Math.random()*.3+.15,
+      spin:(Math.random()-.5)*.005,
+      oBase:Math.random()*.25+.1,
       oPhase:Math.random()*Math.PI*2,
-      oSpeed:Math.random()*.003+.001,
-      // shape: 0=circle, 1=elongated (ash flake)
-      shape:Math.random()>.4?1:0,
-      aspect:Math.random()*.5+.3, // how elongated
-      // warm tint
-      r:170+Math.floor(Math.random()*40),
-      g:150+Math.floor(Math.random()*30),
-      b:120+Math.floor(Math.random()*30)
+      oSpeed:Math.random()*.002+.0008,
+      shape:Math.random()>.5?1:0,
+      aspect:Math.random()*.4+.25,
+      r:190+Math.floor(Math.random()*35),
+      g:170+Math.floor(Math.random()*25),
+      b:135+Math.floor(Math.random()*25)
     };
   }
 
@@ -609,41 +633,39 @@ p.sap{font-size:.9rem;line-height:1.9}
     t++;
     for(var i=0;i<N;i++){
       var p=pts[i];
-
-      // move
-      p.x+=p.vx+Math.sin(t*.002+i)*.08; // gentle sway
+      p.x+=p.vx+Math.sin(t*.0015+i*.7)*.05;
       p.y+=p.vy;
       p.angle+=p.spin;
 
-      // pulse opacity
-      p.o=p.oBase+Math.sin(t*p.oSpeed+p.oPhase)*.12;
+      // brightness stronger near center of beam
+      var distFromCenter=Math.abs(p.x-W/2);
+      var beamW=15+(p.y/H)*(W*.18);
+      var inBeam=Math.max(0,1-distFromCenter/beamW);
+      var o=p.oBase+Math.sin(t*p.oSpeed+p.oPhase)*.1;
+      // particles in beam are brighter
+      o=o*(0.3+inBeam*0.7);
 
-      // respawn if off screen
-      if(p.y<-20||p.x<-20||p.x>W+20){
+      if(p.y<-10||p.x<-20||p.x>W+20){
         pts[i]=make(false);
-        pts[i].x=Math.random()*W;
         continue;
       }
 
       ctx.save();
       ctx.translate(p.x,p.y);
       ctx.rotate(p.angle);
-      ctx.globalAlpha=Math.max(0,Math.min(1,p.o));
+      ctx.globalAlpha=Math.max(0,Math.min(1,o));
 
       if(p.shape===0){
-        // circle dust
         ctx.beginPath();
         ctx.arc(0,0,p.size,0,Math.PI*2);
         ctx.fillStyle='rgb('+p.r+','+p.g+','+p.b+')';
         ctx.fill();
       }else{
-        // elongated ash flake
         ctx.beginPath();
         ctx.ellipse(0,0,p.size,p.size*p.aspect,0,0,Math.PI*2);
         ctx.fillStyle='rgb('+p.r+','+p.g+','+p.b+')';
         ctx.fill();
       }
-
       ctx.restore();
     }
     requestAnimationFrame(draw);

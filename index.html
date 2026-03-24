@@ -862,13 +862,13 @@
 
   // === STARS — tiny flickering dust ===
   var stars=[];
-  for(var i=0;i<80;i++){
+  for(var i=0;i<90;i++){
     stars.push({
       x:Math.random(), y:Math.random()*.85,
-      size:.5+Math.random()*1.5,
+      size:1+Math.random()*2.5,
       phase:Math.random()*Math.PI*2,
-      speed:.003+Math.random()*.006,
-      alpha:.15+Math.random()*.35
+      speed:.002+Math.random()*.005,
+      alpha:.4+Math.random()*.5
     });
   }
 
@@ -896,8 +896,14 @@
       var flicker=st.alpha*(.5+.5*Math.sin(st.phase));
       ctx.beginPath();
       ctx.arc(st.x*W,st.y*H,st.size,0,Math.PI*2);
-      ctx.fillStyle='rgba(200,190,175,'+flicker+')';
+      ctx.fillStyle='rgba(120,90,70,'+flicker+')';
       ctx.fill();
+      // Soft glow around star
+      var sg=ctx.createRadialGradient(st.x*W,st.y*H,0,st.x*W,st.y*H,st.size*3);
+      sg.addColorStop(0,'rgba(120,90,70,'+(flicker*.3)+')');
+      sg.addColorStop(1,'rgba(120,90,70,0)');
+      ctx.beginPath();ctx.arc(st.x*W,st.y*H,st.size*3,0,Math.PI*2);
+      ctx.fillStyle=sg;ctx.fill();
     }
 
     // All circles share one center — concentric orbits

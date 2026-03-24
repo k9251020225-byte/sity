@@ -755,15 +755,15 @@
     // Outer green — very slow clockwise, dots counter-clockwise
     {r:.35,rot:0,rotSpeed:.00008,color:'rgba(72,130,68,.35)',lw:1.5,
      glowColor:'rgba(72,130,68,', glowSize:12,
-     dotRot:0, dotSpeed:-.003, dots:8, dotSize:3, dotColor:'rgba(72,130,68,.8)',dotGlow:10},
+     dotRot:0, dotSpeed:-.0008, dots:8, dotSize:3, dotColor:'rgba(72,130,68,.8)',dotGlow:10},
     // Middle wine — slow counter-clockwise, dots clockwise
     {r:.25,rot:0,rotSpeed:-.00012,color:'rgba(107,29,58,.4)',lw:1.8,
      glowColor:'rgba(107,29,58,', glowSize:14,
-     dotRot:0, dotSpeed:.004, dots:6, dotSize:3.2, dotColor:'rgba(107,29,58,.85)',dotGlow:12},
+     dotRot:0, dotSpeed:.001, dots:6, dotSize:3.2, dotColor:'rgba(107,29,58,.85)',dotGlow:12},
     // Inner grey — slow clockwise, dots counter-clockwise
     {r:.16,rot:0,rotSpeed:.00016,color:'rgba(140,130,125,.45)',lw:2,
      glowColor:'rgba(140,130,125,', glowSize:10,
-     dotRot:0, dotSpeed:-.005, dots:5, dotSize:2.8, dotColor:'rgba(140,130,125,.75)',dotGlow:8}
+     dotRot:0, dotSpeed:-.0012, dots:5, dotSize:2.8, dotColor:'rgba(140,130,125,.75)',dotGlow:8}
   ];
   // Pulsating wine dot — slow breathing like a distant planet
   var wineDot={angle:Math.PI*.3,baseSize:7,pulse:0,pulseSpeed:.006,color:'rgba(107,29,58,'};
@@ -888,11 +888,11 @@
       ctx.shadowColor=cr.glowColor+'.15)';
       ctx.stroke();
       ctx.restore();
-      // Dots floating NEAR the orbit — not on it, offset inside/outside
+      // Dots floating AWAY from orbit — clearly not on the ring
       cr.dotRot+=cr.dotSpeed;
       for(var d=0;d<cr.dots;d++){
         var da=cr.dotRot+d*(Math.PI*2/cr.dots);
-        var offset=(d%2===0?1:-1)*(12+d*3);
+        var offset=(d%2===0?1:-1)*r*(.15+d*.04);
         var dr=r+offset;
         var dx=cx+Math.cos(da)*dr;
         var dy=cy+Math.sin(da)*dr;

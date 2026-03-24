@@ -875,10 +875,10 @@
   var shootingStars=[];
   function spawnShootingStar(){
     shootingStars.push({
-      x:Math.random()*.8, y:Math.random()*.4,
-      vx:.008+Math.random()*.006, vy:.003+Math.random()*.003,
-      life:0, maxLife:40+Math.random()*30,
-      size:1+Math.random()*1.5
+      x:Math.random()*.7+.1, y:0,
+      vx:.0004+Math.random()*.0003, vy:.0008+Math.random()*.0004,
+      life:0, maxLife:300+Math.random()*400,
+      size:.8+Math.random()*1
     });
   }
 
@@ -924,13 +924,13 @@
     }
 
     // Shooting stars — rare, diagonal streaks
-    if(Math.random()<.008) spawnShootingStar();
+    if(Math.random()<.003) spawnShootingStar();
     for(var i=shootingStars.length-1;i>=0;i--){
       var ss=shootingStars[i];
       ss.x+=ss.vx; ss.y+=ss.vy; ss.life++;
       var fade=1-ss.life/ss.maxLife;
       if(fade<=0){shootingStars.splice(i,1);continue;}
-      var tailLen=30*fade;
+      var tailLen=60*fade;
       var grd=ctx.createLinearGradient(
         ss.x*W,ss.y*H,
         (ss.x-ss.vx*tailLen)*W,(ss.y-ss.vy*tailLen)*H

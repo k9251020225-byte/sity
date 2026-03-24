@@ -1043,7 +1043,8 @@ details summary{transition:all .3s}
 /* Orbit bottom message */
 .orbit-msg{position:absolute;bottom:32px;left:0;width:100%;text-align:center;z-index:3;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity 2s ease,transform 2s ease;filter:blur(8px)}
 .orbit-msg.revealed{opacity:1;transform:translateY(0);pointer-events:auto;filter:blur(0)}
-.orbit-msg-text{font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;color:rgba(90,60,45,.7);letter-spacing:.04em;margin:0 auto 14px;max-width:320px;line-height:1.6}
+.orbit-msg-text{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--accent);letter-spacing:.03em;margin:0 auto 8px;max-width:360px;line-height:1.5}
+.orbit-msg-sub{font-family:'Inter',sans-serif;font-size:.82rem;color:rgba(90,60,45,.6);margin:0 auto 16px;letter-spacing:.02em}
 .orbit-msg-link{display:inline-block;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(107,29,58,.15);padding:10px 28px;border-radius:28px;text-decoration:none;background:rgba(255,245,235,.25);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .4s,border-color .4s,box-shadow .4s}
 .orbit-msg-link:hover{background:rgba(255,245,235,.5);border-color:rgba(107,29,58,.25);box-shadow:0 6px 30px rgba(107,29,58,.08)}
 
@@ -1052,7 +1053,7 @@ details summary{transition:all .3s}
 .ocard{font-size:.72rem;padding:7px 13px}
 .ocard-desc{max-width:280px;font-size:.8rem;padding:16px 18px}
 .orbit-msg{bottom:24px}
-.orbit-msg-text{font-size:.9rem;max-width:260px}
+.orbit-msg-text{font-size:1.05rem;max-width:280px}
 }
 
 /* ACCESSIBILITY */

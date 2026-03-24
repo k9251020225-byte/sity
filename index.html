@@ -749,14 +749,15 @@
   }
   resize();
 
-  // === CIRCLES: 1=green(big), 2=wine(medium), 3=grey(small, thick) ===
+  // === CONCENTRIC ORBITS — all share ONE center ===
+  var orbitCenter={x:.46,y:.48};
   var circles=[
-    {cx:.40,cy:.46,r:.35,rot:0,rotSpeed:.0004,color:'rgba(72,130,68,.5)',lw:2,
-     drift:-.00004, dotRot:0, dotSpeed:-.008, dots:8, dotSize:2.5, dotColor:'rgba(72,130,68,.75)'},
-    {cx:.50,cy:.48,r:.25,rot:0,rotSpeed:-.0006,color:'rgba(107,29,58,.6)',lw:2.2,
-     drift:.00004, dotRot:0, dotSpeed:.01, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
-    {cx:.55,cy:.54,r:.16,rot:0,rotSpeed:.0008,color:'rgba(140,130,125,.65)',lw:2.5,
-     drift:.00003, dotRot:0, dotSpeed:-.012, dots:5, dotSize:2.2, dotColor:'rgba(140,130,125,.8)'}
+    {r:.35,rot:0,rotSpeed:.0004,color:'rgba(72,130,68,.5)',lw:2,
+     dotRot:0, dotSpeed:-.008, dots:8, dotSize:2.5, dotColor:'rgba(72,130,68,.75)'},
+    {r:.25,rot:0,rotSpeed:-.0006,color:'rgba(107,29,58,.6)',lw:2.2,
+     dotRot:0, dotSpeed:.01, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
+    {r:.16,rot:0,rotSpeed:.0008,color:'rgba(140,130,125,.65)',lw:2.5,
+     dotRot:0, dotSpeed:-.012, dots:5, dotSize:2.2, dotColor:'rgba(140,130,125,.8)'}
   ];
   // Pulsating wine dot — ON circle edge, bottom-right, connects all 3 circles harmoniously
   var wineDot={angle:Math.PI*.3,baseSize:7,pulse:0,pulseSpeed:.02,color:'rgba(107,29,58,'};
@@ -858,24 +859,22 @@
     ctx.clearRect(0,0,W,H);
     var s=Math.min(W,H);
 
-    // Rotate & draw circles with drift — all dots ON circles only
+    // All circles share one center — concentric orbits
+    var cx=orbitCenter.x*W, cy=orbitCenter.y*H;
     var circleCenters=[];
-    var allDots=[]; // collect all orbital dot positions for neural connections
+    var allDots=[];
     for(var i=0;i<circles.length;i++){
       var cr=circles[i];
       cr.rot+=cr.rotSpeed;
-      // Drift circle position (bounce at edges)
-      cr.cx+=cr.drift;
-      if(cr.cx*W<cr.r*s+20||cr.cx*W>W-cr.r*s-20) cr.drift*=-1;
-      var cx=cr.cx*W, cy=cr.cy*H, r=cr.r*s;
+      var r=cr.r*s;
       circleCenters.push({x:cx,y:cy,r:r});
-      // Draw circle
+      // Draw orbit ring
       ctx.beginPath();
       ctx.arc(cx,cy,r,0,Math.PI*2);
       ctx.strokeStyle=cr.color;
       ctx.lineWidth=cr.lw;
       ctx.stroke();
-      // Orbital dots — own fast rotation, opposite to circle
+      // Dots rotating ON the orbit — opposite direction
       cr.dotRot+=cr.dotSpeed;
       for(var d=0;d<cr.dots;d++){
         var da=cr.dotRot+d*(Math.PI*2/cr.dots);

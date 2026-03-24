@@ -749,12 +749,17 @@
   }
   resize();
 
-  // === CIRCLES: each rotates around its own center ===
+  // === CIRCLES: drift + orbital dots ===
   var circles=[
-    {cx:.40,cy:.46,r:.35,rot:0,rotSpeed:.0004,color:'rgba(150,130,120,.55)',lw:1.3},
-    {cx:.50,cy:.48,r:.25,rot:0,rotSpeed:-.0006,color:'rgba(107,29,58,.6)',lw:1.5},
-    {cx:.55,cy:.54,r:.16,rot:0,rotSpeed:.0008,color:'rgba(45,10,30,.75)',lw:1.8}
+    {cx:.40,cy:.46,r:.35,rot:0,rotSpeed:.0004,color:'rgba(150,130,120,.55)',lw:1.3,
+     drift:-.00004, driftAxis:'x', dotDir:1, dots:8, dotSize:2.5, dotColor:'rgba(150,130,120,.8)'},
+    {cx:.50,cy:.48,r:.25,rot:0,rotSpeed:-.0006,color:'rgba(107,29,58,.6)',lw:1.5,
+     drift:.00004, driftAxis:'x', dotDir:-1, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
+    {cx:.55,cy:.54,r:.16,rot:0,rotSpeed:.0008,color:'rgba(45,10,30,.75)',lw:1.8,
+     drift:.00003, driftAxis:'x', dotDir:1, dots:5, dotSize:2.2, dotColor:'rgba(45,10,30,.9)'}
   ];
+  // Pulsating wine dot — bottom-right, connects all circles
+  var wineDot={x:.82,y:.78,baseSize:8,pulse:0,pulseSpeed:.025,color:'rgba(107,29,58,'};
 
   // === NODES scattered across field ===
   var nodes=[];
@@ -872,31 +877,59 @@
     ctx.clearRect(0,0,W,H);
     var s=Math.min(W,H);
 
-    // Rotate & draw circles
+    // Rotate & draw circles with drift and orbital dots
+    var circleCenters=[];
     for(var i=0;i<circles.length;i++){
       var cr=circles[i];
       cr.rot+=cr.rotSpeed;
+      // Drift circle position (bounce at edges)
+      cr.cx+=cr.drift;
+      if(cr.cx*W<cr.r*s+20||cr.cx*W>W-cr.r*s-20) cr.drift*=-1;
       var cx=cr.cx*W, cy=cr.cy*H, r=cr.r*s;
-      // Draw circle with rotation — use small dash pattern to show rotation
-      ctx.save();
-      ctx.translate(cx,cy);
-      ctx.rotate(cr.rot);
+      circleCenters.push({x:cx,y:cy,r:r});
+      // Draw circle — clean, no ticks
       ctx.beginPath();
-      ctx.arc(0,0,r,0,Math.PI*2);
+      ctx.arc(cx,cy,r,0,Math.PI*2);
       ctx.strokeStyle=cr.color;
       ctx.lineWidth=cr.lw;
       ctx.stroke();
-      // Tick marks to show rotation
-      for(var t=0;t<12;t++){
-        var ta=t*Math.PI/6;
-        ctx.beginPath();
-        ctx.moveTo(Math.cos(ta)*(r-4),Math.sin(ta)*(r-4));
-        ctx.lineTo(Math.cos(ta)*(r+4),Math.sin(ta)*(r+4));
-        ctx.strokeStyle=cr.color;
-        ctx.lineWidth=.8;
-        ctx.stroke();
+      // Orbital dots rotating around the circle
+      for(var d=0;d<cr.dots;d++){
+        var da=cr.rot*cr.dotDir*3+d*(Math.PI*2/cr.dots);
+        var dx=cx+Math.cos(da)*r;
+        var dy=cy+Math.sin(da)*r;
+        ctx.beginPath();ctx.arc(dx,dy,cr.dotSize,0,Math.PI*2);
+        ctx.fillStyle=cr.dotColor;ctx.fill();
       }
-      ctx.restore();
+    }
+
+    // Pulsating wine dot (bottom-right) connecting all 3 circles
+    wineDot.pulse+=wineDot.pulseSpeed;
+    var wpx=wineDot.x*W, wpy=wineDot.y*H;
+    var wSize=wineDot.baseSize+Math.sin(wineDot.pulse)*4;
+    var wAlpha=.55+Math.sin(wineDot.pulse)*.35;
+    // Glow
+    var grd=ctx.createRadialGradient(wpx,wpy,0,wpx,wpy,wSize*3);
+    grd.addColorStop(0,wineDot.color+(.3*wAlpha)+')');
+    grd.addColorStop(1,wineDot.color+'0)');
+    ctx.beginPath();ctx.arc(wpx,wpy,wSize*3,0,Math.PI*2);
+    ctx.fillStyle=grd;ctx.fill();
+    // Core dot
+    ctx.beginPath();ctx.arc(wpx,wpy,wSize,0,Math.PI*2);
+    ctx.fillStyle=wineDot.color+wAlpha+')';ctx.fill();
+    // Lines from wine dot to each circle center
+    for(var i=0;i<circleCenters.length;i++){
+      var cc=circleCenters[i];
+      ctx.beginPath();ctx.moveTo(wpx,wpy);ctx.lineTo(cc.x,cc.y);
+      var lineAlpha=.12+Math.sin(wineDot.pulse+i)*.08;
+      ctx.strokeStyle='rgba(107,29,58,'+lineAlpha+')';
+      ctx.lineWidth=1;ctx.stroke();
+      // Small dot at intersection with circle edge
+      var ang=Math.atan2(wpy-cc.y,wpx-cc.x);
+      var ix=cc.x+Math.cos(ang)*cc.r;
+      var iy=cc.y+Math.sin(ang)*cc.r;
+      ctx.beginPath();ctx.arc(ix,iy,3,0,Math.PI*2);
+      ctx.fillStyle='rgba(107,29,58,'+(.3+wAlpha*.3)+')';ctx.fill();
     }
 
     // Update node positions

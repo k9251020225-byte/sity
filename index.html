@@ -749,18 +749,21 @@
   }
   resize();
 
-  // === CONCENTRIC ORBITS — all share ONE center ===
+  // === CONCENTRIC ORBITS — Melancholia style: slow, hypnotic, inevitable ===
   var orbitCenter={x:.46,y:.48};
   var circles=[
-    {r:.35,rot:0,rotSpeed:.0004,color:'rgba(72,130,68,.5)',lw:2,
-     dotRot:0, dotSpeed:-.008, dots:8, dotSize:2.5, dotColor:'rgba(72,130,68,.75)'},
-    {r:.25,rot:0,rotSpeed:-.0006,color:'rgba(107,29,58,.6)',lw:2.2,
-     dotRot:0, dotSpeed:.01, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
-    {r:.16,rot:0,rotSpeed:.0008,color:'rgba(140,130,125,.65)',lw:2.5,
-     dotRot:0, dotSpeed:-.012, dots:5, dotSize:2.2, dotColor:'rgba(140,130,125,.8)'}
+    // Outer green — very slow clockwise, dots counter-clockwise
+    {r:.35,rot:0,rotSpeed:.00008,color:'rgba(72,130,68,.35)',lw:1.5,
+     dotRot:0, dotSpeed:-.0006, dots:8, dotSize:2.5, dotColor:'rgba(72,130,68,.6)'},
+    // Middle wine — slow counter-clockwise, dots clockwise
+    {r:.25,rot:0,rotSpeed:-.00012,color:'rgba(107,29,58,.4)',lw:1.8,
+     dotRot:0, dotSpeed:.0008, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.7)'},
+    // Inner grey — slow clockwise, dots counter-clockwise
+    {r:.16,rot:0,rotSpeed:.00016,color:'rgba(140,130,125,.45)',lw:2,
+     dotRot:0, dotSpeed:-.001, dots:5, dotSize:2.2, dotColor:'rgba(140,130,125,.65)'}
   ];
-  // Pulsating wine dot — ON circle edge, bottom-right, connects all 3 circles harmoniously
-  var wineDot={angle:Math.PI*.3,baseSize:7,pulse:0,pulseSpeed:.02,color:'rgba(107,29,58,'};
+  // Pulsating wine dot — slow breathing like a distant planet
+  var wineDot={angle:Math.PI*.3,baseSize:7,pulse:0,pulseSpeed:.006,color:'rgba(107,29,58,'};
 
   // === NEURAL NET connections between dots on circles — appear and fade ===
   var nets=[];
@@ -798,7 +801,7 @@
     cardDrift.push({
       bx:cardPositions[i].x, by:cardPositions[i].y,
       angle:Math.random()*Math.PI*2,
-      speed:.0006+Math.random()*.001,
+      speed:.0002+Math.random()*.0004,
       rx:driftR+Math.random()*driftR, ry:driftR*.6+Math.random()*driftR*.6
     });
   }

@@ -867,7 +867,7 @@
       x:Math.random(), y:Math.random()*.85,
       size:1+Math.random()*2.5,
       phase:Math.random()*Math.PI*2,
-      speed:.002+Math.random()*.005,
+      speed:.02+Math.random()*.06,
       alpha:.4+Math.random()*.5
     });
   }
@@ -893,17 +893,23 @@
     for(var i=0;i<stars.length;i++){
       var st=stars[i];
       st.phase+=st.speed;
-      var flicker=st.alpha*(.5+.5*Math.sin(st.phase));
+      // Flicker: star goes from nearly invisible to bright and back
+      var wave=Math.sin(st.phase);
+      var flicker=wave>0?wave*wave:0; // sharp peaks — star blinks ON then fades
+      var a=.05+flicker*st.alpha;
+      var sz=st.size*(.6+flicker*.6);
       ctx.beginPath();
-      ctx.arc(st.x*W,st.y*H,st.size,0,Math.PI*2);
-      ctx.fillStyle='rgba(120,90,70,'+flicker+')';
+      ctx.arc(st.x*W,st.y*H,sz,0,Math.PI*2);
+      ctx.fillStyle='rgba(120,90,70,'+a+')';
       ctx.fill();
-      // Soft glow around star
-      var sg=ctx.createRadialGradient(st.x*W,st.y*H,0,st.x*W,st.y*H,st.size*3);
-      sg.addColorStop(0,'rgba(120,90,70,'+(flicker*.3)+')');
-      sg.addColorStop(1,'rgba(120,90,70,0)');
-      ctx.beginPath();ctx.arc(st.x*W,st.y*H,st.size*3,0,Math.PI*2);
-      ctx.fillStyle=sg;ctx.fill();
+      // Glow pulses with the star
+      if(flicker>.2){
+        var sg=ctx.createRadialGradient(st.x*W,st.y*H,0,st.x*W,st.y*H,sz*4);
+        sg.addColorStop(0,'rgba(120,90,70,'+(flicker*.25)+')');
+        sg.addColorStop(1,'rgba(120,90,70,0)');
+        ctx.beginPath();ctx.arc(st.x*W,st.y*H,sz*4,0,Math.PI*2);
+        ctx.fillStyle=sg;ctx.fill();
+      }
     }
 
     // All circles share one center — concentric orbits

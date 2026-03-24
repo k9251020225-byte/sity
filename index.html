@@ -860,15 +860,25 @@
     }
   });
 
-  // === STARS — tiny flickering dust ===
+  // === STARS — real twinkling starry sky ===
   var stars=[];
-  for(var i=0;i<90;i++){
+  for(var i=0;i<120;i++){
     stars.push({
-      x:Math.random(), y:Math.random()*.85,
-      size:1+Math.random()*2.5,
-      phase:Math.random()*Math.PI*2,
-      speed:.02+Math.random()*.06,
-      alpha:.4+Math.random()*.5
+      x:Math.random(), y:Math.random()*.9,
+      size:.8+Math.random()*1.8,
+      on:Math.random(), // current brightness
+      target:Math.random(), // target brightness to lerp toward
+      timer:Math.floor(Math.random()*60) // frames until new target
+    });
+  }
+  // Shooting stars
+  var shootingStars=[];
+  function spawnShootingStar(){
+    shootingStars.push({
+      x:Math.random()*.8, y:Math.random()*.4,
+      vx:.008+Math.random()*.006, vy:.003+Math.random()*.003,
+      life:0, maxLife:40+Math.random()*30,
+      size:1+Math.random()*1.5
     });
   }
 
@@ -889,27 +899,49 @@
     ctx.clearRect(0,0,W,H);
     var s=Math.min(W,H);
 
-    // Stars — background layer
+    // Stars — real twinkling
     for(var i=0;i<stars.length;i++){
       var st=stars[i];
-      st.phase+=st.speed;
-      // Flicker: star goes from nearly invisible to bright and back
-      var wave=Math.sin(st.phase);
-      var flicker=wave>0?wave*wave:0; // sharp peaks — star blinks ON then fades
-      var a=.05+flicker*st.alpha;
-      var sz=st.size*(.6+flicker*.6);
-      ctx.beginPath();
-      ctx.arc(st.x*W,st.y*H,sz,0,Math.PI*2);
-      ctx.fillStyle='rgba(120,90,70,'+a+')';
-      ctx.fill();
-      // Glow pulses with the star
-      if(flicker>.2){
-        var sg=ctx.createRadialGradient(st.x*W,st.y*H,0,st.x*W,st.y*H,sz*4);
-        sg.addColorStop(0,'rgba(120,90,70,'+(flicker*.25)+')');
-        sg.addColorStop(1,'rgba(120,90,70,0)');
-        ctx.beginPath();ctx.arc(st.x*W,st.y*H,sz*4,0,Math.PI*2);
-        ctx.fillStyle=sg;ctx.fill();
+      st.timer--;
+      if(st.timer<=0){
+        st.target=Math.random();
+        st.timer=10+Math.floor(Math.random()*50);
       }
+      // Lerp toward target — creates visible flicker
+      st.on+=(st.target-st.on)*.15;
+      var a=.08+st.on*.7;
+      var sx=st.x*W,sy=st.y*H;
+      ctx.beginPath();ctx.arc(sx,sy,st.size,0,Math.PI*2);
+      ctx.fillStyle='rgba(90,60,45,'+a+')';ctx.fill();
+      // Cross sparkle at bright moments
+      if(st.on>.6){
+        ctx.strokeStyle='rgba(90,60,45,'+(st.on*.3)+')';
+        ctx.lineWidth=.5;
+        var arm=st.size*3*st.on;
+        ctx.beginPath();ctx.moveTo(sx-arm,sy);ctx.lineTo(sx+arm,sy);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(sx,sy-arm);ctx.lineTo(sx,sy+arm);ctx.stroke();
+      }
+    }
+
+    // Shooting stars — rare, diagonal streaks
+    if(Math.random()<.008) spawnShootingStar();
+    for(var i=shootingStars.length-1;i>=0;i--){
+      var ss=shootingStars[i];
+      ss.x+=ss.vx; ss.y+=ss.vy; ss.life++;
+      var fade=1-ss.life/ss.maxLife;
+      if(fade<=0){shootingStars.splice(i,1);continue;}
+      var tailLen=30*fade;
+      var grd=ctx.createLinearGradient(
+        ss.x*W,ss.y*H,
+        (ss.x-ss.vx*tailLen)*W,(ss.y-ss.vy*tailLen)*H
+      );
+      grd.addColorStop(0,'rgba(90,60,45,'+(fade*.6)+')');
+      grd.addColorStop(1,'rgba(90,60,45,0)');
+      ctx.strokeStyle=grd;ctx.lineWidth=ss.size*fade;
+      ctx.beginPath();
+      ctx.moveTo(ss.x*W,ss.y*H);
+      ctx.lineTo((ss.x-ss.vx*tailLen)*W,(ss.y-ss.vy*tailLen)*H);
+      ctx.stroke();
     }
 
     // All circles share one center — concentric orbits

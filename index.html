@@ -752,14 +752,31 @@
   // === CIRCLES: 1=green(big), 2=wine(medium), 3=grey(small, thick) ===
   var circles=[
     {cx:.40,cy:.46,r:.35,rot:0,rotSpeed:.0004,color:'rgba(72,130,68,.5)',lw:2,
-     drift:-.00004, dotDir:-1, dots:8, dotSize:2.5, dotColor:'rgba(72,130,68,.75)'},
+     drift:-.00004, dotRot:0, dotSpeed:-.008, dots:8, dotSize:2.5, dotColor:'rgba(72,130,68,.75)'},
     {cx:.50,cy:.48,r:.25,rot:0,rotSpeed:-.0006,color:'rgba(107,29,58,.6)',lw:2.2,
-     drift:.00004, dotDir:1, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
+     drift:.00004, dotRot:0, dotSpeed:.01, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
     {cx:.55,cy:.54,r:.16,rot:0,rotSpeed:.0008,color:'rgba(140,130,125,.65)',lw:2.5,
-     drift:.00003, dotDir:-1, dots:5, dotSize:2.2, dotColor:'rgba(140,130,125,.8)'}
+     drift:.00003, dotRot:0, dotSpeed:-.012, dots:5, dotSize:2.2, dotColor:'rgba(140,130,125,.8)'}
   ];
   // Pulsating wine dot — ON circle edge, bottom-right, connects all 3 circles harmoniously
   var wineDot={angle:Math.PI*.3,baseSize:7,pulse:0,pulseSpeed:.02,color:'rgba(107,29,58,'};
+
+  // === NEURAL NET connections between dots on circles — appear and fade ===
+  var nets=[];
+  var totalDots=circles[0].dots+circles[1].dots+circles[2].dots;
+  function buildNet(){
+    nets=[];
+    for(var i=0;i<totalDots;i++){
+      for(var j=i+1;j<totalDots;j++){
+        if(Math.random()<.2) nets.push({
+          a:i,b:j,
+          age:Math.floor(Math.random()*400),
+          maxLife:Math.random()*500+200
+        });
+      }
+    }
+  }
+  buildNet();
 
   // === CARDS: 8 floating cards on the orbit field ===
   var cards=document.querySelectorAll('.ocard');
@@ -858,9 +875,10 @@
       ctx.strokeStyle=cr.color;
       ctx.lineWidth=cr.lw;
       ctx.stroke();
-      // Orbital dots rotating ON the circle — opposite direction to circle rotation
+      // Orbital dots — own fast rotation, opposite to circle
+      cr.dotRot+=cr.dotSpeed;
       for(var d=0;d<cr.dots;d++){
-        var da=cr.rot*cr.dotDir*5+d*(Math.PI*2/cr.dots);
+        var da=cr.dotRot+d*(Math.PI*2/cr.dots);
         var dx=cx+Math.cos(da)*r;
         var dy=cy+Math.sin(da)*r;
         ctx.beginPath();ctx.arc(dx,dy,cr.dotSize,0,Math.PI*2);
@@ -869,18 +887,34 @@
       }
     }
 
-    // Subtle neural connections between orbital dots on different circles
-    ctx.lineWidth=.4;
-    for(var i=0;i<allDots.length;i++){
-      for(var j=i+1;j<allDots.length;j++){
-        var dx=allDots[j].x-allDots[i].x,dy=allDots[j].y-allDots[i].y;
-        var dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<s*.25){
-          var alpha=0.06*(1-dist/(s*.25));
-          ctx.beginPath();ctx.moveTo(allDots[i].x,allDots[i].y);ctx.lineTo(allDots[j].x,allDots[j].y);
-          ctx.strokeStyle='rgba(80,40,50,'+alpha+')';
-          ctx.stroke();
-        }
+    // Neural net connections — appear and fade like synapses
+    ctx.lineWidth=.6;
+    for(var i=nets.length-1;i>=0;i--){
+      var net=nets[i];
+      net.age++;
+      var lifeRatio=net.age/net.maxLife;
+      var fade;
+      if(lifeRatio<.2) fade=lifeRatio/.2;
+      else if(lifeRatio>.75) fade=(1-lifeRatio)/.25;
+      else fade=1;
+      // Respawn when dead
+      if(net.age>=net.maxLife){
+        net.a=Math.floor(Math.random()*totalDots);
+        net.b=Math.floor(Math.random()*totalDots);
+        if(net.a===net.b) net.b=(net.a+1)%totalDots;
+        net.age=0;
+        net.maxLife=Math.random()*500+200;
+        continue;
+      }
+      if(net.a>=allDots.length||net.b>=allDots.length) continue;
+      var a=allDots[net.a],b=allDots[net.b];
+      var ddx=b.x-a.x,ddy=b.y-a.y;
+      var dist=Math.sqrt(ddx*ddx+ddy*ddy);
+      if(dist<s*.6){
+        var alpha=(.1+.15*(1-dist/(s*.6)))*fade;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle='rgba(80,40,50,'+alpha+')';
+        ctx.stroke();
       }
     }
 

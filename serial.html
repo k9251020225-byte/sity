@@ -60,34 +60,68 @@ z-index:1;animation:fogBreathe 12s ease-in-out infinite alternate}
 /* ===== PARTICLES CANVAS ===== */
 .s-particles{position:absolute;inset:0;z-index:2;pointer-events:none}
 
-/* ===== SPOTLIGHT BEAM — visible cone onto the title ===== */
-.s-beam{position:absolute;z-index:1;pointer-events:none;
-  top:0;left:50%;
-  width:80px;height:100%;margin-left:-40px;
-  background:linear-gradient(to bottom,
-    rgba(220,195,150,.18) 0%,
-    rgba(200,175,130,.10) 20%,
-    rgba(180,155,110,.04) 50%,
-    transparent 75%);
-  clip-path:polygon(35% 0%,65% 0%,100% 100%,0% 100%);
-  animation:beamBreathe 8s ease-in-out infinite alternate}
-/* Second wider, softer cone */
-.s-beam-soft{position:absolute;z-index:1;pointer-events:none;
-  top:0;left:50%;
-  width:160px;height:100%;margin-left:-80px;
-  background:linear-gradient(to bottom,
-    rgba(200,175,140,.06) 0%,
-    rgba(180,155,120,.03) 30%,
+/* ===== TWO SPOTLIGHTS FROM SIDES — crossing on the title ===== */
+
+/* Left beam — from upper-left corner, angled right toward center */
+.s-beam-left{position:absolute;z-index:1;pointer-events:none;
+  top:0;left:0;width:55%;height:100%;
+  background:linear-gradient(to bottom right,
+    rgba(220,190,140,.14) 0%,
+    rgba(200,170,120,.07) 20%,
+    rgba(180,150,100,.02) 45%,
     transparent 65%);
-  clip-path:polygon(40% 0%,60% 0%,100% 100%,0% 100%);
-  animation:beamBreathe 8s ease-in-out infinite alternate}
-/* Source glow at top */
+  clip-path:polygon(0% 0%,8% 0%,65% 100%,35% 100%);
+  animation:beamLeft 10s ease-in-out infinite alternate}
+@keyframes beamLeft{0%{opacity:.7;transform:rotate(-.5deg)}100%{opacity:1;transform:rotate(.5deg)}}
+
+/* Left beam — soft outer glow */
+.s-beam-left-soft{position:absolute;z-index:1;pointer-events:none;
+  top:0;left:0;width:60%;height:100%;
+  background:linear-gradient(to bottom right,
+    rgba(200,175,130,.05) 0%,
+    rgba(180,155,110,.02) 25%,
+    transparent 55%);
+  clip-path:polygon(0% 0%,12% 0%,70% 100%,30% 100%);
+  animation:beamLeft 10s ease-in-out infinite alternate}
+
+/* Right beam — from upper-right corner, angled left toward center */
+.s-beam-right{position:absolute;z-index:1;pointer-events:none;
+  top:0;right:0;width:55%;height:100%;
+  background:linear-gradient(to bottom left,
+    rgba(180,170,200,.12) 0%,
+    rgba(160,150,180,.06) 20%,
+    rgba(140,130,160,.02) 45%,
+    transparent 65%);
+  clip-path:polygon(92% 0%,100% 0%,65% 100%,35% 100%);
+  animation:beamRight 12s ease-in-out infinite alternate}
+@keyframes beamRight{0%{opacity:.7;transform:rotate(.5deg)}100%{opacity:1;transform:rotate(-.5deg)}}
+
+/* Right beam — soft outer glow */
+.s-beam-right-soft{position:absolute;z-index:1;pointer-events:none;
+  top:0;right:0;width:60%;height:100%;
+  background:linear-gradient(to bottom left,
+    rgba(170,160,190,.04) 0%,
+    rgba(150,140,170,.02) 25%,
+    transparent 55%);
+  clip-path:polygon(88% 0%,100% 0%,70% 100%,30% 100%);
+  animation:beamRight 12s ease-in-out infinite alternate}
+
+/* Light sources — glowing dots at top corners */
 .s-beam-src{position:absolute;z-index:1;pointer-events:none;
-  top:-4px;left:50%;margin-left:-6px;
-  width:12px;height:12px;border-radius:50%;
-  background:rgba(230,210,170,.4);
-  box-shadow:0 0 24px 10px rgba(230,210,170,.15),0 0 60px 20px rgba(200,180,140,.08)}
-@keyframes beamBreathe{0%{opacity:.7;transform:scaleX(.85)}100%{opacity:1;transform:scaleX(1.15)}}
+  top:6px;width:10px;height:10px;border-radius:50%}
+.s-beam-src-l{left:3%;
+  background:rgba(230,210,160,.45);
+  box-shadow:0 0 20px 8px rgba(230,210,160,.15),0 0 50px 16px rgba(200,180,140,.08)}
+.s-beam-src-r{right:3%;
+  background:rgba(190,180,220,.35);
+  box-shadow:0 0 20px 8px rgba(190,180,220,.12),0 0 50px 16px rgba(160,150,190,.06)}
+
+/* Where beams cross — bright glow on the title */
+.s-beam-cross{position:absolute;z-index:1;pointer-events:none;
+  top:35%;left:50%;width:400px;height:250px;margin-left:-200px;
+  background:radial-gradient(ellipse at center,rgba(210,190,150,.06) 0%,transparent 60%);
+  animation:crossGlow 8s ease-in-out infinite alternate}
+@keyframes crossGlow{0%{opacity:.5;transform:scale(.95)}100%{opacity:1;transform:scale(1.05)}}
 
 /* Netflix-style logo */
 .s-netflix-logo{font-family:'Bebas Neue',Impact,'Arial Black',sans-serif;font-size:clamp(4rem,12vw,8.5rem);font-weight:700;color:var(--cr);letter-spacing:.08em;text-transform:uppercase;line-height:.85;margin-bottom:8px;text-shadow:0 0 120px rgba(138,53,53,.3),0 0 60px rgba(138,53,53,.15),0 4px 32px rgba(0,0,0,.8);animation:logoIn 2.5s cubic-bezier(.25,.1,.25,1) both}
@@ -251,9 +285,13 @@ p.sap{font-size:.9rem;line-height:1.9}
 
 <!-- HERO -->
 <section class="s-hero">
-<div class="s-beam-soft"></div>
-<div class="s-beam"></div>
-<div class="s-beam-src"></div>
+<div class="s-beam-left-soft"></div>
+<div class="s-beam-left"></div>
+<div class="s-beam-right-soft"></div>
+<div class="s-beam-right"></div>
+<div class="s-beam-src s-beam-src-l"></div>
+<div class="s-beam-src s-beam-src-r"></div>
+<div class="s-beam-cross"></div>
 <canvas class="s-particles" id="particles"></canvas>
 <div class="s-hero-content">
 
@@ -580,13 +618,13 @@ p.sap{font-size:.9rem;line-height:1.9}
 </footer>
 
 <script>
-// === Dust in spotlight beam — small, dense, concentrated in the light ===
+// === Dust in crossed spotlights — small particles in both beams ===
 (function(){
   var c=document.getElementById('particles');
   if(!c)return;
   var ctx=c.getContext('2d');
   var pts=[];
-  var N=80; // lots of small particles
+  var N=90;
   var W,H;
 
   function resize(){
@@ -596,12 +634,36 @@ p.sap{font-size:.9rem;line-height:1.9}
   resize();
   window.addEventListener('resize',resize);
 
-  // beam cone shape: narrow at top, wide at bottom, centered
-  function beamX(y){
-    // at y=0 beam is ~30px wide, at y=H it's ~half screen
-    var spread=30+(y/H)*(W*.35);
-    var cx=W/2;
-    return cx-spread/2+Math.random()*spread;
+  // Left beam zone: starts at ~4% top, goes to ~50% bottom
+  // Right beam zone: starts at ~96% top, goes to ~50% bottom
+  function inBeam(x,y){
+    var t=y/H;
+    // left beam center line goes from x=W*0.04 at top to x=W*0.5 at bottom
+    var lx=W*0.04+t*(W*0.46);
+    var spread=20+t*W*0.12;
+    var dl=Math.abs(x-lx)/spread;
+    // right beam center line goes from x=W*0.96 at top to x=W*0.5 at bottom
+    var rx=W*0.96-t*(W*0.46);
+    var dr=Math.abs(x-rx)/spread;
+    return Math.max(0,1-Math.min(dl,dr));
+  }
+
+  function spawnX(y){
+    // 70% chance in a beam, 30% anywhere (ambient dust)
+    if(Math.random()<.7){
+      var t=y/H;
+      if(Math.random()<.5){
+        // left beam
+        var lx=W*0.04+t*(W*0.46);
+        var spread=20+t*W*0.12;
+        return lx+(Math.random()-.5)*spread*2;
+      }else{
+        var rx=W*0.96-t*(W*0.46);
+        var spread=20+t*W*0.12;
+        return rx+(Math.random()-.5)*spread*2;
+      }
+    }
+    return Math.random()*W;
   }
 
   for(var i=0;i<N;i++) pts.push(make(true));
@@ -609,21 +671,20 @@ p.sap{font-size:.9rem;line-height:1.9}
   function make(init){
     var y=init?Math.random()*H:H+Math.random()*40;
     return{
-      x:beamX(y),
-      y:y,
-      size:Math.random()*1.8+.4, // 0.4–2.2px — small dust
-      vx:(Math.random()-.5)*.06,
-      vy:-(Math.random()*.1+.03), // very slow upward
+      x:spawnX(y),y:y,
+      size:Math.random()*1.5+.3,
+      vx:(Math.random()-.5)*.05,
+      vy:-(Math.random()*.08+.02),
       angle:Math.random()*Math.PI*2,
-      spin:(Math.random()-.5)*.005,
-      oBase:Math.random()*.25+.1,
+      spin:(Math.random()-.5)*.004,
+      oBase:Math.random()*.2+.08,
       oPhase:Math.random()*Math.PI*2,
-      oSpeed:Math.random()*.002+.0008,
+      oSpeed:Math.random()*.002+.0006,
       shape:Math.random()>.5?1:0,
-      aspect:Math.random()*.4+.25,
-      r:190+Math.floor(Math.random()*35),
-      g:170+Math.floor(Math.random()*25),
-      b:135+Math.floor(Math.random()*25)
+      aspect:Math.random()*.4+.2,
+      r:195+Math.floor(Math.random()*30),
+      g:175+Math.floor(Math.random()*20),
+      b:140+Math.floor(Math.random()*20)
     };
   }
 
@@ -633,39 +694,31 @@ p.sap{font-size:.9rem;line-height:1.9}
     t++;
     for(var i=0;i<N;i++){
       var p=pts[i];
-      p.x+=p.vx+Math.sin(t*.0015+i*.7)*.05;
+      p.x+=p.vx+Math.sin(t*.0012+i*.8)*.04;
       p.y+=p.vy;
       p.angle+=p.spin;
 
-      // brightness stronger near center of beam
-      var distFromCenter=Math.abs(p.x-W/2);
-      var beamW=15+(p.y/H)*(W*.18);
-      var inBeam=Math.max(0,1-distFromCenter/beamW);
-      var o=p.oBase+Math.sin(t*p.oSpeed+p.oPhase)*.1;
-      // particles in beam are brighter
-      o=o*(0.3+inBeam*0.7);
+      var beam=inBeam(p.x,p.y);
+      var o=p.oBase+Math.sin(t*p.oSpeed+p.oPhase)*.08;
+      // in beam = brighter, outside = dim
+      o=o*(0.15+beam*0.85);
 
       if(p.y<-10||p.x<-20||p.x>W+20){
-        pts[i]=make(false);
-        continue;
+        pts[i]=make(false);continue;
       }
 
       ctx.save();
       ctx.translate(p.x,p.y);
       ctx.rotate(p.angle);
       ctx.globalAlpha=Math.max(0,Math.min(1,o));
-
+      ctx.beginPath();
       if(p.shape===0){
-        ctx.beginPath();
         ctx.arc(0,0,p.size,0,Math.PI*2);
-        ctx.fillStyle='rgb('+p.r+','+p.g+','+p.b+')';
-        ctx.fill();
       }else{
-        ctx.beginPath();
         ctx.ellipse(0,0,p.size,p.size*p.aspect,0,0,Math.PI*2);
-        ctx.fillStyle='rgb('+p.r+','+p.g+','+p.b+')';
-        ctx.fill();
       }
+      ctx.fillStyle='rgb('+p.r+','+p.g+','+p.b+')';
+      ctx.fill();
       ctx.restore();
     }
     requestAnimationFrame(draw);

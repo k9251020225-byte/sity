@@ -632,12 +632,25 @@ p.sap{font-size:.9rem;line-height:1.9}
   resize();
   window.addEventListener('resize',resize);
 
+  // Push particles to sides — avoid center reading zone
+  function spawnX(){
+    // 85% spawn in side zones (0-25% or 75-100% of width)
+    if(Math.random()<.85){
+      return Math.random()<.5
+        ? Math.random()*W*.28           // left 28%
+        : W-Math.random()*W*.28;        // right 28%
+    }
+    // 15% in mid zone but closer to edges
+    var mid=W*.28+Math.random()*W*.44;
+    return mid;
+  }
+
   for(var i=0;i<N;i++) pts.push(make(true));
 
   function make(init){
     var size=Math.random()*4+1.5;
     return{
-      x:Math.random()*W,
+      x:spawnX(),
       y:init?Math.random()*H:H+20,
       size:size,
       vx:(Math.random()-.5)*.12,
@@ -668,7 +681,6 @@ p.sap{font-size:.9rem;line-height:1.9}
 
       if(p.y<-20||p.x<-20||p.x>W+20){
         pts[i]=make(false);
-        pts[i].x=Math.random()*W;
         continue;
       }
 

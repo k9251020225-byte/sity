@@ -1039,10 +1039,20 @@ details summary{transition:all .3s}
 .ocard:hover{background:rgba(255,245,235,.35);border-color:rgba(107,29,58,.12);box-shadow:0 8px 40px rgba(107,29,58,.08),inset 0 0 30px rgba(255,245,235,.15);color:rgba(90,60,45,.9)}
 .ocard-desc{position:absolute;z-index:10;max-width:380px;width:90%;background:rgba(255,242,230,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(107,29,58,.15);border-radius:14px;padding:22px 24px;box-shadow:0 12px 40px rgba(107,29,58,.12);font-family:'Inter',sans-serif;font-size:.85rem;line-height:1.7;color:var(--tb);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .4s,transform .4s}
 .ocard-desc.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+
+/* Orbit bottom message */
+.orbit-msg{position:absolute;bottom:32px;left:0;width:100%;text-align:center;z-index:3;opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity 2s ease,transform 2s ease;filter:blur(8px)}
+.orbit-msg.revealed{opacity:1;transform:translateY(0);pointer-events:auto;filter:blur(0)}
+.orbit-msg-text{font-family:'Playfair Display',serif;font-size:1rem;font-weight:500;color:rgba(90,60,45,.7);letter-spacing:.04em;margin:0 auto 14px;max-width:320px;line-height:1.6}
+.orbit-msg-link{display:inline-block;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(107,29,58,.15);padding:10px 28px;border-radius:28px;text-decoration:none;background:rgba(255,245,235,.25);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .4s,border-color .4s,box-shadow .4s}
+.orbit-msg-link:hover{background:rgba(255,245,235,.5);border-color:rgba(107,29,58,.25);box-shadow:0 6px 30px rgba(107,29,58,.08)}
+
 @media(max-width:768px){
 .orbit-section{height:100vh;min-height:600px}
 .ocard{font-size:.72rem;padding:7px 13px}
 .ocard-desc{max-width:280px;font-size:.8rem;padding:16px 18px}
+.orbit-msg{bottom:24px}
+.orbit-msg-text{font-size:.9rem;max-width:260px}
 }
 
 /* ACCESSIBILITY */

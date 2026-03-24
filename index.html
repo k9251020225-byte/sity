@@ -888,12 +888,14 @@
       ctx.shadowColor=cr.glowColor+'.15)';
       ctx.stroke();
       ctx.restore();
-      // Dots rotating ON the orbit — opposite direction to ring
+      // Dots floating NEAR the orbit — not on it, offset inside/outside
       cr.dotRot+=cr.dotSpeed;
       for(var d=0;d<cr.dots;d++){
         var da=cr.dotRot+d*(Math.PI*2/cr.dots);
-        var dx=cx+Math.cos(da)*r;
-        var dy=cy+Math.sin(da)*r;
+        var offset=(d%2===0?1:-1)*(12+d*3);
+        var dr=r+offset;
+        var dx=cx+Math.cos(da)*dr;
+        var dy=cy+Math.sin(da)*dr;
         // Dot glow — soft halo
         var dg=ctx.createRadialGradient(dx,dy,0,dx,dy,cr.dotGlow);
         dg.addColorStop(0,cr.dotColor);

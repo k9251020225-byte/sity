@@ -1035,8 +1035,8 @@ details summary{transition:all .3s}
 #orbitCanvas{position:absolute;top:0;left:0;width:100%;height:100%}
 .orbit-title{position:absolute;top:32px;left:0;width:100%;text-align:center;z-index:3;pointer-events:none}
 .orbit-cards{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2}
-.ocard{position:absolute;font-family:'Playfair Display',serif;font-size:.82rem;font-weight:500;color:var(--td);background:rgba(255,242,230,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(107,29,58,.12);padding:10px 18px;border-radius:20px;cursor:pointer;user-select:none;transition:background .3s,border-color .3s,box-shadow .3s;letter-spacing:.02em;white-space:nowrap}
-.ocard:hover{background:rgba(255,242,230,.95);border-color:rgba(107,29,58,.3);box-shadow:0 4px 20px rgba(107,29,58,.1)}
+.ocard{position:absolute;font-family:'Playfair Display',serif;font-size:.82rem;font-weight:500;color:rgba(90,60,45,.7);background:rgba(255,245,235,.18);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(107,29,58,.06);padding:12px 22px;border-radius:28px;cursor:pointer;user-select:none;transition:background .6s,border-color .6s,box-shadow .6s,color .6s;letter-spacing:.03em;white-space:nowrap;box-shadow:0 4px 30px rgba(107,29,58,.04),inset 0 0 20px rgba(255,245,235,.1)}
+.ocard:hover{background:rgba(255,245,235,.35);border-color:rgba(107,29,58,.12);box-shadow:0 8px 40px rgba(107,29,58,.08),inset 0 0 30px rgba(255,245,235,.15);color:rgba(90,60,45,.9)}
 .ocard-desc{position:absolute;z-index:10;max-width:380px;width:90%;background:rgba(255,242,230,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(107,29,58,.15);border-radius:14px;padding:22px 24px;box-shadow:0 12px 40px rgba(107,29,58,.12);font-family:'Inter',sans-serif;font-size:.85rem;line-height:1.7;color:var(--tb);opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .4s,transform .4s}
 .ocard-desc.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
 @media(max-width:768px){

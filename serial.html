@@ -618,13 +618,13 @@ p.sap{font-size:.9rem;line-height:1.9}
 </footer>
 
 <script>
-// === Dust in crossed spotlights — small particles in both beams ===
+// === Original melancholic dust — big, slow, everywhere ===
 (function(){
   var c=document.getElementById('particles');
   if(!c)return;
   var ctx=c.getContext('2d');
   var pts=[];
-  var N=90;
+  var N=35;
   var W,H;
 
   function resize(){
@@ -634,57 +634,26 @@ p.sap{font-size:.9rem;line-height:1.9}
   resize();
   window.addEventListener('resize',resize);
 
-  // Left beam zone: starts at ~4% top, goes to ~50% bottom
-  // Right beam zone: starts at ~96% top, goes to ~50% bottom
-  function inBeam(x,y){
-    var t=y/H;
-    // left beam center line goes from x=W*0.04 at top to x=W*0.5 at bottom
-    var lx=W*0.04+t*(W*0.46);
-    var spread=20+t*W*0.12;
-    var dl=Math.abs(x-lx)/spread;
-    // right beam center line goes from x=W*0.96 at top to x=W*0.5 at bottom
-    var rx=W*0.96-t*(W*0.46);
-    var dr=Math.abs(x-rx)/spread;
-    return Math.max(0,1-Math.min(dl,dr));
-  }
-
-  function spawnX(y){
-    // 70% chance in a beam, 30% anywhere (ambient dust)
-    if(Math.random()<.7){
-      var t=y/H;
-      if(Math.random()<.5){
-        // left beam
-        var lx=W*0.04+t*(W*0.46);
-        var spread=20+t*W*0.12;
-        return lx+(Math.random()-.5)*spread*2;
-      }else{
-        var rx=W*0.96-t*(W*0.46);
-        var spread=20+t*W*0.12;
-        return rx+(Math.random()-.5)*spread*2;
-      }
-    }
-    return Math.random()*W;
-  }
-
   for(var i=0;i<N;i++) pts.push(make(true));
 
   function make(init){
-    var y=init?Math.random()*H:H+Math.random()*40;
+    var size=Math.random()*4+1.5;
     return{
-      x:spawnX(y),y:y,
-      size:Math.random()*1.5+.3,
-      vx:(Math.random()-.5)*.05,
-      vy:-(Math.random()*.08+.02),
+      x:Math.random()*W,
+      y:init?Math.random()*H:H+20,
+      size:size,
+      vx:(Math.random()-.5)*.12,
+      vy:-(Math.random()*.15+.08),
       angle:Math.random()*Math.PI*2,
-      spin:(Math.random()-.5)*.004,
-      oBase:Math.random()*.2+.08,
+      spin:(Math.random()-.5)*.008,
+      oBase:Math.random()*.3+.15,
       oPhase:Math.random()*Math.PI*2,
-      oSpeed:Math.random()*.002+.0006,
-      shape:Math.random()>.5?1:0,
-      aspect:Math.random()*.4+.2,
-      r:195+Math.floor(Math.random()*30),
-      g:175+Math.floor(Math.random()*20),
-      b:140+Math.floor(Math.random()*20)
+      oSpeed:Math.random()*.003+.001,
+      shape:Math.random()>.4?1:0,
+      aspect:Math.random()*.5+.3,
+      r:170+Math.floor(Math.random()*40),
+      g:150+Math.floor(Math.random()*30),
+      b:120+Math.floor(Math.random()*30)
     };
   }
 
@@ -694,23 +663,21 @@ p.sap{font-size:.9rem;line-height:1.9}
     t++;
     for(var i=0;i<N;i++){
       var p=pts[i];
-      p.x+=p.vx+Math.sin(t*.0012+i*.8)*.04;
+      p.x+=p.vx+Math.sin(t*.002+i)*.08;
       p.y+=p.vy;
       p.angle+=p.spin;
+      p.o=p.oBase+Math.sin(t*p.oSpeed+p.oPhase)*.12;
 
-      var beam=inBeam(p.x,p.y);
-      var o=p.oBase+Math.sin(t*p.oSpeed+p.oPhase)*.08;
-      // in beam = brighter, outside = dim
-      o=o*(0.15+beam*0.85);
-
-      if(p.y<-10||p.x<-20||p.x>W+20){
-        pts[i]=make(false);continue;
+      if(p.y<-20||p.x<-20||p.x>W+20){
+        pts[i]=make(false);
+        pts[i].x=Math.random()*W;
+        continue;
       }
 
       ctx.save();
       ctx.translate(p.x,p.y);
       ctx.rotate(p.angle);
-      ctx.globalAlpha=Math.max(0,Math.min(1,o));
+      ctx.globalAlpha=Math.max(0,Math.min(1,p.o));
       ctx.beginPath();
       if(p.shape===0){
         ctx.arc(0,0,p.size,0,Math.PI*2);

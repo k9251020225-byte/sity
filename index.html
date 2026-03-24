@@ -749,53 +749,17 @@
   }
   resize();
 
-  // === CIRCLES: drift + orbital dots ===
+  // === CIRCLES: drift + orbital dots (ALL dots on circles only) ===
   var circles=[
     {cx:.40,cy:.46,r:.35,rot:0,rotSpeed:.0004,color:'rgba(150,130,120,.55)',lw:1.3,
-     drift:-.00004, driftAxis:'x', dotDir:1, dots:8, dotSize:2.5, dotColor:'rgba(150,130,120,.8)'},
+     drift:-.00004, dotDir:1, dots:8, dotSize:2.5, dotColor:'rgba(150,130,120,.8)'},
     {cx:.50,cy:.48,r:.25,rot:0,rotSpeed:-.0006,color:'rgba(107,29,58,.6)',lw:1.5,
-     drift:.00004, driftAxis:'x', dotDir:-1, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
+     drift:.00004, dotDir:-1, dots:6, dotSize:2.8, dotColor:'rgba(107,29,58,.85)'},
     {cx:.55,cy:.54,r:.16,rot:0,rotSpeed:.0008,color:'rgba(45,10,30,.75)',lw:1.8,
-     drift:.00003, driftAxis:'x', dotDir:1, dots:5, dotSize:2.2, dotColor:'rgba(45,10,30,.9)'}
+     drift:.00003, dotDir:1, dots:5, dotSize:2.2, dotColor:'rgba(45,10,30,.9)'}
   ];
-  // Pulsating wine dot — bottom-right, connects all circles
-  var wineDot={x:.82,y:.78,baseSize:8,pulse:0,pulseSpeed:.025,color:'rgba(107,29,58,'};
-
-  // === NODES scattered across field ===
-  var nodes=[];
-  var palette=['#6B1D3A','#8A2E50','#4A0E28','#2D0A1E','#1a5c18','#586357','#a83e3e','#3a1a0e'];
-  function seed(){
-    nodes=[];
-    for(var i=0;i<55;i++){
-      nodes.push({
-        x:.08+Math.random()*.84,
-        y:.08+Math.random()*.84,
-        vx:(Math.random()-.5)*.06,
-        vy:(Math.random()-.5)*.06,
-        size:.6+Math.random()*4.5,
-        color:palette[Math.floor(Math.random()*palette.length)],
-        opacity:.25+Math.random()*.65
-      });
-    }
-  }
-  seed();
-
-  // === NEURAL NET connections — appear and fade ===
-  var nets=[];
-  function buildNet(){
-    nets=[];
-    for(var i=0;i<nodes.length;i++){
-      for(var j=i+1;j<nodes.length;j++){
-        if(Math.random()<.15) nets.push({
-          a:i,b:j,
-          life:Math.random()*600+200,
-          age:Math.floor(Math.random()*800),
-          maxLife:Math.random()*600+200
-        });
-      }
-    }
-  }
-  buildNet();
+  // Pulsating wine dot — sits ON the outer circle edge, bottom-right, connects all 3 circles
+  var wineDot={angle:Math.PI*.3,baseSize:8,pulse:0,pulseSpeed:.025,color:'rgba(107,29,58,'};
 
   // === CARDS: 8 floating cards on the orbit field ===
   var cards=document.querySelectorAll('.ocard');
@@ -877,8 +841,9 @@
     ctx.clearRect(0,0,W,H);
     var s=Math.min(W,H);
 
-    // Rotate & draw circles with drift and orbital dots
+    // Rotate & draw circles with drift — all dots ON circles only
     var circleCenters=[];
+    var allDots=[]; // collect all orbital dot positions for neural connections
     for(var i=0;i<circles.length;i++){
       var cr=circles[i];
       cr.rot+=cr.rotSpeed;
@@ -887,25 +852,43 @@
       if(cr.cx*W<cr.r*s+20||cr.cx*W>W-cr.r*s-20) cr.drift*=-1;
       var cx=cr.cx*W, cy=cr.cy*H, r=cr.r*s;
       circleCenters.push({x:cx,y:cy,r:r});
-      // Draw circle — clean, no ticks
+      // Draw circle
       ctx.beginPath();
       ctx.arc(cx,cy,r,0,Math.PI*2);
       ctx.strokeStyle=cr.color;
       ctx.lineWidth=cr.lw;
       ctx.stroke();
-      // Orbital dots rotating around the circle
+      // Orbital dots rotating ON the circle
       for(var d=0;d<cr.dots;d++){
         var da=cr.rot*cr.dotDir*3+d*(Math.PI*2/cr.dots);
         var dx=cx+Math.cos(da)*r;
         var dy=cy+Math.sin(da)*r;
         ctx.beginPath();ctx.arc(dx,dy,cr.dotSize,0,Math.PI*2);
         ctx.fillStyle=cr.dotColor;ctx.fill();
+        allDots.push({x:dx,y:dy});
       }
     }
 
-    // Pulsating wine dot (bottom-right) connecting all 3 circles
+    // Subtle neural connections between orbital dots on different circles
+    ctx.lineWidth=.4;
+    for(var i=0;i<allDots.length;i++){
+      for(var j=i+1;j<allDots.length;j++){
+        var dx=allDots[j].x-allDots[i].x,dy=allDots[j].y-allDots[i].y;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<s*.25){
+          var alpha=0.06*(1-dist/(s*.25));
+          ctx.beginPath();ctx.moveTo(allDots[i].x,allDots[i].y);ctx.lineTo(allDots[j].x,allDots[j].y);
+          ctx.strokeStyle='rgba(80,40,50,'+alpha+')';
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Pulsating wine dot — ON the outer circle edge, bottom-right
     wineDot.pulse+=wineDot.pulseSpeed;
-    var wpx=wineDot.x*W, wpy=wineDot.y*H;
+    var outerC=circleCenters[0]; // outer circle
+    var wpx=outerC.x+Math.cos(wineDot.angle)*outerC.r;
+    var wpy=outerC.y+Math.sin(wineDot.angle)*outerC.r;
     var wSize=wineDot.baseSize+Math.sin(wineDot.pulse)*4;
     var wAlpha=.55+Math.sin(wineDot.pulse)*.35;
     // Glow
@@ -917,88 +900,21 @@
     // Core dot
     ctx.beginPath();ctx.arc(wpx,wpy,wSize,0,Math.PI*2);
     ctx.fillStyle=wineDot.color+wAlpha+')';ctx.fill();
-    // Lines from wine dot to each circle center
+    // Lines from wine dot to each circle center — connecting all 3 circles
     for(var i=0;i<circleCenters.length;i++){
       var cc=circleCenters[i];
       ctx.beginPath();ctx.moveTo(wpx,wpy);ctx.lineTo(cc.x,cc.y);
       var lineAlpha=.12+Math.sin(wineDot.pulse+i)*.08;
       ctx.strokeStyle='rgba(107,29,58,'+lineAlpha+')';
       ctx.lineWidth=1;ctx.stroke();
-      // Small dot at intersection with circle edge
-      var ang=Math.atan2(wpy-cc.y,wpx-cc.x);
-      var ix=cc.x+Math.cos(ang)*cc.r;
-      var iy=cc.y+Math.sin(ang)*cc.r;
-      ctx.beginPath();ctx.arc(ix,iy,3,0,Math.PI*2);
-      ctx.fillStyle='rgba(107,29,58,'+(.3+wAlpha*.3)+')';ctx.fill();
-    }
-
-    // Update node positions
-    for(var i=0;i<nodes.length;i++){
-      var n=nodes[i];
-      n.x+=n.vx/W;n.y+=n.vy/H;
-      if(n.x<.05||n.x>.95)n.vx*=-1;
-      if(n.y<.05||n.y>.95)n.vy*=-1;
-    }
-
-    // Positions in pixels
-    var pos=[];
-    for(var i=0;i<nodes.length;i++){
-      pos.push({x:nodes[i].x*W,y:nodes[i].y*H});
-    }
-
-    // Draw neural network — lines appear and fade like real synapses
-    ctx.lineWidth=.5;
-    for(var i=nets.length-1;i>=0;i--){
-      var net=nets[i];
-      net.age++;
-      // Fade in then fade out
-      var lifeRatio=net.age/net.maxLife;
-      var fade;
-      if(lifeRatio<.2) fade=lifeRatio/.2;
-      else if(lifeRatio>.8) fade=(1-lifeRatio)/.2;
-      else fade=1;
-      // Respawn when dead
-      if(net.age>=net.maxLife){
-        net.a=Math.floor(Math.random()*nodes.length);
-        net.b=Math.floor(Math.random()*nodes.length);
-        if(net.a===net.b) net.b=(net.a+1)%nodes.length;
-        net.age=0;
-        net.maxLife=Math.random()*600+200;
-        continue;
+      // Small dot where line meets each circle edge
+      if(i>0){
+        var ang=Math.atan2(wpy-cc.y,wpx-cc.x);
+        var ix=cc.x+Math.cos(ang)*cc.r;
+        var iy=cc.y+Math.sin(ang)*cc.r;
+        ctx.beginPath();ctx.arc(ix,iy,3,0,Math.PI*2);
+        ctx.fillStyle='rgba(107,29,58,'+(.3+wAlpha*.3)+')';ctx.fill();
       }
-      var a=pos[net.a],b=pos[net.b];
-      var dx=b.x-a.x,dy=b.y-a.y;
-      var dist=Math.sqrt(dx*dx+dy*dy);
-      var maxD=s*.65;
-      if(dist<maxD){
-        var alpha=(.08+.12*(1-dist/maxD))*fade;
-        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle='rgba(80,40,50,'+alpha+')';
-        ctx.stroke();
-      }
-    }
-
-    // Proximity connections — also pulse
-    ctx.lineWidth=.3;
-    for(var i=0;i<pos.length;i++){
-      for(var j=i+1;j<pos.length;j++){
-        var dx=pos[j].x-pos[i].x,dy=pos[j].y-pos[i].y;
-        var dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<s*.15){
-          ctx.beginPath();ctx.moveTo(pos[i].x,pos[i].y);ctx.lineTo(pos[j].x,pos[j].y);
-          ctx.strokeStyle='rgba(80,40,50,'+(0.04*(1-dist/(s*.15)))+')';
-          ctx.stroke();
-        }
-      }
-    }
-
-    // Draw nodes
-    for(var i=0;i<nodes.length;i++){
-      var n=nodes[i],p=pos[i];
-      ctx.globalAlpha=n.opacity;
-      ctx.beginPath();ctx.arc(p.x,p.y,n.size,0,Math.PI*2);
-      ctx.fillStyle=n.color;ctx.fill();
-      ctx.globalAlpha=1;
     }
 
     // Animate cards
@@ -1007,7 +923,7 @@
   }
 
   draw();
-  window.addEventListener('resize',function(){resize();seed();buildNet();});
+  window.addEventListener('resize',function(){resize();});
 })();
 </script>
 </body>

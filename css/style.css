@@ -243,7 +243,7 @@ p.sap{font-family:'Inter',system-ui,sans-serif;font-size:1.05rem;color:var(--td)
 .artt{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:600;color:var(--td);margin-bottom:4px}
 .arte{font-size:.8rem;color:var(--tm);line-height:1.5;margin-bottom:7px}
 /* FOOTER */
-footer{background:linear-gradient(180deg,#1a2a18,var(--mul));padding:48px 24px 24px;position:relative;z-index:1;border-radius:24px 24px 0 0}
+footer{background:linear-gradient(180deg,#2D0A1E,var(--mul));padding:48px 24px 24px;position:relative;z-index:1;border-radius:24px 24px 0 0}
 .fg{display:grid;grid-template-columns:2fr 1fr 1fr;gap:28px}
 .fbn{font-family:'Playfair Display',serif;font-size:1rem;color:var(--cr-l);margin-bottom:4px}
 .ftg{font-size:.85rem;color:rgba(255,242,230,.4);margin-bottom:7px}

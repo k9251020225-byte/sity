@@ -109,11 +109,38 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .profile-birth{font-size:.78rem;color:var(--tm);margin-bottom:12px}
 .profile-section{font-family:'Raleway',sans-serif;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--tm);margin:12px 0 6px}
 .profile-item{font-size:.84rem;color:var(--td);padding:4px 0;padding-left:14px;border-left:2px solid var(--cr);margin-bottom:4px;line-height:1.5}
+.pin-screen{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--cream);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px}
+.pin-box{max-width:340px;width:100%;text-align:center}
+.pin-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--td);margin-bottom:6px}
+.pin-desc{font-size:.82rem;color:var(--tm);margin-bottom:24px;line-height:1.6}
+.pin-input{width:100%;font-family:'Inter',sans-serif;font-size:1.4rem;text-align:center;letter-spacing:.6em;color:var(--td);background:rgba(255,255,255,.6);border:1.5px solid var(--bd);border-radius:14px;padding:16px;outline:none;transition:border-color .3s}
+.pin-input:focus{border-color:var(--cr)}
+.pin-input::placeholder{letter-spacing:.1em;font-size:.85rem}
+.pin-btn{margin-top:16px;width:100%}
+.pin-switch{font-size:.78rem;color:var(--tm);margin-top:14px;cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'Inter',sans-serif}
+.pin-switch:hover{color:var(--cr)}
+.pin-error{font-size:.78rem;color:#a33;margin-top:8px;min-height:20px}
+.pin-hint{font-size:.72rem;color:var(--tl);margin-top:10px;line-height:1.5}
+#app{display:none}
 @media(max-width:480px){html{font-size:16px}.container{padding:14px 12px}}
 </style>
 </head>
 <body>
 
+<!-- PIN SCREEN -->
+<div class="pin-screen" id="pin-screen">
+  <div class="pin-box">
+    <div class="pin-title">Дневник <span style="color:var(--cr)">целей</span></div>
+    <div class="pin-desc" id="pin-desc">Придумайте код для вашего дневника.<br>Запомните его — по этому коду вы будете входить.</div>
+    <input class="pin-input" id="pin-input" type="tel" maxlength="8" placeholder="Ваш код" autocomplete="off" inputmode="numeric">
+    <div class="pin-error" id="pin-error"></div>
+    <button class="btn btn-primary pin-btn" id="pin-go">Войти</button>
+    <button class="pin-switch" id="pin-toggle">У меня уже есть код</button>
+    <div class="pin-hint">Код может быть любым: цифры, буквы, от 3 символов.<br>Разные коды — разные дневники.</div>
+  </div>
+</div>
+
+<div id="app">
 <div class="header">
   <div>
     <div class="header-title">Дневник <span>целей</span></div>
@@ -247,6 +274,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   </div>
 </div>
 
+</div><!-- /app -->
+
 <div class="modal-bg" id="modal">
   <div class="modal">
     <div class="modal-title">Данные скопированы</div>
@@ -257,15 +286,61 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
 <script>
 (function(){
-  var GKEY='goals_diary_2026';
-  var CKEY='goals_checkins_2026';
+  function $(id){return document.getElementById(id)}
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+  // ===== PIN SYSTEM =====
+  var isNew=true;
+  var pinScreen=$('pin-screen');
+  var pinInput=$('pin-input');
+  var pinDesc=$('pin-desc');
+  var pinError=$('pin-error');
+  var pinToggle=$('pin-toggle');
+
+  pinToggle.onclick=function(){
+    isNew=!isNew;
+    if(isNew){
+      pinDesc.innerHTML='Придумайте код для вашего дневника.<br>Запомните его — по этому коду вы будете входить.';
+      pinToggle.textContent='У меня уже есть код';
+    }else{
+      pinDesc.innerHTML='Введите ваш код для входа в дневник.';
+      pinToggle.textContent='Создать новый дневник';
+    }
+    pinError.textContent='';
+  };
+
+  $('pin-go').onclick=function(){tryPin()};
+  pinInput.addEventListener('keydown',function(e){if(e.key==='Enter')tryPin()});
+
+  function tryPin(){
+    var code=pinInput.value.trim();
+    if(code.length<3){pinError.textContent='Минимум 3 символа';return}
+    var storageKey='goals_pin_'+code;
+    if(isNew){
+      if(localStorage.getItem(storageKey+'_goals')){
+        pinError.textContent='Такой код уже занят. Выберите другой или войдите.';
+        return;
+      }
+      localStorage.setItem(storageKey+'_goals','[]');
+    }else{
+      if(!localStorage.getItem(storageKey+'_goals')){
+        pinError.textContent='Дневник с таким кодом не найден.';
+        return;
+      }
+    }
+    pinScreen.style.display='none';
+    $('app').style.display='block';
+    initApp(storageKey);
+  }
+
+  function initApp(storageKey){
+  var GKEY=storageKey+'_goals';
+  var CKEY=storageKey+'_checkins';
 
   function loadG(){try{return JSON.parse(localStorage.getItem(GKEY))||[]}catch(e){return[]}}
   function saveG(d){localStorage.setItem(GKEY,JSON.stringify(d))}
   function loadC(){try{return JSON.parse(localStorage.getItem(CKEY))||{}}catch(e){return{}}}
   function saveC(d){localStorage.setItem(CKEY,JSON.stringify(d))}
-  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-  function $(id){return document.getElementById(id)}
 
   // Week helpers
   function getWeekKey(date){
@@ -495,7 +570,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   renderGoals();
 
   // ===== PROFILE =====
-  var PKEY='goals_profile';
+  var PKEY=storageKey+'_profile';
   function loadProfile(){try{return JSON.parse(localStorage.getItem(PKEY))||{name:'',birth:'',rules:[],values:[]}}catch(e){return{name:'',birth:'',rules:[],values:[]}}}
   function saveProfile(p){localStorage.setItem(PKEY,JSON.stringify(p))}
 
@@ -564,6 +639,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     renderPPreview();
     alert('Профиль сохранён!');
   };
+  } // end initApp
 })();
 </script>
 </body>

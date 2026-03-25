@@ -404,13 +404,28 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   }
 
   function initApp(storageKey){
-  // Letter show/hide
-  var letterKey=storageKey+'_letter_closed';
+  // Letter show/hide — collapses to button, can reopen
   var letterWrap=$('letter-wrap');
-  if(localStorage.getItem(letterKey)){letterWrap.style.display='none'}
-  $('letter-close').onclick=function(){
+  var letterEl=$('letter');
+  var letterClose=$('letter-close');
+
+  // Create "Письмо" toggle button
+  var letterBtn=document.createElement('button');
+  letterBtn.className='btn btn-secondary btn-sm';
+  letterBtn.textContent='Письмо';
+  letterBtn.style.cssText='display:none;margin:16px auto 0;width:max-content';
+  letterWrap.parentNode.insertBefore(letterBtn,letterWrap.nextSibling);
+
+  letterClose.onclick=function(){
     letterWrap.style.display='none';
-    localStorage.setItem(letterKey,'1');
+    letterBtn.style.display='block';
+  };
+  letterBtn.onclick=function(){
+    letterWrap.style.display='block';
+    letterBtn.style.display='none';
+    letterEl.classList.remove('smoke-in');
+    void letterEl.offsetWidth;
+    letterEl.classList.add('smoke-in');
   };
 
   var GKEY=storageKey+'_goals';

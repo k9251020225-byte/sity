@@ -288,7 +288,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <label class="form-label">Ключевые шаги (каждый с новой строки)</label>
       <textarea class="form-textarea" id="g-steps" placeholder="1. Записаться на курс&#10;2. Заниматься 30 мин/день&#10;3. Сдать экзамен" rows="4"></textarea>
     </div>
-    <div class="btn-row">
+    <div class="btn-row" style="padding-bottom:120px">
       <button class="btn btn-primary" id="btn-add-goal">Добавить цель</button>
     </div>
   </div>
@@ -434,7 +434,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   // Render goals
   function renderGoals(){
     var goals=loadG(),el=$('goals-list');
-    if(!goals.length){el.innerHTML='<div class="empty"><div class="empty-text">Нет целей. Добавьте первую во вкладке "+ Цель".</div></div>';return}
+    if(!goals.length){el.innerHTML='<div class="empty"><div class="empty-text">Пока нет целей.</div><button class="btn btn-primary" style="margin-top:16px" onclick="document.querySelectorAll(\'.tab\').forEach(function(x){x.classList.remove(\'active\')});document.querySelector(\'[data-tab=add]\').classList.add(\'active\');document.querySelectorAll(\'.panel\').forEach(function(p){p.classList.remove(\'active\')});document.getElementById(\'panel-add\').classList.add(\'active\')">Добавить первую цель</button></div>';return}
     var checkins=loadC();
     var h='';
     goals.forEach(function(g){

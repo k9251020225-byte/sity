@@ -157,11 +157,12 @@
         var e=entries[g.id]||{};
         h+='<div class="day-goal" data-gid="'+g.id+'">';
         h+='<div class="day-goal-name">'+esc(g.name)+' <span style="font-size:.65rem;color:var(--tm)">'+esc(g.cat)+'</span></div>';
-        if(g.focus)h+='<div style="font-size:.78rem;color:var(--cr);font-style:italic;margin-bottom:8px">Фокус: '+esc(g.focus)+'</div>';
+        if(g.focus)h+='<div style="font-size:.75rem;color:var(--cr);margin-bottom:4px">Фокус месяца: '+esc(g.focus)+'</div>';
+        if(g.weekAction)h+='<div style="font-size:.75rem;color:var(--tm);margin-bottom:8px">На неделю: '+esc(g.weekAction)+'</div>';
 
         h+='<div class="day-section">';
-        h+='<div class="day-section-label">Утро — мой план</div>';
-        h+='<textarea class="form-textarea dg-morning" data-gid="'+g.id+'" placeholder="Мои конкретные шаги к этой цели сегодня">'+esc(e.morning||'')+'</textarea>';
+        h+='<div class="day-section-label">Утро — мой один шаг сегодня</div>';
+        h+='<textarea class="form-textarea dg-morning" data-gid="'+g.id+'" placeholder="Один конкретный шаг к этой цели сегодня" style="min-height:50px">'+esc(e.morning||'')+'</textarea>';
         h+='</div>';
 
         h+='<div class="day-section">';
@@ -308,9 +309,9 @@
     $('btn-add-goal').onclick=function(){
       var name=$('g-name').value.trim();
       if(!name){alert('Введите название цели');return}
-      var goal={id:Date.now(),name:name,state:($('g-state')||{}).value||'',desc:$('g-desc').value.trim(),cat:$('g-cat').value,focus:($('g-focus')||{}).value||'',steps:$('g-steps').value.trim().split('\n').filter(function(s){return s.trim()}),created:new Date().toISOString()};
+      var goal={id:Date.now(),name:name,state:($('g-state')||{}).value||'',desc:$('g-desc').value.trim(),cat:$('g-cat').value,quarter:($('g-quarter')||{}).value||'',focus:($('g-focus')||{}).value||'',weekAction:($('g-week-action')||{}).value||'',steps:$('g-steps').value.trim().split('\n').filter(function(s){return s.trim()}),created:new Date().toISOString()};
       var g=loadG();g.push(goal);saveG(g);
-      $('g-name').value='';$('g-desc').value='';$('g-steps').value='';if($('g-state'))$('g-state').value='';if($('g-focus'))$('g-focus').value='';
+      $('g-name').value='';$('g-desc').value='';$('g-steps').value='';if($('g-state'))$('g-state').value='';if($('g-focus'))$('g-focus').value='';if($('g-quarter'))$('g-quarter').value='';if($('g-week-action'))$('g-week-action').value='';
       alert('Цель добавлена!');
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
       document.querySelector('[data-tab="goals"]').classList.add('active');
@@ -329,21 +330,25 @@
       goals.forEach(function(g){
         h+='<div class="goal-card">';
         h+='<div class="goal-head"><div class="goal-name">'+esc(g.name)+'</div><div class="goal-cat">'+esc(g.cat)+'</div></div>';
-        if(g.state)h+='<div style="font-size:.8rem;color:var(--cr);font-style:italic;margin-bottom:6px">Состояние: '+esc(g.state)+'</div>';
+        if(g.state)h+='<div style="font-size:.8rem;color:var(--cr);font-style:italic;margin-bottom:6px">Хочу чувствовать: '+esc(g.state)+'</div>';
         if(g.desc)h+='<div class="goal-desc">'+esc(g.desc)+'</div>';
+        if(g.quarter)h+='<div style="font-size:.82rem;color:var(--td);margin:8px 0;padding:8px 12px;background:rgba(107,29,58,.03);border-radius:10px;border-left:2px solid var(--tm)"><strong style="font-size:.68rem;color:var(--tm);text-transform:uppercase;letter-spacing:.15em;display:block;margin-bottom:2px">Результат на квартал</strong>'+esc(g.quarter)+'</div>';
         if(g.focus)h+='<div style="font-size:.82rem;color:var(--td);margin:8px 0;padding:8px 12px;background:rgba(107,29,58,.05);border-radius:10px;border-left:2px solid var(--cr)"><strong style="font-size:.68rem;color:var(--tm);text-transform:uppercase;letter-spacing:.15em;display:block;margin-bottom:2px">Фокус месяца</strong>'+esc(g.focus)+'</div>';
+        if(g.weekAction)h+='<div style="font-size:.82rem;color:var(--td);margin:8px 0;padding:8px 12px;background:rgba(107,29,58,.07);border-radius:10px;border-left:2px solid var(--cr-l)"><strong style="font-size:.68rem;color:var(--tm);text-transform:uppercase;letter-spacing:.15em;display:block;margin-bottom:2px">Действия на неделю</strong>'+esc(g.weekAction)+'</div>';
         if(g.steps&&g.steps.length){h+='<div style="margin-top:8px">';g.steps.forEach(function(s){h+='<div style="font-size:.78rem;color:var(--tm);padding:2px 0">'+esc(s)+'</div>'});h+='</div>'}
-        h+='<div class="goal-actions"><button class="btn btn-secondary btn-sm" onclick="window._editFocus('+g.id+')">Сменить фокус</button><button class="btn btn-danger btn-sm" onclick="window._delGoal('+g.id+')">Удалить</button></div>';
+        h+='<div class="goal-actions"><button class="btn btn-secondary btn-sm" onclick="window._editField('+g.id+',\'quarter\',\'Результат на квартал:\')">Квартал</button><button class="btn btn-secondary btn-sm" onclick="window._editField('+g.id+',\'focus\',\'Фокус месяца:\')">Месяц</button><button class="btn btn-secondary btn-sm" onclick="window._editField('+g.id+',\'weekAction\',\'Действия на неделю:\')">Неделя</button><button class="btn btn-danger btn-sm" onclick="window._delGoal('+g.id+')">Удалить</button></div>';
         h+='</div>';
       });
       el.innerHTML=h;
     }
 
-    window._editFocus=function(id){
-      var newFocus=prompt('Новый фокус месяца:');
-      if(newFocus===null)return;
+    window._editField=function(id,field,label){
       var goals=loadG();
-      goals.forEach(function(g){if(g.id===id)g.focus=newFocus.trim()});
+      var current='';
+      goals.forEach(function(g){if(g.id===id)current=g[field]||''});
+      var val=prompt(label,current);
+      if(val===null)return;
+      goals.forEach(function(g){if(g.id===id)g[field]=val.trim()});
       saveG(goals);renderGoals();
     };
 

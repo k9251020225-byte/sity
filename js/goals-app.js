@@ -157,6 +157,7 @@
         var e=entries[g.id]||{};
         h+='<div class="day-goal" data-gid="'+g.id+'">';
         h+='<div class="day-goal-name">'+esc(g.name)+' <span style="font-size:.65rem;color:var(--tm)">'+esc(g.cat)+'</span></div>';
+        if(g.questions&&g.questions.state)h+='<div style="font-size:.72rem;color:var(--cr);font-style:italic;margin-bottom:4px">Хочу чувствовать: '+esc(g.questions.state)+'</div>';
         if(g.focus)h+='<div style="font-size:.75rem;color:var(--cr);margin-bottom:4px">Фокус месяца: '+esc(g.focus)+'</div>';
         if(g.weekAction)h+='<div style="font-size:.75rem;color:var(--tm);margin-bottom:8px">На неделю: '+esc(g.weekAction)+'</div>';
 
@@ -309,9 +310,11 @@
     $('btn-add-goal').onclick=function(){
       var name=$('g-name').value.trim();
       if(!name){alert('Введите название цели');return}
-      var goal={id:Date.now(),name:name,state:($('g-state')||{}).value||'',desc:$('g-desc').value.trim(),cat:$('g-cat').value,quarter:($('g-quarter')||{}).value||'',focus:($('g-focus')||{}).value||'',weekAction:($('g-week-action')||{}).value||'',steps:$('g-steps').value.trim().split('\n').filter(function(s){return s.trim()}),created:new Date().toISOString()};
+      var questions={truth:($('gq-truth')||{}).value||'',state:($('gq-state')||{}).value||'',motive:($('gq-motive')||{}).value||'',cost:($('gq-cost')||{}).value||'',fear:($('gq-fear')||{}).value||'',child:($('gq-child')||{}).value||'',adult:($('gq-adult')||{}).value||'',impact:($('gq-impact')||{}).value||''};
+      var goal={id:Date.now(),name:name,cat:$('g-cat').value,questions:questions,quarter:($('g-quarter')||{}).value||'',focus:($('g-focus')||{}).value||'',weekAction:($('g-week-action')||{}).value||'',steps:($('g-steps')||{}).value?$('g-steps').value.trim().split('\n').filter(function(s){return s.trim()}):[],created:new Date().toISOString()};
       var g=loadG();g.push(goal);saveG(g);
-      $('g-name').value='';$('g-desc').value='';$('g-steps').value='';if($('g-state'))$('g-state').value='';if($('g-focus'))$('g-focus').value='';if($('g-quarter'))$('g-quarter').value='';if($('g-week-action'))$('g-week-action').value='';
+      $('g-name').value='';if($('g-steps'))$('g-steps').value='';if($('g-focus'))$('g-focus').value='';if($('g-quarter'))$('g-quarter').value='';if($('g-week-action'))$('g-week-action').value='';
+      ['gq-truth','gq-state','gq-motive','gq-cost','gq-fear','gq-child','gq-adult','gq-impact'].forEach(function(id){if($(id))$(id).value=''});
       alert('Цель добавлена!');
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
       document.querySelector('[data-tab="goals"]').classList.add('active');
@@ -330,6 +333,17 @@
       goals.forEach(function(g){
         h+='<div class="goal-card">';
         h+='<div class="goal-head"><div class="goal-name">'+esc(g.name)+'</div><div class="goal-cat">'+esc(g.cat)+'</div></div>';
+        if(g.questions){
+          var q=g.questions;
+          if(q.state)h+='<div style="font-size:.8rem;color:var(--cr);font-style:italic;margin-bottom:6px">Хочу чувствовать: '+esc(q.state)+'</div>';
+          if(q.motive)h+='<div class="goal-desc">Мотив: '+esc(q.motive)+'</div>';
+          h+='<details style="margin:8px 0"><summary style="font-size:.75rem;color:var(--cr);cursor:pointer">Мои ответы на 8 вопросов</summary><div style="padding:10px 0">';
+          var labels={truth:'Проверка на истинность',state:'Состояние',motive:'Честный мотив',cost:'Цена бездействия',fear:'Что мешает',child:'Внутренний ребёнок',adult:'Взрослое решение',impact:'Влияние'};
+          Object.keys(labels).forEach(function(k){
+            if(q[k])h+='<div style="font-size:.78rem;color:var(--tm);margin-bottom:8px;padding-left:10px;border-left:2px solid var(--bd)"><strong style="font-size:.65rem;color:var(--tl);text-transform:uppercase;letter-spacing:.12em;display:block;margin-bottom:2px">'+labels[k]+'</strong>'+esc(q[k])+'</div>';
+          });
+          h+='</div></details>';
+        }
         if(g.state)h+='<div style="font-size:.8rem;color:var(--cr);font-style:italic;margin-bottom:6px">Хочу чувствовать: '+esc(g.state)+'</div>';
         if(g.desc)h+='<div class="goal-desc">'+esc(g.desc)+'</div>';
         if(g.quarter)h+='<div style="font-size:.82rem;color:var(--td);margin:8px 0;padding:8px 12px;background:rgba(107,29,58,.03);border-radius:10px;border-left:2px solid var(--tm)"><strong style="font-size:.68rem;color:var(--tm);text-transform:uppercase;letter-spacing:.15em;display:block;margin-bottom:2px">Результат на квартал</strong>'+esc(g.quarter)+'</div>';

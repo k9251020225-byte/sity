@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Дневник КПТ — Екатерина Судас</title>
+<meta name="description" content="Интерактивный дневник когнитивно-поведенческой терапии. Отслеживание мыслей, эмоций и когнитивных искажений.">
+<meta name="theme-color" content="#fff2e6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#fff2e6;--cream-d:#f5e6d3;--cr:#6B1D3A;--cr-l:#8A2E50;--cab:#4A0E28;--mul:#2D0A1E;--td:#0f0806;--tb:#1a0f0a;--tm:#4a3830;--tl:#5a4a40;--bd:rgba(107,29,58,.12)}
+html{font-size:18px;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--tb);line-height:1.7;min-height:100vh;padding-bottom:80px}
+.header{background:rgba(255,242,230,.95);backdrop-filter:blur(20px);padding:16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(40,13,8,.06);display:flex;align-items:center;justify-content:space-between}
+.header-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:500;color:var(--td)}
+.header-title span{color:var(--cr)}
+.header-sub{font-family:'Raleway',sans-serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tm)}
+.header-back{font-size:.7rem;color:var(--cr);text-decoration:none;font-family:'Raleway',sans-serif;letter-spacing:.1em}
+.container{max-width:640px;margin:0 auto;padding:20px 16px}
+.tabs{display:flex;gap:6px;margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;padding:9px 15px;border-radius:20px;border:1.5px solid var(--bd);background:transparent;color:var(--tm);cursor:pointer;white-space:nowrap;transition:all .3s}
+.tab.active{background:var(--cr);color:var(--cream);border-color:var(--cr)}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:500;color:var(--td);margin-bottom:6px}
+.sec-sub{font-size:.82rem;color:var(--tm);margin-bottom:20px;line-height:1.6}
+.divider{width:50px;height:2px;background:linear-gradient(to right,transparent,var(--cr),transparent);margin:0 0 16px;border-radius:2px}
+.form-group{margin-bottom:16px}
+.form-label{font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--tm);margin-bottom:6px;display:block}
+.form-input,.form-textarea{width:100%;font-family:'Inter',sans-serif;font-size:.88rem;color:var(--tb);background:rgba(255,255,255,.6);border:1.5px solid var(--bd);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .3s}
+.form-input:focus,.form-textarea:focus{border-color:var(--cr)}
+.form-textarea{min-height:90px;resize:vertical;line-height:1.6}
+.slider-wrap{display:flex;align-items:center;gap:12px}
+.slider-wrap input[type=range]{flex:1;-webkit-appearance:none;height:4px;background:linear-gradient(to right,var(--cr),var(--cream-d));border-radius:4px;outline:none}
+.slider-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--cr);cursor:pointer;box-shadow:0 2px 8px rgba(107,29,58,.3)}
+.slider-val{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--cr);min-width:28px;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:.72rem;padding:6px 13px;border-radius:16px;border:1.5px solid var(--bd);background:transparent;color:var(--tm);cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+.chip.selected{background:var(--cr);color:var(--cream);border-color:var(--cr)}
+.btn{font-family:'Playfair Display',serif;font-size:.85rem;padding:13px 26px;border-radius:24px;border:none;cursor:pointer;transition:all .4s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--cr);color:var(--cream)}.btn-primary:hover{background:var(--cr-l);box-shadow:0 4px 16px rgba(107,29,58,.2)}
+.btn-secondary{background:transparent;color:var(--cr);border:1.5px solid var(--bd)}.btn-secondary:hover{border-color:var(--cr)}
+.btn-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.btn-sm{padding:10px 16px;font-size:.78rem}
+.btn-danger{background:transparent;color:#a33;border:1.5px solid rgba(170,50,50,.2)}.btn-danger:hover{background:rgba(170,50,50,.06)}
+.card{background:rgba(255,255,255,.5);border:1.5px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:12px;transition:all .3s}
+.card-date{font-family:'Raleway',sans-serif;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:var(--tm);margin-bottom:6px}
+.card-text{font-size:.88rem;color:var(--td);margin-bottom:6px;line-height:1.6}
+.card-tag{display:inline-block;font-size:.7rem;padding:3px 10px;border-radius:12px;background:rgba(107,29,58,.08);color:var(--cr);margin:2px 2px 2px 0}
+.card-dim{font-size:.8rem;color:var(--tm);font-style:italic;line-height:1.6}
+.card-alt{font-size:.8rem;color:var(--cr);margin-top:6px;line-height:1.5}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.stat-card{background:rgba(255,255,255,.5);border:1.5px solid var(--bd);border-radius:14px;padding:14px;text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--cr);line-height:1}
+.stat-label{font-size:.68rem;color:var(--tm);margin-top:4px}
+.chart-wrap{background:rgba(255,255,255,.5);border:1.5px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:14px}
+.chart-title{font-family:'Raleway',sans-serif;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--tm);margin-bottom:10px}
+.chart-bars{display:flex;align-items:flex-end;gap:3px;height:100px}
+.chart-bar{flex:1;border-radius:3px 3px 0 0;min-width:4px;transition:height .5s ease}
+.chart-bar-before{background:linear-gradient(to top,var(--cr),var(--cr-l))}
+.chart-bar-after{background:linear-gradient(to top,var(--cream-d),rgba(107,29,58,.2))}
+.chart-labels{display:flex;gap:3px;margin-top:3px}
+.chart-label{flex:1;text-align:center;font-size:.5rem;color:var(--tl)}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bar-name{flex:1;font-size:.78rem;color:var(--tm)}
+.bar-track{width:100px;height:6px;background:var(--cream-d);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;background:var(--cr);border-radius:3px;transition:width .5s}
+.bar-count{font-size:.68rem;color:var(--cr);min-width:24px;text-align:right}
+.month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.month-label{font-family:'Playfair Display',serif;font-size:1rem;color:var(--td)}
+.month-btn{background:none;border:1.5px solid var(--bd);border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--tm);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.month-btn:hover{border-color:var(--cr);color:var(--cr)}
+.empty{text-align:center;padding:40px 20px;color:var(--tm)}
+.empty-text{font-size:.85rem;line-height:1.6}
+.panel{display:none}.panel.active{display:block}
+.modal-bg{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,8,6,.5);z-index:200;align-items:center;justify-content:center;padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:var(--cream);border-radius:20px;padding:24px;max-width:400px;width:100%}
+.modal-title{font-family:'Playfair Display',serif;font-size:1rem;color:var(--td);margin-bottom:10px}
+.legend{display:flex;gap:14px;margin-bottom:10px;font-size:.7rem;color:var(--tm)}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:middle}
+.thought-rank{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--cr);margin-right:8px;min-width:20px;display:inline-block}
+@media(max-width:480px){html{font-size:16px}.container{padding:14px 12px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">Дневник <span>КПТ</span></div>
+    <div class="header-sub">когнитивно-поведенческая терапия</div>
+  </div>
+  <a href="https://sudas-psy.ru" class="header-back">sudas-psy.ru</a>
+</div>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" data-tab="new">Запись</button>
+    <button class="tab" data-tab="journal">Журнал</button>
+    <button class="tab" data-tab="monthly">Месяц</button>
+    <button class="tab" data-tab="info">Подсказки</button>
+  </div>
+
+  <!-- NEW ENTRY -->
+  <div class="panel active" id="panel-new">
+    <div class="sec-title">Новая запись</div>
+    <div class="divider"></div>
+    <div class="sec-sub">Опишите ситуацию, мысли и эмоции. Связь между ними — ключ к изменению.</div>
+
+    <div class="form-group">
+      <label class="form-label">Ситуация</label>
+      <textarea class="form-textarea" id="f-situation" placeholder="Что произошло? Где? С кем?" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Автоматическая мысль</label>
+      <textarea class="form-textarea" id="f-thought" placeholder="Что пронеслось в голове?" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Эмоция</label>
+      <input class="form-input" id="f-emotion" placeholder="Тревога, злость, грусть...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Интенсивность до (1-10)</label>
+      <div class="slider-wrap">
+        <input type="range" id="f-int1" min="1" max="10" value="5">
+        <span class="slider-val" id="f-int1-v">5</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Когнитивные искажения</label>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Альтернативная мысль</label>
+      <textarea class="form-textarea" id="f-alt" placeholder="Как можно посмотреть иначе?" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Интенсивность после (1-10)</label>
+      <div class="slider-wrap">
+        <input type="range" id="f-int2" min="1" max="10" value="5">
+        <span class="slider-val" id="f-int2-v">5</span>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-save">Сохранить</button>
+      <button class="btn btn-secondary" id="btn-clear">Очистить</button>
+    </div>
+  </div>
+
+  <!-- JOURNAL -->
+  <div class="panel" id="panel-journal">
+    <div class="sec-title">Журнал записей</div>
+    <div class="divider"></div>
+    <div id="journal-list"></div>
+  </div>
+
+  <!-- MONTHLY REPORT -->
+  <div class="panel" id="panel-monthly">
+    <div class="sec-title">Месячный отчёт</div>
+    <div class="divider"></div>
+    <div class="month-nav">
+      <button class="month-btn" id="month-prev">&larr;</button>
+      <div class="month-label" id="month-label"></div>
+      <button class="month-btn" id="month-next">&rarr;</button>
+    </div>
+    <div class="stat-grid" id="m-stats"></div>
+    <div class="chart-wrap">
+      <div class="chart-title">Динамика интенсивности</div>
+      <div class="legend">
+        <span><span class="legend-dot" style="background:var(--cr)"></span>До</span>
+        <span><span class="legend-dot" style="background:var(--cream-d)"></span>После</span>
+      </div>
+      <div class="chart-bars" id="m-chart"></div>
+      <div class="chart-labels" id="m-chart-labels"></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Топ автоматических мыслей</div>
+      <div id="m-thoughts"></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Частые искажения</div>
+      <div id="m-distortions"></div>
+    </div>
+    <div class="chart-wrap">
+      <div class="chart-title">Частые эмоции</div>
+      <div id="m-emotions"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary btn-sm" id="btn-export">Экспорт</button>
+      <button class="btn btn-danger btn-sm" id="btn-nuke">Удалить всё</button>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="panel" id="panel-info">
+    <div class="sec-title">Когнитивные искажения</div>
+    <div class="divider"></div>
+    <div class="sec-sub">Систематические ошибки мышления, искажающие восприятие реальности.</div>
+    <div class="card"><div class="card-date">Чёрно-белое мышление</div><div class="card-text">Оценка в крайностях: идеально или ужасно, без середины.</div><div class="card-dim">"Если не получу эту работу — я полный неудачник."</div></div>
+    <div class="card"><div class="card-date">Катастрофизация</div><div class="card-text">Ожидание наихудшего, даже когда маловероятно.</div><div class="card-dim">"Болит голова — наверное, это опухоль."</div></div>
+    <div class="card"><div class="card-date">Чтение мыслей</div><div class="card-text">Уверенность, что знаете мысли других без доказательств.</div><div class="card-dim">"Она странно посмотрела — считает меня глупой."</div></div>
+    <div class="card"><div class="card-date">Персонализация</div><div class="card-text">Принятие на свой счёт того, что не связано с вами.</div><div class="card-dim">"Коллега не поздоровался — я его обидел."</div></div>
+    <div class="card"><div class="card-date">Долженствование</div><div class="card-text">Жёсткие правила "должен", "обязан" к себе и другим.</div><div class="card-dim">"Я должна всегда быть в хорошем настроении."</div></div>
+    <div class="card"><div class="card-date">Обесценивание позитива</div><div class="card-text">Отвержение положительного опыта — "не считается".</div><div class="card-dim">"Похвалили — это просто из вежливости."</div></div>
+    <div class="card"><div class="card-date">Сверхобобщение</div><div class="card-text">Один случай — правило "всегда" или "никогда".</div><div class="card-dim">"Мне отказали — у меня никогда ничего не получается."</div></div>
+    <div class="card"><div class="card-date">Эмоциональное обоснование</div><div class="card-text">Эмоции принимаются за факты.</div><div class="card-dim">"Чувствую себя никчёмной — значит, я такая."</div></div>
+    <div class="card"><div class="card-date">Ментальный фильтр</div><div class="card-text">Фокус только на негативной детали, игнор позитива.</div><div class="card-dim">"Из 10 комплиментов помню одну критику."</div></div>
+    <div class="card"><div class="card-date">Предсказание будущего</div><div class="card-text">Уверенность в негативном исходе до его наступления.</div><div class="card-dim">"Точно провалю собеседование, даже идти не стоит."</div></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="modal-title">Данные скопированы</div>
+    <div class="sec-sub">JSON в буфере обмена. Сохраните в надёжном месте.</div>
+    <button class="btn btn-primary btn-sm" onclick="document.getElementById('modal').classList.remove('show')">Ок</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='kpt_diary_2026';
+  var DISTORTIONS=['Чёрно-белое','Катастрофизация','Чтение мыслей','Персонализация','Долженствование','Обесценивание','Сверхобобщение','Эмоц. обоснование','Ментальный фильтр','Предсказание'];
+
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||[]}catch(e){return[]}}
+  function persist(d){localStorage.setItem(KEY,JSON.stringify(d))}
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+  function $(id){return document.getElementById(id)}
+
+  // Chips
+  var selDist=[];
+  var chipsEl=$('chips');
+  DISTORTIONS.forEach(function(d){
+    var b=document.createElement('button');b.className='chip';b.textContent=d;b.dataset.d=d;
+    b.onclick=function(){
+      if(b.classList.contains('selected')){b.classList.remove('selected');selDist=selDist.filter(function(x){return x!==d})}
+      else{b.classList.add('selected');selDist.push(d)}
+    };
+    chipsEl.appendChild(b);
+  });
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.onclick=function(){
+      document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+      t.classList.add('active');
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+      $('panel-'+t.dataset.tab).classList.add('active');
+      if(t.dataset.tab==='journal')renderJournal();
+      if(t.dataset.tab==='monthly')renderMonthly();
+    };
+  });
+
+  // Sliders
+  var s1=$('f-int1'),v1=$('f-int1-v'),s2=$('f-int2'),v2=$('f-int2-v');
+  s1.oninput=function(){v1.textContent=s1.value};
+  s2.oninput=function(){v2.textContent=s2.value};
+
+  // Save
+  $('btn-save').onclick=function(){
+    var sit=$('f-situation').value.trim();
+    if(!sit){alert('Опишите ситуацию');return}
+    var entry={
+      id:Date.now(),date:new Date().toISOString(),
+      situation:sit,
+      thought:$('f-thought').value.trim(),
+      emotion:$('f-emotion').value.trim()||'Не указана',
+      int1:+s1.value,
+      distortions:selDist.slice(),
+      alt:$('f-alt').value.trim(),
+      int2:+s2.value
+    };
+    var d=load();d.unshift(entry);persist(d);
+    clearForm();alert('Сохранено!');
+  };
+
+  function clearForm(){
+    $('f-situation').value='';$('f-thought').value='';$('f-emotion').value='';$('f-alt').value='';
+    s1.value=5;v1.textContent='5';s2.value=5;v2.textContent='5';
+    selDist=[];chipsEl.querySelectorAll('.chip').forEach(function(c){c.classList.remove('selected')});
+  }
+  $('btn-clear').onclick=clearForm;
+
+  // Journal
+  function renderJournal(){
+    var entries=load(),el=$('journal-list');
+    if(!entries.length){el.innerHTML='<div class="empty"><div class="empty-text">Пока нет записей.<br>Создайте первую.</div></div>';return}
+    var h='';
+    entries.forEach(function(e){
+      var dt=new Date(e.date);
+      h+='<div class="card">';
+      h+='<div class="card-date">'+dt.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})+' '+dt.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})+'</div>';
+      h+='<div class="card-text">'+esc(e.situation)+'</div>';
+      h+='<div><span class="card-tag">'+esc(e.emotion)+' '+e.int1+'/10 &rarr; '+e.int2+'/10</span></div>';
+      if(e.thought)h+='<div class="card-dim">&laquo;'+esc(e.thought)+'&raquo;</div>';
+      if(e.distortions&&e.distortions.length){h+='<div style="margin-top:5px">';e.distortions.forEach(function(dd){h+='<span class="card-tag">'+esc(dd)+'</span>'});h+='</div>'}
+      if(e.alt)h+='<div class="card-alt">'+esc(e.alt)+'</div>';
+      h+='<div style="margin-top:8px"><button class="btn btn-danger btn-sm" onclick="delEntry('+e.id+')">Удалить</button></div>';
+      h+='</div>';
+    });
+    el.innerHTML=h;
+  }
+  window.delEntry=function(id){
+    if(!confirm('Удалить?'))return;
+    persist(load().filter(function(e){return e.id!==id}));renderJournal();
+  };
+
+  // Monthly report
+  var curMonth=new Date().getMonth(),curYear=new Date().getFullYear();
+  var MONTHS=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+
+  $('month-prev').onclick=function(){curMonth--;if(curMonth<0){curMonth=11;curYear--}renderMonthly()};
+  $('month-next').onclick=function(){curMonth++;if(curMonth>11){curMonth=0;curYear++}renderMonthly()};
+
+  function renderMonthly(){
+    $('month-label').textContent=MONTHS[curMonth]+' '+curYear;
+    var all=load();
+    var entries=all.filter(function(e){var d=new Date(e.date);return d.getMonth()===curMonth&&d.getFullYear()===curYear});
+    var n=entries.length;
+
+    // Stats
+    var avgI=0,avgA=0,improved=0;
+    if(n){
+      var si=0,sa=0;
+      entries.forEach(function(e){si+=e.int1;sa+=e.int2;if(e.int2<e.int1)improved++});
+      avgI=(si/n).toFixed(1);avgA=(sa/n).toFixed(1);
+    }
+    $('m-stats').innerHTML=
+      '<div class="stat-card"><div class="stat-num">'+n+'</div><div class="stat-label">Записей</div></div>'+
+      '<div class="stat-card"><div class="stat-num">'+avgI+'</div><div class="stat-label">Средн. до</div></div>'+
+      '<div class="stat-card"><div class="stat-num">'+avgA+'</div><div class="stat-label">Средн. после</div></div>'+
+      '<div class="stat-card"><div class="stat-num">'+improved+'</div><div class="stat-label">Улучшений</div></div>';
+
+    // Chart — intensity before/after
+    var rev=entries.slice().reverse();
+    var bh='',lh='';
+    if(rev.length){
+      rev.forEach(function(e){
+        bh+='<div class="chart-bar chart-bar-before" style="height:'+Math.max(8,e.int1*10)+'%"></div>';
+        bh+='<div class="chart-bar chart-bar-after" style="height:'+Math.max(8,e.int2*10)+'%"></div>';
+        var dd=new Date(e.date);
+        lh+='<div class="chart-label" style="flex:2">'+dd.getDate()+'</div>';
+      });
+    }
+    $('m-chart').innerHTML=bh;$('m-chart-labels').innerHTML=lh;
+
+    // Top thoughts
+    var tm={};
+    entries.forEach(function(e){if(e.thought){var t=e.thought.toLowerCase().trim();tm[t]=(tm[t]||{count:0,orig:e.thought});tm[t].count++}});
+    var ta=Object.keys(tm).map(function(k){return tm[k]}).sort(function(a,b){return b.count-a.count}).slice(0,5);
+    var th='';
+    if(ta.length){
+      ta.forEach(function(t,i){
+        th+='<div style="margin-bottom:10px;line-height:1.5"><span class="thought-rank">'+(i+1)+'</span><span style="font-size:.82rem;color:var(--td)">&laquo;'+esc(t.orig)+'&raquo;</span><span style="font-size:.7rem;color:var(--tm);margin-left:6px">&times;'+t.count+'</span></div>';
+      });
+    }else{th='<div style="font-size:.82rem;color:var(--tm)">Нет данных</div>'}
+    $('m-thoughts').innerHTML=th;
+
+    // Distortion frequency
+    var dm={};
+    entries.forEach(function(e){if(e.distortions)e.distortions.forEach(function(d){dm[d]=(dm[d]||0)+1})});
+    var da=Object.keys(dm).map(function(k){return{name:k,count:dm[k]}}).sort(function(a,b){return b.count-a.count});
+    var dh='';
+    var maxD=da.length?da[0].count:1;
+    da.forEach(function(d){
+      dh+='<div class="bar-row"><div class="bar-name">'+esc(d.name)+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.round(d.count/maxD*100)+'%"></div></div><div class="bar-count">'+d.count+'</div></div>';
+    });
+    $('m-distortions').innerHTML=dh||'<div style="font-size:.82rem;color:var(--tm)">Нет данных</div>';
+
+    // Emotion frequency
+    var em={};
+    entries.forEach(function(e){if(e.emotion&&e.emotion!=='Не указана'){var k=e.emotion.toLowerCase().trim();em[k]=(em[k]||{count:0,orig:e.emotion});em[k].count++}});
+    var ea=Object.keys(em).map(function(k){return em[k]}).sort(function(a,b){return b.count-a.count});
+    var eh='';
+    var maxE=ea.length?ea[0].count:1;
+    ea.forEach(function(e){
+      eh+='<div class="bar-row"><div class="bar-name">'+esc(e.orig)+'</div><div class="bar-track"><div class="bar-fill" style="width:'+Math.round(e.count/maxE*100)+'%"></div></div><div class="bar-count">'+e.count+'</div></div>';
+    });
+    $('m-emotions').innerHTML=eh||'<div style="font-size:.82rem;color:var(--tm)">Нет данных</div>';
+  }
+
+  // Export
+  $('btn-export').onclick=function(){
+    var data=JSON.stringify(load(),null,2);
+    if(navigator.clipboard){navigator.clipboard.writeText(data).then(function(){$('modal').classList.add('show')})}
+    else{prompt('Скопируйте:',data)}
+  };
+  $('btn-nuke').onclick=function(){
+    if(!confirm('Удалить ВСЕ записи? Необратимо!'))return;
+    if(!confirm('Точно?'))return;
+    persist([]);renderMonthly();
+  };
+})();
+</script>
+</body>
+</html>

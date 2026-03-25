@@ -77,12 +77,28 @@
   function initApp(sk){
     var GKEY=sk+'_goals';
     var PKEY=sk+'_profile';
+    var RKEY=sk+'_revision';
     var db=null;
 
     openDB(sk+'_db',function(d){
       db=d;
       renderDay();
     });
+
+    // Revision load/save
+    function loadRev(){try{return JSON.parse(localStorage.getItem(RKEY))||{}}catch(e){return{}}}
+    function saveRev(r){localStorage.setItem(RKEY,JSON.stringify(r))}
+    var rev=loadRev();
+    if($('rev-flow'))$('rev-flow').value=rev.flow||'';
+    if($('rev-free'))$('rev-free').value=rev.free||'';
+    if($('rev-real'))$('rev-real').value=rev.real||'';
+    if($('rev-feel'))$('rev-feel').value=rev.feel||'';
+    if($('rev-whose'))$('rev-whose').value=rev.whose||'';
+    if($('rev-ifnot'))$('rev-ifnot').value=rev.ifnot||'';
+    $('btn-save-rev').onclick=function(){
+      saveRev({flow:$('rev-flow').value.trim(),free:$('rev-free').value.trim(),real:$('rev-real').value.trim(),feel:$('rev-feel').value.trim(),whose:$('rev-whose').value.trim(),ifnot:$('rev-ifnot').value.trim()});
+      alert('Ревизия сохранена!');
+    };
 
     function loadG(){try{return JSON.parse(localStorage.getItem(GKEY))||[]}catch(e){return[]}}
     function saveG(d){localStorage.setItem(GKEY,JSON.stringify(d))}
@@ -141,6 +157,7 @@
         var e=entries[g.id]||{};
         h+='<div class="day-goal" data-gid="'+g.id+'">';
         h+='<div class="day-goal-name">'+esc(g.name)+' <span style="font-size:.65rem;color:var(--tm)">'+esc(g.cat)+'</span></div>';
+        if(g.focus)h+='<div style="font-size:.78rem;color:var(--cr);font-style:italic;margin-bottom:8px">Фокус: '+esc(g.focus)+'</div>';
 
         h+='<div class="day-section">';
         h+='<div class="day-section-label">Утро — мой план</div>';
@@ -291,9 +308,9 @@
     $('btn-add-goal').onclick=function(){
       var name=$('g-name').value.trim();
       if(!name){alert('Введите название цели');return}
-      var goal={id:Date.now(),name:name,desc:$('g-desc').value.trim(),cat:$('g-cat').value,steps:$('g-steps').value.trim().split('\n').filter(function(s){return s.trim()}),created:new Date().toISOString()};
+      var goal={id:Date.now(),name:name,state:($('g-state')||{}).value||'',desc:$('g-desc').value.trim(),cat:$('g-cat').value,focus:($('g-focus')||{}).value||'',steps:$('g-steps').value.trim().split('\n').filter(function(s){return s.trim()}),created:new Date().toISOString()};
       var g=loadG();g.push(goal);saveG(g);
-      $('g-name').value='';$('g-desc').value='';$('g-steps').value='';
+      $('g-name').value='';$('g-desc').value='';$('g-steps').value='';if($('g-state'))$('g-state').value='';if($('g-focus'))$('g-focus').value='';
       alert('Цель добавлена!');
       document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
       document.querySelector('[data-tab="goals"]').classList.add('active');
@@ -312,13 +329,23 @@
       goals.forEach(function(g){
         h+='<div class="goal-card">';
         h+='<div class="goal-head"><div class="goal-name">'+esc(g.name)+'</div><div class="goal-cat">'+esc(g.cat)+'</div></div>';
+        if(g.state)h+='<div style="font-size:.8rem;color:var(--cr);font-style:italic;margin-bottom:6px">Состояние: '+esc(g.state)+'</div>';
         if(g.desc)h+='<div class="goal-desc">'+esc(g.desc)+'</div>';
+        if(g.focus)h+='<div style="font-size:.82rem;color:var(--td);margin:8px 0;padding:8px 12px;background:rgba(107,29,58,.05);border-radius:10px;border-left:2px solid var(--cr)"><strong style="font-size:.68rem;color:var(--tm);text-transform:uppercase;letter-spacing:.15em;display:block;margin-bottom:2px">Фокус месяца</strong>'+esc(g.focus)+'</div>';
         if(g.steps&&g.steps.length){h+='<div style="margin-top:8px">';g.steps.forEach(function(s){h+='<div style="font-size:.78rem;color:var(--tm);padding:2px 0">'+esc(s)+'</div>'});h+='</div>'}
-        h+='<div class="goal-actions"><button class="btn btn-danger btn-sm" onclick="window._delGoal('+g.id+')">Удалить</button></div>';
+        h+='<div class="goal-actions"><button class="btn btn-secondary btn-sm" onclick="window._editFocus('+g.id+')">Сменить фокус</button><button class="btn btn-danger btn-sm" onclick="window._delGoal('+g.id+')">Удалить</button></div>';
         h+='</div>';
       });
       el.innerHTML=h;
     }
+
+    window._editFocus=function(id){
+      var newFocus=prompt('Новый фокус месяца:');
+      if(newFocus===null)return;
+      var goals=loadG();
+      goals.forEach(function(g){if(g.id===id)g.focus=newFocus.trim()});
+      saveG(goals);renderGoals();
+    };
 
     window._delGoal=function(id){
       if(!confirm('Удалить цель?'))return;

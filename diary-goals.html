@@ -174,11 +174,67 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
 <div class="container">
   <div class="tabs">
+    <button class="tab" data-tab="start">Начало</button>
     <button class="tab active" data-tab="day">День</button>
     <button class="tab" data-tab="week">Неделя</button>
     <button class="tab" data-tab="goals">Цели</button>
     <button class="tab" data-tab="profile">Профиль</button>
     <button class="tab" data-tab="add">+ Цель</button>
+  </div>
+
+  <!-- START: Exercise + Revision -->
+  <div class="panel" id="panel-start">
+    <div class="sec-title">Прежде чем ставить цели</div>
+    <div class="divider"></div>
+
+    <div class="goal-card">
+      <div class="day-section-label" style="border:none;padding:0;color:var(--cr);font-size:.72rem;margin-bottom:10px">Упражнение &laquo;Два будущих&raquo;</div>
+      <div style="font-size:.84rem;color:var(--td);line-height:1.75">
+        <p style="margin-bottom:10px">Это упражнение может изменить вашу жизнь. Но для этого нужно действительно его выполнить — не прочитать, а прожить.</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--cr)">Закройте глаза.</strong></p>
+        <p style="margin-bottom:10px">Представьте, что прошла неделя. Вы не предприняли ни одного действия. Всё осталось как есть. Почувствуйте это.</p>
+        <p style="margin-bottom:10px">Теперь представьте, что прошёл месяц. Вы по-прежнему ничего не изменили. Те же мысли, те же оправдания. Те же чувства. Только теперь к ним добавилось разочарование в себе.</p>
+        <p style="margin-bottom:10px">Теперь — год. Целый год бездействия. Здоровье стало хуже. Отношения застыли или разрушились. Деньги — те же или меньше. Вы смотрите на себя и видите <strong style="color:var(--cr)">худшую версию себя</strong>. Ту, которая знала, что нужно действовать — но не стала.</p>
+        <p style="margin-bottom:10px">Представьте, что прошло пять лет. Все вокруг двигались, а вы стоите на месте. Что вы чувствуете?</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--cr)">Теперь откройте глаза.</strong></p>
+        <p style="margin-bottom:10px">У вас есть год. Целый год. Тот самый год, который вы только что потеряли в своём воображении — он ещё ваш. И вы можете прожить его иначе.</p>
+        <p style="font-size:.78rem;color:var(--tm)">Подсознание не различает реальные и воображаемые переживания. Всё, что вы только что почувствовали — настоящее. Используйте это как топливо.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <div class="sec-title" style="font-size:1rem">Ревизия: моя ли это цель?</div>
+      <div class="divider"></div>
+      <div class="sec-sub">Ответьте честно. Эти ответы — только для вас. Они помогут отделить настоящие цели от чужих ожиданий.</div>
+
+      <div class="form-group">
+        <label class="form-label">Чем я занимаюсь, когда забываю про время?</label>
+        <textarea class="form-textarea" id="rev-flow" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Что бы я делал, если бы не нужно было никому доказывать?</label>
+        <textarea class="form-textarea" id="rev-free" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Какой результат я хочу — для себя, а не для чьего-то одобрения?</label>
+        <textarea class="form-textarea" id="rev-real" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Как я хочу себя чувствовать через год?</label>
+        <textarea class="form-textarea" id="rev-feel" rows="2" placeholder="Спокойно, свободно, уверенно..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Чья это цель — моя или того, кто от меня этого ждёт?</label>
+        <textarea class="form-textarea" id="rev-whose" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Как я буду себя чувствовать, достигнув этого? А если не достигну?</label>
+        <textarea class="form-textarea" id="rev-ifnot" rows="2"></textarea>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-save-rev">Сохранить ревизию</button>
+      </div>
+    </div>
   </div>
 
   <!-- DAY -->
@@ -259,11 +315,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   <div class="panel" id="panel-add">
     <div class="sec-title">Новая цель</div>
     <div class="divider"></div>
-    <div class="sec-sub">Определите цель на год. Чем конкретнее — тем проще отслеживать.</div>
-    <div class="form-group"><label class="form-label">Название цели</label><input class="form-input" id="g-name" placeholder="Например: Выучить английский до B2"></div>
-    <div class="form-group"><label class="form-label">Описание / зачем</label><textarea class="form-textarea" id="g-desc" placeholder="Зачем вам эта цель? Что изменится?" rows="2"></textarea></div>
+    <div class="sec-sub">Цель привязана к состоянию. Не &laquo;что получить&raquo;, а &laquo;как я хочу себя чувствовать&raquo;.</div>
+    <div class="form-group"><label class="form-label">Как я хочу себя чувствовать?</label><input class="form-input" id="g-state" placeholder="Спокойно, уверенно, свободно..."></div>
+    <div class="form-group"><label class="form-label">Цель на год (что приведёт к этому состоянию)</label><input class="form-input" id="g-name" placeholder="Например: Выйти на доход 200 000"></div>
+    <div class="form-group"><label class="form-label">Зачем мне это?</label><textarea class="form-textarea" id="g-desc" placeholder="Что изменится в жизни, когда я достигну этого?" rows="2"></textarea></div>
     <div class="form-group"><label class="form-label">Категория</label><select class="form-select" id="g-cat"><option>Здоровье</option><option>Карьера</option><option>Отношения</option><option>Финансы</option><option>Развитие</option><option>Творчество</option><option>Привычки</option><option>Другое</option></select></div>
-    <div class="form-group"><label class="form-label">Ключевые шаги (каждый с новой строки)</label><textarea class="form-textarea" id="g-steps" placeholder="1. Записаться на курс&#10;2. Заниматься 30 мин/день" rows="4"></textarea></div>
+    <div class="form-group"><label class="form-label">Фокус этого месяца (один главный шаг)</label><input class="form-input" id="g-focus" placeholder="Например: Запустить рекламу и провести 10 консультаций"></div>
+    <div class="form-group"><label class="form-label">Ключевые шаги к годовой цели</label><textarea class="form-textarea" id="g-steps" placeholder="1. Записаться на курс&#10;2. Заниматься 30 мин/день" rows="3"></textarea></div>
     <div class="btn-row" style="padding-bottom:120px"><button class="btn btn-primary" id="btn-add-goal">Добавить цель</button></div>
   </div>
 </div>

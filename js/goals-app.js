@@ -89,15 +89,13 @@
     function loadRev(){try{return JSON.parse(localStorage.getItem(RKEY))||{}}catch(e){return{}}}
     function saveRev(r){localStorage.setItem(RKEY,JSON.stringify(r))}
     var rev=loadRev();
-    if($('rev-flow'))$('rev-flow').value=rev.flow||'';
-    if($('rev-free'))$('rev-free').value=rev.free||'';
-    if($('rev-real'))$('rev-real').value=rev.real||'';
-    if($('rev-feel'))$('rev-feel').value=rev.feel||'';
-    if($('rev-whose'))$('rev-whose').value=rev.whose||'';
-    if($('rev-ifnot'))$('rev-ifnot').value=rev.ifnot||'';
+    var revFields=['rev-flow','rev-free','rev-real','rev-feel','rev-whose','rev-ifnot','rev-rel','rev-leisure'];
+    revFields.forEach(function(id){if($(id))$(id).value=rev[id]||''});
     $('btn-save-rev').onclick=function(){
-      saveRev({flow:$('rev-flow').value.trim(),free:$('rev-free').value.trim(),real:$('rev-real').value.trim(),feel:$('rev-feel').value.trim(),whose:$('rev-whose').value.trim(),ifnot:$('rev-ifnot').value.trim()});
-      alert('Ревизия сохранена!');
+      var data={};
+      revFields.forEach(function(id){if($(id))data[id]=$(id).value.trim()});
+      saveRev(data);
+      alert('Сохранено!');
     };
 
     function loadG(){try{return JSON.parse(localStorage.getItem(GKEY))||[]}catch(e){return[]}}

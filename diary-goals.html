@@ -183,58 +183,77 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <button class="tab" data-tab="add">+ Цель</button>
   </div>
 
-  <!-- START: Exercise + Revision -->
+  <!-- START: 3 stages -->
   <div class="panel" id="panel-start">
     <div class="sec-title">Прежде чем ставить цели</div>
     <div class="divider"></div>
+    <div class="sec-sub">Методика <strong>Future Authoring</strong> Джордана Питерсона — клинического психолога, профессора Университета Торонто. Исследования показали: студенты, прошедшие это упражнение, подняли успеваемость на 25% и снизили отчисления с 30% до 0%. Не торопитесь. Выделите на это 30-40 минут тишины.</div>
 
-    <div class="goal-card">
-      <div class="day-section-label" style="border:none;padding:0;color:var(--cr);font-size:.72rem;margin-bottom:10px">Упражнение &laquo;Два будущих&raquo;</div>
-      <div style="font-size:.84rem;color:var(--td);line-height:1.75">
-        <p style="margin-bottom:10px">Это упражнение может изменить вашу жизнь. Но для этого нужно действительно его выполнить — не прочитать, а прожить.</p>
-        <p style="margin-bottom:10px"><strong style="color:var(--cr)">Закройте глаза.</strong></p>
-        <p style="margin-bottom:10px">Представьте, что прошла неделя. Вы не предприняли ни одного действия. Всё осталось как есть. Почувствуйте это.</p>
-        <p style="margin-bottom:10px">Теперь представьте, что прошёл месяц. Вы по-прежнему ничего не изменили. Те же мысли, те же оправдания. Те же чувства. Только теперь к ним добавилось разочарование в себе.</p>
-        <p style="margin-bottom:10px">Теперь — год. Целый год бездействия. Здоровье стало хуже. Отношения застыли или разрушились. Деньги — те же или меньше. Вы смотрите на себя и видите <strong style="color:var(--cr)">худшую версию себя</strong>. Ту, которая знала, что нужно действовать — но не стала.</p>
-        <p style="margin-bottom:10px">Представьте, что прошло пять лет. Все вокруг двигались, а вы стоите на месте. Что вы чувствуете?</p>
-        <p style="margin-bottom:10px"><strong style="color:var(--cr)">Теперь откройте глаза.</strong></p>
-        <p style="margin-bottom:10px">У вас есть год. Целый год. Тот самый год, который вы только что потеряли в своём воображении — он ещё ваш. И вы можете прожить его иначе.</p>
-        <p style="font-size:.78rem;color:var(--tm)">Подсознание не различает реальные и воображаемые переживания. Всё, что вы только что почувствовали — настоящее. Используйте это как топливо.</p>
+    <!-- STAGE 1 -->
+    <div class="goal-card" style="margin-bottom:20px">
+      <div class="day-section-label" style="border:none;padding:0;color:var(--cr);font-size:.72rem;margin-bottom:10px">Этап 1. Моё идеальное будущее</div>
+      <div style="font-size:.84rem;color:var(--td);line-height:1.75;margin-bottom:14px">
+        <p style="margin-bottom:10px">Представьте: прошёл год. Всё сложилось наилучшим образом. Вы устроили свою жизнь так, как действительно хотели — не для кого-то, а для себя.</p>
+        <p style="margin-bottom:10px">Не редактируйте, не критикуйте — просто пишите. Позвольте себе мечтать. Каким человеком вы стали? Что вы делаете каждый день? Кто рядом? Как выглядит ваше здоровье, работа, отношения? Как вы себя чувствуете, когда просыпаетесь утром?</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Моя идеальная жизнь через год (пишите свободно, минимум 10 минут)</label>
+        <textarea class="form-textarea" id="rev-flow" rows="8" placeholder="Не торопитесь. Закройте глаза, представьте — и пишите всё, что приходит..."></textarea>
       </div>
     </div>
 
-    <div style="margin-top:24px">
-      <div class="sec-title" style="font-size:1rem">Разминка перед целями</div>
-      <div class="divider"></div>
-      <div class="sec-sub">Методика <strong>Future Authoring</strong> Джордана Питерсона — клинического психолога, профессора Университета Торонто. Исследования показали: студенты, прошедшие это упражнение, подняли успеваемость на 25% и снизили отчисления с 30% до 0%. Ответьте на вопросы честно — они помогут увидеть направление.</div>
+    <!-- STAGE 2 -->
+    <div class="goal-card" style="margin-bottom:20px">
+      <div class="day-section-label" style="border:none;padding:0;color:var(--cr);font-size:.72rem;margin-bottom:10px">Этап 2. Будущее, которого я хочу избежать</div>
+      <div style="font-size:.84rem;color:var(--td);line-height:1.75;margin-bottom:14px">
+        <p style="margin-bottom:10px"><strong style="color:var(--cr)">Закройте глаза.</strong> Представьте, что прошёл год — и вы не сделали ничего. Ни одного шага. Те же мысли, те же оправдания. Только теперь стало хуже.</p>
+        <p style="margin-bottom:10px">Здоровье подвело. Отношения застыли или разрушились. Деньги — те же или меньше. Вы смотрите на себя и видите <strong style="color:var(--cr)">худшую версию себя</strong>. Ту, которая знала, что нужно действовать — но не стала.</p>
+        <p style="margin-bottom:10px">Представьте, что прошло пять лет. Все вокруг двигались, а вы стоите на месте.</p>
+        <p style="margin-bottom:10px"><strong style="color:var(--cr)">Откройте глаза.</strong> У вас есть год. Тот самый год, который вы только что потеряли — он ещё ваш.</p>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Моя жизнь через год, если я ничего не изменю (пишите свободно)</label>
+        <textarea class="form-textarea" id="rev-free" rows="6" placeholder="Что я чувствую? Что вижу? О чём жалею?"></textarea>
+      </div>
+    </div>
 
+    <!-- WARMUP -->
+    <div class="goal-card" style="margin-bottom:20px">
+      <div class="day-section-label" style="border:none;padding:0;color:var(--cr);font-size:.72rem;margin-bottom:10px">Разминка — короткие ответы</div>
       <div class="form-group">
         <label class="form-label">Что я мог бы делать лучше?</label>
-        <textarea class="form-textarea" id="rev-flow" rows="2"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Чему бы я хотел научиться?</label>
-        <textarea class="form-textarea" id="rev-free" rows="2"></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Какие привычки я хочу изменить?</label>
         <textarea class="form-textarea" id="rev-real" rows="2"></textarea>
       </div>
       <div class="form-group">
-        <label class="form-label">Какой должна быть моя карьера через 3-5 лет?</label>
+        <label class="form-label">Чему бы я хотел научиться?</label>
         <textarea class="form-textarea" id="rev-feel" rows="2"></textarea>
       </div>
       <div class="form-group">
-        <label class="form-label">Какими я хочу видеть свои отношения?</label>
+        <label class="form-label">Какие привычки я хочу изменить?</label>
         <textarea class="form-textarea" id="rev-whose" rows="2"></textarea>
       </div>
       <div class="form-group">
-        <label class="form-label">Как я хочу проводить свободное время?</label>
+        <label class="form-label">Какой должна быть моя карьера через 3-5 лет?</label>
         <textarea class="form-textarea" id="rev-ifnot" rows="2"></textarea>
       </div>
-      <div class="btn-row">
-        <button class="btn btn-primary" id="btn-save-rev">Сохранить</button>
+      <div class="form-group">
+        <label class="form-label">Какими я хочу видеть свои отношения?</label>
+        <textarea class="form-textarea" id="rev-rel" rows="2"></textarea>
       </div>
+      <div class="form-group">
+        <label class="form-label">Как я хочу проводить свободное время?</label>
+        <textarea class="form-textarea" id="rev-leisure" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-save-rev">Сохранить</button>
+    </div>
+
+    <!-- Transition to Stage 3 -->
+    <div style="margin-top:28px;text-align:center;padding:20px;background:rgba(107,29,58,.03);border-radius:16px;border:1px solid var(--bd)">
+      <div style="font-size:.88rem;color:var(--td);line-height:1.8;margin-bottom:14px">Вы только что увидели два будущих — то, к которому хотите прийти, и то, от которого хотите уйти. Между ними — ваши действия.<br><br>Теперь вы готовы. Перейдите во вкладку <strong style="color:var(--cr)">+ Цель</strong> и поставьте свою первую цель. Не идеальную. Настоящую.</div>
+      <button class="btn btn-primary" onclick="document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});document.querySelector('[data-tab=add]').classList.add('active');document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});document.getElementById('panel-add').classList.add('active')">Перейти к Этапу 3 — поставить цель</button>
     </div>
   </div>
 
@@ -314,9 +333,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
   <!-- ADD GOAL -->
   <div class="panel" id="panel-add">
-    <div class="sec-title">Новая цель</div>
+    <div class="sec-title">Этап 3. Постановка цели</div>
     <div class="divider"></div>
-    <div class="sec-sub">Ответьте на вопросы честно. Они помогут отделить настоящую цель от чужих ожиданий.</div>
+    <div class="sec-sub">Вы увидели своё будущее. Теперь превратите его в конкретную цель. Ответьте на вопросы честно — они помогут отделить настоящее желание от привычки угождать.</div>
 
     <div class="form-group"><label class="form-label">Категория</label><select class="form-select" id="g-cat"><option>Здоровье</option><option>Карьера</option><option>Отношения</option><option>Финансы</option><option>Развитие</option><option>Творчество</option><option>Привычки</option><option>Другое</option></select></div>
 
@@ -374,11 +393,12 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     </div>
 
     <div class="goal-card" style="margin-bottom:16px">
-      <div class="day-section-label" style="border:none;padding:0;color:var(--cr);font-size:.72rem;margin-bottom:12px">Разбивка по времени</div>
-      <div class="form-group"><label class="form-label">Результат на этот квартал (3 месяца)</label><input class="form-input" id="g-quarter" placeholder="Например: Найти 5 постоянных клиентов"></div>
-      <div class="form-group"><label class="form-label">Фокус этого месяца (один главный шаг)</label><input class="form-input" id="g-focus" placeholder="Например: Запустить рекламу и провести 10 консультаций"></div>
-      <div class="form-group"><label class="form-label">Действия на эту неделю</label><input class="form-input" id="g-week-action" placeholder="Например: Написать 3 поста, позвонить 5 людям"></div>
-      <div class="form-group"><label class="form-label">Ключевые шаги к годовой цели</label><textarea class="form-textarea" id="g-steps" placeholder="1. Записаться на курс&#10;2. Заниматься 30 мин/день" rows="3"></textarea></div>
+      <div class="day-section-label" style="border:none;padding:0;color:var(--cr);font-size:.72rem;margin-bottom:6px">Путь к цели</div>
+      <div style="font-size:.78rem;color:var(--tm);margin-bottom:14px;line-height:1.6">Год — это далеко. Разбейте цель на понятные отрезки. Каждый уровень можно обновлять по мере продвижения.</div>
+      <div class="form-group"><label class="form-label">Что я хочу получить за ближайшие 3 месяца?</label><input class="form-input" id="g-quarter" placeholder="Конкретный, измеримый результат к концу квартала"></div>
+      <div class="form-group"><label class="form-label">На чём я сосредоточусь в этом месяце?</label><input class="form-input" id="g-focus" placeholder="Один главный шаг, который двинет к квартальному результату"></div>
+      <div class="form-group"><label class="form-label">Что конкретно я сделаю на этой неделе?</label><input class="form-input" id="g-week-action" placeholder="2-3 конкретных действия, которые я точно могу выполнить"></div>
+      <div class="form-group"><label class="form-label">Крупные шаги на весь год</label><textarea class="form-textarea" id="g-steps" placeholder="Все шаги, которые приходят в голову — не фильтруйте" rows="3"></textarea></div>
     </div>
 
     <div class="btn-row" style="padding-bottom:120px"><button class="btn btn-primary" id="btn-add-goal">Добавить цель</button></div>

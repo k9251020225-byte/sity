@@ -19,6 +19,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .header-title span{color:var(--cr)}
 .header-sub{font-family:'Raleway',sans-serif;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tm)}
 .header-back{font-size:.7rem;color:var(--cr);text-decoration:none;font-family:'Raleway',sans-serif;letter-spacing:.1em}
+.header-links{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.header-links a{font-size:.68rem;color:var(--cr);text-decoration:none;font-family:'Raleway',sans-serif;letter-spacing:.08em;padding:4px 10px;border:1px solid var(--bd);border-radius:14px;transition:all .3s;white-space:nowrap}
+.header-links a:hover{border-color:var(--cr);background:rgba(107,29,58,.06)}
 .container{max-width:640px;margin:0 auto;padding:20px 16px}
 .tabs{display:flex;gap:6px;margin-bottom:24px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
@@ -92,7 +95,12 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="header-title">Дневник <span>КПТ</span></div>
     <div class="header-sub">когнитивно-поведенческая терапия</div>
   </div>
-  <a href="https://sudas-psy.ru" class="header-back">sudas-psy.ru</a>
+  <div class="header-links">
+    <a href="https://sudas-psy.ru" target="_blank">Сайт</a>
+    <a href="https://t.me/sudas_psy" target="_blank">Telegram</a>
+    <a href="https://t.me/psyMuza" target="_blank">Канал</a>
+    <a href="https://dzen.ru/id/69a1e2a84aaf5559c210326b" target="_blank">Дзен</a>
+  </div>
 </div>
 
 <div class="container">

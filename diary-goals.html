@@ -125,6 +125,31 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .pin-error{font-size:.78rem;color:#a33;margin-top:8px;min-height:20px}
 .pin-hint{font-size:.72rem;color:var(--tl);margin-top:10px;line-height:1.5}
 #app{display:none}
+/* Letter intro */
+.letter-wrap{padding:20px 16px 0;max-width:640px;margin:0 auto}
+.letter{background:rgba(255,255,255,.45);border:1px solid var(--bd);border-radius:20px;padding:28px 22px;position:relative;overflow:hidden}
+.letter-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--bd);float:left;margin:0 16px 8px 0;shape-outside:circle()}
+.letter-text{font-size:.84rem;color:var(--td);line-height:1.75}
+.letter-text p{margin-bottom:12px}
+.letter-text strong{color:var(--cr);font-weight:500}
+.letter-text em{font-size:.78rem;color:var(--tm);font-style:normal;display:block;margin-top:8px}
+.letter-close{position:absolute;top:12px;right:14px;background:none;border:none;font-size:1.2rem;color:var(--tm);cursor:pointer;opacity:.4;transition:opacity .3s}
+.letter-close:hover{opacity:1}
+
+/* Smoke fade-in animation */
+@keyframes smokeFadeIn{
+  0%{opacity:0;filter:blur(8px);transform:translateY(20px)}
+  60%{filter:blur(2px)}
+  100%{opacity:1;filter:blur(0);transform:translateY(0)}
+}
+.letter.smoke-in{animation:smokeFadeIn 2s ease-out forwards}
+.letter.smoke-in .letter-photo{animation:smokeFadeIn 1.5s ease-out .3s both}
+.letter.smoke-in .letter-text p:nth-child(1){animation:smokeFadeIn 1.2s ease-out .5s both}
+.letter.smoke-in .letter-text p:nth-child(2){animation:smokeFadeIn 1.2s ease-out .9s both}
+.letter.smoke-in .letter-text p:nth-child(3){animation:smokeFadeIn 1.2s ease-out 1.3s both}
+.letter.smoke-in .letter-text p:nth-child(4){animation:smokeFadeIn 1.2s ease-out 1.7s both}
+.letter.smoke-in .letter-text p:nth-child(5){animation:smokeFadeIn 1.2s ease-out 2.1s both}
+
 .author-block{text-align:center;padding:30px 16px 10px;margin-top:30px;border-top:1px solid var(--bd)}
 .author-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--td);margin-bottom:2px}
 .author-role{font-size:.78rem;color:var(--tm);margin-bottom:4px}
@@ -172,6 +197,20 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="header-sub">целеполагание на год</div>
   </div>
   <a href="https://t.me/sudas_psy" class="header-back" target="_blank">Написать</a>
+</div>
+
+<div class="letter-wrap" id="letter-wrap">
+  <div class="letter smoke-in" id="letter">
+    <button class="letter-close" id="letter-close">&times;</button>
+    <img class="letter-photo" src="images/image_1.png" alt="Екатерина Судас">
+    <div class="letter-text">
+      <p><strong>Понимание без действия не меняет жизнь.</strong></p>
+      <p>Тревога — это не поломка. Это сигнал: вы стоите перед шагом, для которого нужна опора на себя. А опоры пока нет. Психика устроена просто: знакомое — безопасно, новое — угроза. Поэтому вместо действий — бесконечное изучение. Понимание растёт, а жизнь стоит.</p>
+      <p>Цель на год — это не про мотивацию. Это про опору. Когда вы ставите цель и каждую неделю фиксируете движение — вы создаёте связь между тем, кто вы сейчас, и тем, куда вы идёте.</p>
+      <p>Тревога уходит не тогда, когда всё становится хорошо. А тогда, когда появляется точка опоры в настоящем. Этот дневник — ваш инструмент. Не для понимания. Для действия.</p>
+      <p><em>Екатерина Судас — клинический психолог, МГУ</em></p>
+    </div>
+  </div>
 </div>
 
 <div class="container">
@@ -365,6 +404,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   }
 
   function initApp(storageKey){
+  // Letter show/hide
+  var letterKey=storageKey+'_letter_closed';
+  var letterWrap=$('letter-wrap');
+  if(localStorage.getItem(letterKey)){letterWrap.style.display='none'}
+  $('letter-close').onclick=function(){
+    letterWrap.style.display='none';
+    localStorage.setItem(letterKey,'1');
+  };
+
   var GKEY=storageKey+'_goals';
   var CKEY=storageKey+'_checkins';
 

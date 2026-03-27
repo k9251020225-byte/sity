@@ -303,7 +303,8 @@ function initApp(sk){
 
   // === WEEK ===
   function renderWeek(){
-    var h='<div class="sec-title">Еженедельный обзор</div><div class="divider"></div>';
+    var h='<div class="sec-title">Обзор каждые 5 дней</div><div class="divider"></div>';
+    h+='<div class="sec-sub" style="color:var(--tx3)">Перечитайте записи за последние 5 дней и ответьте на вопросы.</div>';
     h+='<div class="form-group"><label class="form-label">Паттерны недели — что я вижу?</label><textarea class="form-textarea" id="wk-pattern" rows="3"></textarea></div>';
     h+='<div class="form-group"><label class="form-label">Самая импульсивная покупка — какое состояние я покупал(-а)?</label><textarea class="form-textarea" id="wk-impulse" rows="2"></textarea></div>';
     h+='<div class="form-group"><label class="form-label">Самая осознанная покупка — что я выбрал(-а)?</label><textarea class="form-textarea" id="wk-conscious" rows="2"></textarea></div>';

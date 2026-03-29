@@ -6,8 +6,9 @@ var esc=function(s){var d=document.createElement('div');d.textContent=s;return d
 window.initStart=function(){renderStart()};
 window.renderStart=function(){
   var data=loadD();
-  var h='<div class="sec-title">Прежде чем ставить цели</div><div class="divider"></div>';
-  h+='<div class="sec-sub">Методика <strong>Future Authoring</strong> Джордана Питерсона. Не торопитесь — 30 минут тишины.</div>';
+  var h='<div class="sec-title">С чего начать</div><div class="divider"></div>';
+  h+='<div class="card smoke-in"><div class="card-text"><p><strong>Этот дневник — не список целей.</strong></p><p>Это место, где вы встретитесь с собой. С тем, что стоит за вашими решениями, за вашей усталостью, за ощущением «я потерял(-а) себя».</p><p>Перед тем как ставить цели — нужно понять, откуда вы стартуете. Не из головы — а из честного контакта с собой. Для этого мы используем методику <strong>Future Authoring</strong> Джордана Питерсона — клинического психолога, профессора Университета Торонто. Его исследования показали: люди, прошедшие это упражнение, подняли результаты на 25% и перестали бросать начатое.</p><p>Выделите 30 минут тишины. Не торопитесь. Это фундамент, на котором будет стоять всё остальное.</p></div></div>';
+  h+='<div style="margin-top:20px"></div>';
 
   h+='<div class="card"><div class="card-title">Этап 1. Идеальное будущее</div>';
   h+='<div class="card-dim" style="margin-bottom:10px">Представьте: прошёл год. Всё сложилось наилучшим образом. Не редактируйте — просто пишите.</div>';

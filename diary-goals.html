@@ -160,25 +160,25 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
 <div class="container">
 <div class="tabs">
-<button class="tab active" data-tab="day">День</button>
+<button class="tab active" data-tab="start">Начало</button>
+<button class="tab" data-tab="day">День</button>
 <button class="tab" data-tab="review">Обзор</button>
 <button class="tab" data-tab="goals">Цели</button>
 <button class="tab" data-tab="habits">Привычки</button>
-<button class="tab" data-tab="start">Начало</button>
 <button class="tab" data-tab="add">+ Цель</button>
 <button class="tab" data-tab="profile">Профиль</button>
 </div>
 
-<!-- DAY — main panel -->
-<div class="panel active" id="panel-day"><div id="day-content"></div></div>
+<!-- START — first panel, active by default -->
+<div class="panel active" id="panel-start"><div id="start-content"></div></div>
+<!-- DAY -->
+<div class="panel" id="panel-day"><div id="day-content"></div></div>
 <!-- 5-DAY REVIEW -->
 <div class="panel" id="panel-review"><div id="review-content"></div></div>
 <!-- GOALS LIST -->
 <div class="panel" id="panel-goals"><div id="goals-content"></div></div>
 <!-- HABITS -->
 <div class="panel" id="panel-habits"><div id="habits-content"></div></div>
-<!-- START (Питерсон + 8 вопросов) -->
-<div class="panel" id="panel-start"><div id="start-content"></div></div>
 <!-- ADD GOAL -->
 <div class="panel" id="panel-add"><div id="add-content"></div></div>
 <!-- PROFILE -->

@@ -113,13 +113,13 @@ window.renderDay=function(){
 // Review (every 5 days)
 window.renderReview=function(){
   var db=window.OPORA_DB;
-  var h='<div class="sec-title">Обзор каждые 5 дней</div><div class="divider"></div>';
-  h+='<div class="sec-sub">Перечитайте записи за последние 5 дней и ответьте честно.</div>';
+  var h='<div class="sec-title">Еженедельный обзор</div><div class="divider"></div>';
+  h+='<div class="sec-sub">Перечитайте записи за неделю и ответьте честно.</div>';
   h+='<div class="form-group"><label class="form-label">Что мне мешало эти дни?</label><textarea class="form-textarea" id="rv-blocked" rows="3"></textarea></div>';
   h+='<div class="form-group"><label class="form-label">Что мне помогало?</label><textarea class="form-textarea" id="rv-helped" rows="3"></textarea></div>';
   h+='<div class="form-group"><label class="form-label">От чего я прятался(-ась) эти дни?</label><textarea class="form-textarea" id="rv-hiding" rows="2"></textarea></div>';
   h+='<div class="form-group"><label class="form-label">Что я чувствую, когда перечитываю свои записи?</label><textarea class="form-textarea" id="rv-feelings" rows="2"></textarea></div>';
-  h+='<div class="form-group"><label class="form-label">Письмо от взрослой части — напутствие себе</label><textarea class="form-textarea" id="rv-letter" rows="4" placeholder="Что ты хочешь сказать себе на следующие 5 дней?"></textarea></div>';
+  h+='<div class="form-group"><label class="form-label">Письмо от взрослой части — напутствие себе</label><textarea class="form-textarea" id="rv-letter" rows="4" placeholder="Что ты хочешь сказать себе на следующую неделю?"></textarea></div>';
   h+='<div class="form-group" style="padding:10px;background:rgba(107,29,58,.04);border-radius:12px"><label class="form-label" style="color:var(--cr)">Прикасался ли кто-то ко мне? Как это было?</label><textarea class="form-textarea" id="rv-touch" rows="2"></textarea></div>';
   h+='<div class="btn-row"><button class="btn btn-primary" id="btn-save-rv">Сохранить обзор</button></div>';
 

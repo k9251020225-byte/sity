@@ -139,7 +139,8 @@ window.initHabits=function(){renderHabits()};
 window.renderHabits=function(){
   var data=loadD();data.habits=data.habits||[];
   var h='<div class="sec-title">Трекер привычек</div><div class="divider"></div>';
-  h+='<div class="sec-sub">3-4 привычки. 30 клеточек. Без осуждения — просто факты.</div>';
+  h+='<div class="card" style="margin-bottom:18px"><div class="card-text"><p>Цели живут в голове. Привычки — в теле. Можно поставить цель «быть здоровой» и ни разу не выйти на прогулку. Можно мечтать о спокойствии — и ни разу не выделить 10 минут тишины.</p><p>Этот трекер — зеркало. Не для мотивации и не для контроля. Для честности. Вы выбираете 3-4 маленьких действия, которые приближают вас к тому состоянию, которое вы хотите. И каждый день просто отмечаете: сделал(-а) или нет.</p><p><strong>Без осуждения.</strong> Пустая клетка — не провал. Это информация. Закрашенная — не победа. Это факт. Через 30 дней вы увидите свои паттерны глазами, а не ощущениями. Потому что ощущения часто врут — вам всегда кажется, что вы ничего не делаете. А клеточки покажут правду.</p></div></div>';
+  h+='<div class="sec-sub">Примеры: утренняя прогулка, 10 минут тишины, время с партнёром, не есть за ноутбуком, лечь до 23:00</div>';
 
   data.habits.forEach(function(hab,hi){
     h+='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div class="habit-name">'+esc(hab.name)+'</div><button style="background:none;border:none;color:#a33;cursor:pointer;font-size:.8rem;opacity:.5" onclick="window._delHab('+hi+')">&times;</button></div>';

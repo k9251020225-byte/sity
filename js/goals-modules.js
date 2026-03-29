@@ -161,26 +161,70 @@ window.renderHabits=function(){
 
   h+='<div class="sec-sub" style="font-style:italic">Примеры привычек: утренняя прогулка 15 мин, 10 минут тишины, не есть за ноутбуком, лечь до 23:00, время с партнёром, один звонок подруге в неделю, стакан воды утром</div>';
 
+  // Group habits by goal
+  var goals=data.goals||[];
+  var unlinked=[];
+  var byGoal={};
   data.habits.forEach(function(hab,hi){
-    h+='<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div class="habit-name">'+esc(hab.name)+'</div><button style="background:none;border:none;color:#a33;cursor:pointer;font-size:.8rem;opacity:.5" onclick="window._delHab('+hi+')">&times;</button></div>';
-    h+='<div class="habit-grid">';
-    for(var d=0;d<30;d++){var done=hab.days&&hab.days[d];h+='<div class="habit-dot'+(done?' done':'')+'" onclick="window._togHab('+hi+','+d+')"></div>'}
-    h+='</div>';
-    var count=(hab.days||[]).filter(Boolean).length;
-    h+='<div style="font-size:.7rem;color:var(--tm);margin-top:4px">'+count+' / 30</div></div>';
+    if(hab.goalIdx!==undefined&&hab.goalIdx!==null&&goals[hab.goalIdx]){
+      if(!byGoal[hab.goalIdx])byGoal[hab.goalIdx]=[];
+      byGoal[hab.goalIdx].push({hab:hab,hi:hi});
+    }else{
+      unlinked.push({hab:hab,hi:hi});
+    }
   });
 
-  h+='<div style="display:flex;gap:8px;margin-top:12px"><input class="form-input" id="hab-name" placeholder="Новая привычка" style="flex:1"><button class="btn btn-primary btn-sm" id="btn-add-hab">+</button></div>';
+  // Show by goal
+  goals.forEach(function(g,gi){
+    var items=byGoal[gi]||[];
+    if(!items.length)return;
+    h+='<div class="card"><div style="font-size:.82rem;color:var(--cr);margin-bottom:10px;font-family:Playfair Display,serif">'+esc(g.name)+'</div>';
+    items.forEach(function(item){
+      h+=renderHabitRow(item.hab,item.hi);
+    });
+    h+='</div>';
+  });
 
-  // Warning for compulsive
+  // Unlinked habits
+  if(unlinked.length){
+    h+='<div class="card"><div style="font-size:.82rem;color:var(--tm);margin-bottom:10px">Общие привычки</div>';
+    unlinked.forEach(function(item){h+=renderHabitRow(item.hab,item.hi)});
+    h+='</div>';
+  }
+
+  // Add new habit
+  h+='<div class="card" style="margin-top:12px"><div style="font-size:.82rem;color:var(--td);margin-bottom:8px">Добавить привычку</div>';
+  h+='<div class="form-group"><input class="form-input" id="hab-name" placeholder="Название привычки"></div>';
+  if(goals.length){
+    h+='<div class="form-group"><label class="form-label">Привязать к цели</label><select class="form-select" id="hab-goal"><option value="">Без привязки (общая)</option>';
+    goals.forEach(function(g,gi){h+='<option value="'+gi+'">'+esc(g.name)+'</option>'});
+    h+='</select></div>';
+  }
+  h+='<button class="btn btn-primary btn-sm" id="btn-add-hab">Добавить</button></div>';
+
   if(data.habits.length>0){
     h+='<div class="card-dim" style="margin-top:16px;padding:10px;background:rgba(107,29,58,.03);border-radius:10px">Вы заполняете трекер для себя — или чтобы успокоить тревогу? Если второе — это тоже данные.</div>';
   }
 
   $('habits-content').innerHTML=h;
-  $('btn-add-hab').onclick=function(){var n=$('hab-name').value.trim();if(!n)return;data.habits.push({name:n,days:[]});saveD(data);$('hab-name').value='';renderHabits()};
+  $('btn-add-hab').onclick=function(){
+    var n=$('hab-name').value.trim();if(!n)return;
+    var goalSel=$('hab-goal');
+    var goalIdx=goalSel&&goalSel.value!==''?parseInt(goalSel.value):null;
+    data.habits.push({name:n,days:[],goalIdx:goalIdx});
+    saveD(data);$('hab-name').value='';renderHabits();
+  };
 };
 
+function renderHabitRow(hab,hi){
+  var h='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div class="habit-name">'+esc(hab.name)+'</div><button style="background:none;border:none;color:#a33;cursor:pointer;font-size:.8rem;opacity:.5" onclick="window._delHab('+hi+')">&times;</button></div>';
+  h+='<div class="habit-grid">';
+  for(var d=0;d<30;d++){var done=hab.days&&hab.days[d];h+='<div class="habit-dot'+(done?' done':'')+'" onclick="window._togHab('+hi+','+d+')"></div>'}
+  h+='</div>';
+  var count=(hab.days||[]).filter(Boolean).length;
+  h+='<div style="font-size:.7rem;color:var(--tm);margin-top:3px">'+count+' / 30 ('+Math.round(count/30*100)+'%)</div></div>';
+  return h;
+}
 window._togHab=function(hi,d){var data=loadD();if(!data.habits[hi].days)data.habits[hi].days=[];data.habits[hi].days[d]=!data.habits[hi].days[d];saveD(data);renderHabits()};
 window._delHab=function(hi){var data=loadD();data.habits.splice(hi,1);saveD(data);renderHabits()};
 })();

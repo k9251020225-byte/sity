@@ -114,7 +114,12 @@ window.renderDay=function(){
 window.renderReview=function(){
   var db=window.OPORA_DB;
   var h='<div class="sec-title">Еженедельный обзор</div><div class="divider"></div>';
-  h+='<div class="sec-sub">Перечитайте записи за неделю и ответьте честно.</div>';
+  h+='<div class="sec-sub">Перечитайте свои записи за неделю, а затем ответьте на вопросы.</div>';
+
+  // History of entries
+  h+='<div id="rv-history" style="margin-bottom:20px"></div>';
+
+  h+='<div class="sec-title" style="font-size:1rem;margin-top:16px">Мой обзор</div><div class="divider"></div>';
   h+='<div class="form-group"><label class="form-label">Что мне мешало эти дни?</label><textarea class="form-textarea" id="rv-blocked" rows="3"></textarea></div>';
   h+='<div class="form-group"><label class="form-label">Что мне помогало?</label><textarea class="form-textarea" id="rv-helped" rows="3"></textarea></div>';
   h+='<div class="form-group"><label class="form-label">От чего я прятался(-ась) эти дни?</label><textarea class="form-textarea" id="rv-hiding" rows="2"></textarea></div>';
@@ -134,18 +139,55 @@ window.renderReview=function(){
     dbPut(db,'reviews','rv_'+Date.now(),rv,function(){alert('Обзор сохранён!')});
   };
 
-  // Load stats
+  // Load history + stats
   if(db){
     dbGetAll(db,'daily',function(all){
-      var total=all.length;var choseCount=0;var feels={};
+      // Sort by date desc
+      all.sort(function(a,b){return a.key>b.key?-1:1});
+      var last7=all.slice(0,7);
+
+      // Render history
+      var hh='';
+      if(last7.length){
+        hh+='<div class="card-title" style="margin-bottom:10px">Ваши записи за последние дни</div>';
+        var dayNames=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+        last7.forEach(function(item){
+          var v=item.val;var d=new Date(item.key);
+          var dayName=dayNames[d.getDay()];
+          hh+='<div class="card" style="padding:12px;margin-bottom:8px">';
+          hh+='<div style="font-size:.65rem;color:var(--cr);text-transform:uppercase;letter-spacing:.15em;margin-bottom:6px">'+dayName+', '+d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})+'</div>';
+          if(v.feel)hh+='<div style="font-size:.8rem;color:var(--td);margin-bottom:4px"><strong>Состояние:</strong> '+esc(v.feel)+'</div>';
+          if(v.step)hh+='<div style="font-size:.8rem;color:var(--td);margin-bottom:4px"><strong>Шаг:</strong> '+esc(v.step)+'</div>';
+          if(v.hard)hh+='<div style="font-size:.8rem;color:var(--tm);margin-bottom:4px"><strong>Трудно:</strong> '+esc(v.hard)+'</div>';
+          if(v.chose)hh+='<div style="font-size:.8rem;color:var(--cr);margin-bottom:4px"><strong>Выбрал(-а) себя:</strong> '+esc(v.chose)+'</div>';
+          if(v.thanks)hh+='<div style="font-size:.8rem;color:var(--tm);margin-bottom:4px"><strong>Благодарность:</strong> '+esc(v.thanks)+'</div>';
+          if(v.qday)hh+='<div style="font-size:.78rem;color:var(--tl);font-style:italic">'+esc(v.question||'')+' — '+esc(v.qday)+'</div>';
+          hh+='</div>';
+        });
+      }else{
+        hh='<div class="empty-text">Нет записей. Заполняйте вкладку «День» каждый день.</div>';
+      }
+      if($('rv-history'))$('rv-history').innerHTML=hh;
+
+      // Stats
+      var total=all.length;var choseCount=0;var thanksCount=0;var feels={};var bodyCount=0;
       all.forEach(function(item){
         var v=item.val;
         if(v.chose&&v.chose.trim())choseCount++;
+        if(v.thanks&&v.thanks.trim())thanksCount++;
+        if(v.body&&v.body.trim())bodyCount++;
         if(v.feel){var f=v.feel.trim().toLowerCase();feels[f]=(feels[f]||0)+1}
       });
-      var topFeel='—';var topN=0;
-      Object.keys(feels).forEach(function(k){if(feels[k]>topN){topN=feels[k];topFeel=k}});
-      $('rv-stats').innerHTML='<div class="stat-card"><div class="stat-num">'+total+'</div><div class="stat-label">Дней записано</div></div><div class="stat-card"><div class="stat-num">'+choseCount+'</div><div class="stat-label">Раз выбрал(-а) себя</div></div><div class="stat-card"><div class="stat-num" style="font-size:1.1rem">'+esc(topFeel)+'</div><div class="stat-label">Частое состояние</div></div><div class="stat-card"><div class="stat-num">'+Math.round(choseCount/(total||1)*100)+'%</div><div class="stat-label">Дни с выбором себя</div></div>';
+      // Top 3 feelings
+      var feelArr=Object.keys(feels).map(function(k){return{w:k,n:feels[k]}}).sort(function(a,b){return b.n-a.n});
+      var topFeels=feelArr.slice(0,3).map(function(f){return esc(f.w)+' ('+f.n+')'}).join(', ')||'—';
+
+      $('rv-stats').innerHTML=
+        '<div class="stat-card"><div class="stat-num">'+total+'</div><div class="stat-label">Дней записано</div></div>'+
+        '<div class="stat-card"><div class="stat-num">'+choseCount+'</div><div class="stat-label">Раз выбрал(-а) себя</div></div>'+
+        '<div class="stat-card"><div class="stat-num">'+thanksCount+'</div><div class="stat-label">Раз поблагодарил(-а) себя</div></div>'+
+        '<div class="stat-card"><div class="stat-num">'+bodyCount+'</div><div class="stat-label">Дней с телом</div></div>'+
+        '<div style="grid-column:1/-1;text-align:center;padding:10px;background:rgba(255,255,255,.5);border:1.5px solid var(--bd);border-radius:14px"><div style="font-size:.68rem;color:var(--tm);text-transform:uppercase;letter-spacing:.15em;margin-bottom:4px">Частые состояния</div><div style="font-size:.88rem;color:var(--td)">'+topFeels+'</div></div>';
     });
   }
 };

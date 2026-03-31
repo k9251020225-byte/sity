@@ -1,5 +1,8 @@
 (function(){
-var KEY='instruction_v2';
+var KEY='instruction_v3';
+// Clear old data
+if(localStorage.getItem('instruction_v1'))localStorage.removeItem('instruction_v1');
+if(localStorage.getItem('instruction_v2'))localStorage.removeItem('instruction_v2');
 var $=function(id){return document.getElementById(id)};
 var esc=function(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML};
 function loadD(){try{return JSON.parse(localStorage.getItem(KEY))||{step:0}}catch(e){return{step:0}}}
@@ -172,8 +175,9 @@ window.saveStep5=function(){data.s5={a:($('s5a')||{}).value||'',b:($('s5b')||{})
 window.saveStep6=function(){data.s6={a:($('s6a')||{}).value||'',b:($('s6b')||{}).value||'',c:($('s6c')||{}).value||''};saveD(data)};
 
 window.setDayMode=function(m){
-  if(curStep===1)saveStep1();
-  data.dayMode=m;saveD(data);render();
+  try{if(curStep===1)saveStep1()}catch(e){}
+  data.dayMode=m;saveD(data);
+  window.scrollTo(0,0);render();
 };
 
 window.goStep=function(n){

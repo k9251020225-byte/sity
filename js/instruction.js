@@ -50,40 +50,22 @@ function render(){
   h+='<div class="step'+(curStep===1?' active':'')+'"><h2>Дни 1–2. Что я делаю</h2><div class="subtitle">Не как хочется — а как есть. Вчерашний день. Конкретно.</div><div class="divider"></div>';
   h+='<div class="card"><div class="card-text"><p><strong>Зачем это нужно?</strong></p><p>Мы не видим свою жизнь, пока живём на автопилоте. Записать день по часам — значит остановить плёнку и посмотреть каждый кадр. Вы удивитесь: сколько часов уходит на «должен», и как мало — на «хочу». Это не про вину. Это про ясность.</p></div></div>';
 
-  // Toggle: beginner / advanced
-  var mode=data.dayMode||'beginner';
-  h+='<div style="display:flex;gap:8px;margin-bottom:16px"><button class="btn btn-sm '+(mode==='beginner'?'btn-primary':'btn-secondary')+'" onclick="window.setDayMode(\'beginner\')">Вечерний анализ</button><button class="btn btn-sm '+(mode==='advanced'?'btn-primary':'btn-secondary')+'" onclick="window.setDayMode(\'advanced\')">По часам (продвинутый)</button></div>';
-
-  if(mode==='advanced'){
-    h+='<div class="card-dim" style="margin-bottom:12px">Вспомните вчерашний день. Час за часом. Не идеальную версию — реальную.</div>';
-    hours.forEach(function(hr,i){
-      var pre=data['h'+i]||{};
-      h+='<div class="hour-block"><div class="hour-time">'+hr+'</div>';
-      h+='<div class="hour-field"><label>Что делал(-а):</label><input id="h'+i+'a" value="'+esc(pre.a||'')+'"></div>';
-      h+='<div class="hour-field"><label>Что чувствовал(-а):</label><input id="h'+i+'b" value="'+esc(pre.b||'')+'"></div>';
-      h+='<div class="hour-field"><label>Что в теле:</label><input id="h'+i+'c" value="'+esc(pre.c||'')+'"></div>';
-      h+='<div class="hour-field"><label>Чего хотел(-а) на самом деле:</label><input id="h'+i+'d" value="'+esc(pre.d||'')+'"></div></div>';
-    });
-    // Analysis after hours
-    var adv=data.advanced||{};
-    h+='<div class="card" style="margin-top:14px"><div class="card-title">Анализ дня</div>';
-    h+='<div class="field"><label class="field-label">Сколько часов — на «должен»?</label><input class="field-input" id="adv-must" value="'+esc(adv.must||'')+'"></div>';
-    h+='<div class="field"><label class="field-label">Сколько часов — на «хочу»?</label><input class="field-input" id="adv-want" value="'+esc(adv.want||'')+'"></div>';
-    h+='<div class="field"><label class="field-label">В какие часы я был(-а) живым(-ой)?</label><input class="field-input" id="adv-alive" value="'+esc(adv.alive||'')+'"></div>';
-    h+='<div class="field"><label class="field-label">В какие часы — на автопилоте?</label><input class="field-input" id="adv-auto" value="'+esc(adv.auto||'')+'"></div>';
-    h+='<div class="field"><label class="field-label">Что удивило?</label><textarea class="field-textarea" id="adv-surprise">'+(adv.surprise||'')+'</textarea></div></div>';
-  }else{
-    h+='<div class="card-dim" style="margin-bottom:12px">Вечером, перед сном, вспомните прошедший день и ответьте на вопросы.</div>';
-    var beg=data.beginner||{};
-    h+='<div class="card">';
-    h+='<div class="field"><label class="field-label">Как прошёл день? Что делал(-а) больше всего?</label><textarea class="field-textarea" id="bg-day">'+(beg.day||'')+'</textarea></div>';
-    h+='<div class="field"><label class="field-label">Что чувствовал(-а) в течение дня? Какие эмоции были главными?</label><textarea class="field-textarea" id="bg-feel">'+(beg.feel||'')+'</textarea></div>';
-    h+='<div class="field"><label class="field-label">Где в теле было напряжение, усталость, тяжесть?</label><textarea class="field-textarea" id="bg-body">'+(beg.body||'')+'</textarea></div>';
-    h+='<div class="field"><label class="field-label">Чего я хотел(-а) на самом деле сегодня — но не сделал(-а)?</label><textarea class="field-textarea" id="bg-want">'+(beg.want||'')+'</textarea></div>';
-    h+='<div class="field"><label class="field-label">Сколько часов — на «должен»? Сколько — на «хочу»?</label><textarea class="field-textarea" id="bg-ratio">'+(beg.ratio||'')+'</textarea></div>';
-    h+='</div>';
-    h+='<div class="card-dim" style="margin-top:8px">Заполните два вечера подряд — это даст картину. Потом переходите к Дню 3.</div>';
-  }
+  h+='<div class="card-dim" style="margin-bottom:12px">Вспомните вчерашний день. Час за часом. Не идеальную версию — реальную.</div>';
+  hours.forEach(function(hr,i){
+    var pre=data['h'+i]||{};
+    h+='<div class="hour-block"><div class="hour-time">'+hr+'</div>';
+    h+='<div class="hour-field"><label>Что делал(-а):</label><input id="h'+i+'a" value="'+esc(pre.a||'')+'"></div>';
+    h+='<div class="hour-field"><label>Что чувствовал(-а):</label><input id="h'+i+'b" value="'+esc(pre.b||'')+'"></div>';
+    h+='<div class="hour-field"><label>Что в теле:</label><input id="h'+i+'c" value="'+esc(pre.c||'')+'"></div>';
+    h+='<div class="hour-field"><label>Чего хотел(-а) на самом деле:</label><input id="h'+i+'d" value="'+esc(pre.d||'')+'"></div></div>';
+  });
+  var adv=data.advanced||{};
+  h+='<div class="card" style="margin-top:14px"><div class="card-title">Анализ дня</div>';
+  h+='<div class="field"><label class="field-label">Сколько часов — на «должен»?</label><input class="field-input" id="adv-must" value="'+esc(adv.must||'')+'"></div>';
+  h+='<div class="field"><label class="field-label">Сколько часов — на «хочу»?</label><input class="field-input" id="adv-want" value="'+esc(adv.want||'')+'"></div>';
+  h+='<div class="field"><label class="field-label">В какие часы я был(-а) живым(-ой)?</label><input class="field-input" id="adv-alive" value="'+esc(adv.alive||'')+'"></div>';
+  h+='<div class="field"><label class="field-label">В какие часы — на автопилоте?</label><input class="field-input" id="adv-auto" value="'+esc(adv.auto||'')+'"></div>';
+  h+='<div class="field"><label class="field-label">Что удивило?</label><textarea class="field-textarea" id="adv-surprise">'+(adv.surprise||'')+'</textarea></div></div>';
 
   h+='<div class="field" style="margin-top:14px"><label class="field-label">Посмотрите на записи. Что вы чувствуете? Одним предложением.</label><textarea class="field-textarea" id="s1feel">'+(data.s1feel||'')+'</textarea></div>';
   h+='<div class="card-dim">Я разбирала этот механизм в подкасте — почему мы годами в режиме «должен» и не замечаем. Слушайте в <a href="https://t.me/psyMuza" target="_blank" style="color:var(--accent)">@psyMuza</a>.</div>';
@@ -163,22 +145,14 @@ function render(){
 
 // Saves
 window.saveStep1=function(){
-  if(data.dayMode==='advanced'){
-    hours.forEach(function(hr,i){data['h'+i]={a:($('h'+i+'a')||{}).value||'',b:($('h'+i+'b')||{}).value||'',c:($('h'+i+'c')||{}).value||'',d:($('h'+i+'d')||{}).value||''}});
-    data.advanced={must:($('adv-must')||{}).value||'',want:($('adv-want')||{}).value||'',alive:($('adv-alive')||{}).value||'',auto:($('adv-auto')||{}).value||'',surprise:($('adv-surprise')||{}).value||''};
-  }else{data.beginner={day:($('bg-day')||{}).value||'',feel:($('bg-feel')||{}).value||'',body:($('bg-body')||{}).value||'',want:($('bg-want')||{}).value||'',ratio:($('bg-ratio')||{}).value||''}}
+  hours.forEach(function(hr,i){data['h'+i]={a:($('h'+i+'a')||{}).value||'',b:($('h'+i+'b')||{}).value||'',c:($('h'+i+'c')||{}).value||'',d:($('h'+i+'d')||{}).value||''}});
+  data.advanced={must:($('adv-must')||{}).value||'',want:($('adv-want')||{}).value||'',alive:($('adv-alive')||{}).value||'',auto:($('adv-auto')||{}).value||'',surprise:($('adv-surprise')||{}).value||''};
   data.s1feel=($('s1feel')||{}).value||'';saveD(data)};
 window.saveStep2=function(){for(var mi=1;mi<=3;mi++){data['m'+mi]={a:($('m'+mi+'a')||{}).value||'',b:($('m'+mi+'b')||{}).value||'',c:($('m'+mi+'c')||{}).value||''}};data.s2common=($('s2common')||{}).value||'';saveD(data)};
 window.saveStep3=function(){for(var vi=1;vi<=10;vi++){data['v'+vi]=($('v'+vi)||{}).value||''}saveD(data)};
 window.saveStep4=function(){for(var ci=1;ci<=7;ci++){data['c'+ci]={n:($('c'+ci+'n')||{}).value||'',w:($('c'+ci+'w')||{}).value||'',y:($('c'+ci+'y')||{}).value||'',m:($('c'+ci+'m')||{}).value||'',s:($('c'+ci+'s')||{}).value||''}};saveD(data)};
 window.saveStep5=function(){data.s5={a:($('s5a')||{}).value||'',b:($('s5b')||{}).value||'',c:($('s5c')||{}).value||'',d:($('s5d')||{}).value||'',e:($('s5e')||{}).value||''};saveD(data)};
 window.saveStep6=function(){data.s6={a:($('s6a')||{}).value||'',b:($('s6b')||{}).value||'',c:($('s6c')||{}).value||''};saveD(data)};
-
-window.setDayMode=function(m){
-  try{if(curStep===1)saveStep1()}catch(e){}
-  data.dayMode=m;saveD(data);
-  window.scrollTo(0,0);render();
-};
 
 window.goStep=function(n){
   if(curStep===1)saveStep1();if(curStep===2)saveStep2();if(curStep===3)saveStep3();

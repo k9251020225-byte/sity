@@ -67,9 +67,12 @@ function render(){
   h+='<div class="field"><label class="field-label">В какие часы — на автопилоте?</label><input class="field-input" id="adv-auto" value="'+esc(adv.auto||'')+'"></div>';
   h+='<div class="field"><label class="field-label">Что удивило?</label><textarea class="field-textarea" id="adv-surprise">'+(adv.surprise||'')+'</textarea></div></div>';
 
+  // Auto-analysis after saving step 1
+  h+='<div id="auto-analysis" style="margin-top:14px"></div>';
+
   h+='<div class="field" style="margin-top:14px"><label class="field-label">Посмотрите на записи. Что вы чувствуете? Одним предложением.</label><textarea class="field-textarea" id="s1feel">'+(data.s1feel||'')+'</textarea></div>';
   h+='<div class="card-dim">Я разбирала этот механизм в подкасте — почему мы годами в режиме «должен» и не замечаем. Слушайте в <a href="https://t.me/psyMuza" target="_blank" style="color:var(--accent)">@psyMuza</a>.</div>';
-  h+='<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="saveStep1();goStep(0)">← Назад</button><button class="btn btn-primary" onclick="saveStep1();goStep(2)">День 3 →</button></div></div>';
+  h+='<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="saveStep1();goStep(0)">← Назад</button><button class="btn btn-secondary btn-sm" onclick="saveStep1();showAnalysis()">Показать анализ</button><button class="btn btn-primary" onclick="saveStep1();goStep(2)">День 3 →</button></div></div>';
 
   // === STEP 2: DAY 3 ===
   h+='<div class="step'+(curStep===2?' active':'')+'"><h2>День 3. Когда я — это я</h2><div class="subtitle">Вспомните момент, когда внутри и снаружи совпало.</div><div class="divider"></div>';
@@ -112,8 +115,9 @@ function render(){
   h+='<div class="card-text"><p>Возьмите дни 1–2 и день 5. Положите рядом. Посмотрите на свой реальный день — и на свои ценности. Где совпадают? Где расходятся?</p></div>';
   var s5=data.s5||{};
   h+='<div class="card">';
-  h+='<div class="field"><label class="field-label">Часов по ценностям:</label><input class="field-input" id="s5a" value="'+esc(s5.a||'')+'"></div>';
-  h+='<div class="field"><label class="field-label">Часов мимо:</label><input class="field-input" id="s5b" value="'+esc(s5.b||'')+'"></div>';
+  h+='<div class="field"><label class="field-label">Часов по ценностям:</label><input class="field-input" id="s5a" value="'+esc(s5.a||'')+'" type="number" placeholder="0"></div>';
+  h+='<div class="field"><label class="field-label">Часов мимо:</label><input class="field-input" id="s5b" value="'+esc(s5.b||'')+'" type="number" placeholder="0"></div>';
+  h+='<div id="gap-visual"></div>';
   h+='<div class="field"><label class="field-label">Для кого живёте «мимо»? Чьи ожидания?</label><textarea class="field-textarea" id="s5c">'+(s5.c||'')+'</textarea></div>';
   h+='<div class="field"><label class="field-label">Что будет, если перестать? Чего боитесь?</label><textarea class="field-textarea" id="s5d">'+(s5.d||'')+'</textarea></div>';
   h+='<div class="field"><label class="field-label">Что чувствуете прямо сейчас?</label><textarea class="field-textarea" id="s5e">'+(s5.e||'')+'</textarea></div></div>';
@@ -131,11 +135,13 @@ function render(){
 
   h+='<div class="card" style="margin-top:16px"><div class="card-text"><p><strong>Меняет не понимание. Меняет действие.</strong></p><p>Вы совершили семь действий за семь дней. Скачали. Открыли. Заполнили. Посмотрели. Столкнулись. Выбрали.</p></div></div>';
 
+  // Mini analytics
+  h+='<div class="card" style="margin-top:20px"><div class="card-title">Ваши данные за 7 дней</div><div id="mini-analytics"></div></div>';
+
   // CTA
-  h+='<div class="cta-block"><div class="cta-title">Что дальше</div><div class="cta-paths">';
-  h+='<div class="cta-path"><div class="cta-path-name">Путь 1. Самостоятельно.</div><div class="cta-path-desc">Внедрите одно действие из дня 7. Живите с ним неделю. Вернитесь к таблице дня 5 и сверьтесь. Заполняйте таблицу дня 1–2 раз в неделю. Наблюдайте за динамикой. Это уже работа.</div></div>';
-  h+='<div class="cta-path"><div class="cta-path-name">Путь 2. Две сессии.</div><div class="cta-path-desc">Вы приходите с этим документом. Я анализирую ваши данные и выдаю персональную «Инструкцию к себе»: что стоит за паттернами, откуда они, конкретный маршрут. Письменный аналитический отчёт на руках.</div></div>';
-  h+='<div class="cta-path"><div class="cta-path-name">Путь 3. Долгосрочная работа.</div><div class="cta-path-desc">Если то, что вы увидели, — не единичный эпизод, а система, которая повторяется годами. Еженедельные встречи, письменные отчёты, полный маршрут изменений.</div></div></div>';
+  h+='<div class="cta-block"><div class="cta-title">Что дальше</div><div class="cta-text">Этот тренинг — вход. Вы увидели свои паттерны. Теперь есть два пути:</div><div class="cta-paths">';
+  h+='<div class="cta-path"><div class="cta-path-name">Для тех, кто ценит время: 2 сессии под 1 запрос</div><div class="cta-path-desc">Вы приходите с этим документом. Я анализирую ваши данные, провожу глубинную диагностику и выдаю персональную «Инструкцию к себе»: что стоит за паттернами, откуда они, что делать. Письменный аналитический отчёт на руках. Конкретный ответ — не процесс.</div></div>';
+  h+='<div class="cta-path"><div class="cta-path-name">Для тех, кто хочет глубоко: личная терапия</div><div class="cta-path-desc">Мягко. Системно. В вашем ритме. Если то, что вы увидели, — не единичный эпизод, а система, которая повторяется годами. Еженедельные встречи, письменные отчёты на каждом этапе, полный маршрут изменений.</div></div></div>';
   h+='<div class="cta-text" style="margin-top:14px">В любом случае — вы уже начали. Вы уже сделали то, на что большинство не решается: честно посмотрели на свою жизнь и записали то, что увидели.</div>';
   h+='<div style="margin-top:16px"><a href="https://t.me/sudas_psy" target="_blank" class="btn btn-primary">Записаться</a></div></div>';
   h+='<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="saveStep6();goStep(5)">← День 6</button><div></div></div></div>';
@@ -158,6 +164,83 @@ window.goStep=function(n){
   if(curStep===1)saveStep1();if(curStep===2)saveStep2();if(curStep===3)saveStep3();
   if(curStep===4)saveStep4();if(curStep===5)saveStep5();if(curStep===6)saveStep6();
   curStep=n;data.step=n;saveD(data);window.scrollTo(0,0);render()};
+
+// Auto-analysis of hours
+window.showAnalysis=function(){
+  var el=$('auto-analysis');if(!el)return;
+  var feelings={},bodyParts={},mustCount=0,wantCount=0;
+  hours.forEach(function(hr,i){
+    var d=data['h'+i]||{};
+    if(d.b){var f=d.b.trim().toLowerCase();if(f)feelings[f]=(feelings[f]||0)+1}
+    if(d.c){var b=d.c.trim().toLowerCase();if(b)bodyParts[b]=(bodyParts[b]||0)+1}
+    if(d.d&&d.d.trim()&&d.a&&d.a.trim()){
+      if(d.d.trim().toLowerCase()!==d.a.trim().toLowerCase())mustCount++;else wantCount++;
+    }
+  });
+  var topFeel=Object.keys(feelings).sort(function(a,b){return feelings[b]-feelings[a]});
+  var topBody=Object.keys(bodyParts).sort(function(a,b){return bodyParts[b]-bodyParts[a]});
+  var total=mustCount+wantCount||1;
+  var mustPct=Math.round(mustCount/total*100);
+
+  var ah='<div class="card" style="background:rgba(139,0,32,.04);border-color:rgba(139,0,32,.15)"><div class="card-title" style="color:var(--accent)">Что показал ваш день</div><div class="card-text">';
+  if(mustPct>60)ah+='<p><strong>'+mustPct+'% дня — на «должен».</strong> Вы отдали большую часть своих жизненных сил чужим ожиданиям.</p>';
+  if(topFeel.length)ah+='<p>Самое частое чувство за день: <strong>'+esc(topFeel[0])+'</strong>'+(topFeel[1]?' и <strong>'+esc(topFeel[1])+'</strong>':'')+'</p>';
+  if(topBody.length)ah+='<p>Тело сигналило: <strong>'+esc(topBody[0])+'</strong></p>';
+  ah+='<p style="font-size:.82rem;color:var(--accent);margin-top:8px">Это не приговор. Это данные. С данными можно работать.</p>';
+  ah+='</div></div>';
+  el.innerHTML=ah;
+};
+
+// Gap visual on day 6
+function updateGap(){
+  var el=$('gap-visual');if(!el)return;
+  var a=parseInt(($('s5a')||{}).value)||0;
+  var b=parseInt(($('s5b')||{}).value)||0;
+  if(!a&&!b){el.innerHTML='';return}
+  var total=a+b||1;
+  var pctA=Math.round(a/total*100);
+  var pctB=100-pctA;
+  var gh='<div style="margin:14px 0"><div style="display:flex;height:24px;border-radius:12px;overflow:hidden;margin-bottom:6px">';
+  gh+='<div style="width:'+pctA+'%;background:var(--accent);transition:width .5s"></div>';
+  gh+='<div style="width:'+pctB+'%;background:var(--bd);transition:width .5s"></div></div>';
+  gh+='<div style="display:flex;justify-content:space-between;font-size:.75rem"><span style="color:var(--accent)">По ценностям: '+a+'ч ('+pctA+'%)</span><span style="color:var(--tl)">Мимо: '+b+'ч ('+pctB+'%)</span></div>';
+  if(pctB>60)gh+='<div style="font-size:.84rem;color:var(--accent);margin-top:10px;font-style:italic">Больше половины вашего дня — не ваша жизнь.</div>';
+  gh+='</div>';
+  el.innerHTML=gh;
+}
+
+// Mini analytics on day 7
+function showMiniAnalytics(){
+  var el=$('mini-analytics');if(!el)return;
+  // Collect data
+  var adv=data.advanced||{};
+  var s5=data.s5||{};
+  var values=[];for(var ci=1;ci<=7;ci++){var c=data['c'+ci];if(c&&c.n)values.push(c.n)}
+
+  var ah='';
+  if(adv.must||adv.want)ah+='<div style="font-size:.88rem;color:var(--td);margin-bottom:8px">Часов на «должен»: <strong style="color:var(--accent)">'+(adv.must||'?')+'</strong> · На «хочу»: <strong style="color:var(--accent)">'+(adv.want||'?')+'</strong></div>';
+  if(s5.a||s5.b)ah+='<div style="font-size:.88rem;color:var(--td);margin-bottom:8px">По ценностям: <strong>'+(s5.a||'?')+'ч</strong> · Мимо: <strong>'+(s5.b||'?')+'ч</strong></div>';
+  if(values.length)ah+='<div style="font-size:.88rem;color:var(--td);margin-bottom:8px">Ваши ценности: <strong style="color:var(--accent)">'+values.map(esc).join(', ')+'</strong></div>';
+  if(adv.alive)ah+='<div style="font-size:.88rem;color:var(--td);margin-bottom:8px">Живой(-ая) в: <strong>'+esc(adv.alive)+'</strong></div>';
+
+  ah+='<div style="font-size:.82rem;color:var(--tm);margin-top:12px;font-style:italic">Это ваш портрет. Не чужой анализ — ваши собственные данные. Если хотите разобраться, что за ними стоит и что с этим делать — я рядом.</div>';
+  el.innerHTML=ah;
+}
+
+// After render — attach gap listeners and show analytics
+var origRender=render;
+render=function(){
+  origRender();
+  // Attach gap visual listeners
+  setTimeout(function(){
+    if($('s5a'))$('s5a').oninput=updateGap;
+    if($('s5b'))$('s5b').oninput=updateGap;
+    updateGap();
+    showMiniAnalytics();
+    // Show analysis if data exists
+    if(data.advanced&&(data.advanced.must||data.advanced.want))showAnalysis();
+  },50);
+};
 
 render();
 })();

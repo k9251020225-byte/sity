@@ -42,10 +42,29 @@ window.renderStart=function(){
 window.initAdd=function(){renderAdd()};
 window.renderAdd=function(){
   var data=loadD();
+  // Load or init wheel
+  data.wheel=data.wheel||JSON.parse(JSON.stringify(GC.defaultWheel));
+
   var h='<div class="sec-title">Этап 3. Постановка цели</div><div class="divider"></div>';
-  h+='<div class="sec-sub">Ответьте честно. Эти вопросы помогут отделить настоящее желание от привычки угождать.</div>';
-  h+='<div class="form-group"><label class="form-label">Категория</label><select class="form-select" id="g-cat">';
-  GC.categories.forEach(function(c){h+='<option>'+c+'</option>'});
+
+  // Wheel of balance
+  h+='<div class="card" style="margin-bottom:18px"><div class="card-title">Колесо баланса</div>';
+  h+='<div class="card-dim" style="margin-bottom:12px">Оцените каждую сферу жизни от 1 до 10. Посмотрите на колесо — где провал? Оттуда и начните. Вы можете переименовать сферы под себя — это ваша жизнь, не чужие категории.</div>';
+  h+='<div class="wheel-wrap"><svg class="wheel-svg" viewBox="0 0 300 300" id="wheel-svg"></svg></div>';
+
+  // Wheel inputs
+  h+='<div id="wheel-inputs">';
+  data.wheel.forEach(function(w,i){
+    h+='<div class="wheel-input"><input type="text" value="'+esc(w.name)+'" data-wi="'+i+'" class="wi-name"><input type="range" min="1" max="10" value="'+w.score+'" data-wi="'+i+'" class="wi-score"><span class="wval">'+w.score+'</span><button onclick="window._delWheelSector('+i+')">&times;</button></div>';
+  });
+  h+='</div>';
+  h+='<div style="display:flex;gap:8px;margin-top:8px"><input class="form-input" id="wheel-new-name" placeholder="Добавить свою сферу" style="flex:1"><button class="btn btn-primary btn-sm" id="btn-add-sector">+</button></div>';
+  h+='<div class="btn-row"><button class="btn btn-secondary btn-sm" id="btn-save-wheel">Сохранить колесо</button></div>';
+  h+='</div>';
+
+  h+='<div class="sec-sub" style="margin-top:20px">Теперь выберите сферу и поставьте цель.</div>';
+  h+='<div class="form-group"><label class="form-label">Сфера жизни</label><select class="form-select" id="g-cat">';
+  data.wheel.forEach(function(w){h+='<option>'+esc(w.name)+'</option>'});
   h+='</select></div>';
   h+='<div class="form-group"><label class="form-label">Цель на год</label><input class="form-input" id="g-name"></div>';
 
@@ -78,6 +97,75 @@ window.renderAdd=function(){
 
   h+='<div class="btn-row" style="padding-bottom:100px"><button class="btn btn-primary" id="btn-add-goal">Добавить цель</button></div>';
   $('add-content').innerHTML=h;
+
+  // Draw wheel
+  function drawWheel(){
+    var svg=$('wheel-svg');if(!svg)return;
+    var wheel=data.wheel||[];var n=wheel.length;if(!n){svg.innerHTML='';return}
+    var cx=150,cy=150,maxR=120,minR=20;
+    var svgH='';
+    wheel.forEach(function(w,i){
+      var angle=2*Math.PI/n;
+      var startA=i*angle-Math.PI/2;
+      var endA=(i+1)*angle-Math.PI/2;
+      var r=minR+(maxR-minR)*(w.score/10);
+      var x1=cx+r*Math.cos(startA),y1=cy+r*Math.sin(startA);
+      var x2=cx+r*Math.cos(endA),y2=cy+r*Math.sin(endA);
+      var largeArc=angle>Math.PI?1:0;
+      var color=GC.wheelColors[i%GC.wheelColors.length];
+      // Filled sector
+      svgH+='<path d="M'+cx+','+cy+' L'+x1+','+y1+' A'+r+','+r+' 0 '+largeArc+',1 '+x2+','+y2+' Z" fill="'+color+'" opacity="0.3"/>';
+      // Border
+      var bx1=cx+maxR*Math.cos(startA),by1=cy+maxR*Math.sin(startA);
+      svgH+='<line x1="'+cx+'" y1="'+cy+'" x2="'+bx1+'" y2="'+by1+'" stroke="'+color+'" stroke-width="0.5" opacity="0.3"/>';
+      // Label
+      var midA=(startA+endA)/2;
+      var lx=cx+(maxR+16)*Math.cos(midA),ly=cy+(maxR+16)*Math.sin(midA);
+      svgH+='<text x="'+lx+'" y="'+ly+'" class="wheel-label">'+esc(w.name)+'</text>';
+      // Score
+      var sx=cx+(r/2+10)*Math.cos(midA),sy=cy+(r/2+10)*Math.sin(midA);
+      svgH+='<text x="'+sx+'" y="'+(sy+5)+'" class="wheel-score">'+w.score+'</text>';
+    });
+    // Outer circle
+    svgH+='<circle cx="'+cx+'" cy="'+cy+'" r="'+maxR+'" fill="none" stroke="var(--bd)" stroke-width="1"/>';
+    svg.innerHTML=svgH;
+  }
+  drawWheel();
+
+  // Wheel input handlers
+  document.querySelectorAll('.wi-score').forEach(function(s){
+    s.oninput=function(){
+      var i=parseInt(s.dataset.wi);
+      data.wheel[i].score=parseInt(s.value);
+      s.nextElementSibling.textContent=s.value;
+      drawWheel();
+    };
+  });
+  document.querySelectorAll('.wi-name').forEach(function(inp){
+    inp.onchange=function(){
+      var i=parseInt(inp.dataset.wi);
+      data.wheel[i].name=inp.value.trim()||'Сфера '+(i+1);
+    };
+  });
+
+  $('btn-save-wheel').onclick=function(){
+    // Also update names from inputs
+    document.querySelectorAll('.wi-name').forEach(function(inp){
+      var i=parseInt(inp.dataset.wi);
+      data.wheel[i].name=inp.value.trim()||'Сфера '+(i+1);
+    });
+    saveD(data);drawWheel();alert('Колесо сохранено!');
+  };
+
+  $('btn-add-sector').onclick=function(){
+    var name=$('wheel-new-name').value.trim();if(!name)return;
+    data.wheel.push({name:name,score:5});
+    saveD(data);renderAdd();
+  };
+
+  window._delWheelSector=function(i){
+    data.wheel.splice(i,1);saveD(data);renderAdd();
+  };
 
   $('btn-add-goal').onclick=function(){
     var name=$('g-name').value.trim();if(!name){alert('Введите цель');return}

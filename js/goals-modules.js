@@ -79,13 +79,13 @@ window.renderAdd=function(){
     {id:'adult',label:'7. Взрослое решение',ph:'Я готов(-а) идти к этому, даже если никто не заметит и не похвалит?',hint:'Если да — цель ваша. Если нет — вы ищете зрителя.'},
     {id:'impact',label:'8. Влияние',ph:'Что изменится в моей жизни и жизни людей рядом?',hint:''}
   ];
-  h+='<div class="card" style="margin:16px 0"><div class="card-title">8 вопросов к цели</div>';
+  h+='<details class="card" style="margin:16px 0"><summary class="card-title" style="cursor:pointer">8 вопросов к цели ▸</summary><div style="padding-top:12px">';
   qs.forEach(function(q){
     h+='<div class="form-group"><label class="form-label">'+q.label+'</label><textarea class="form-textarea" id="gq-'+q.id+'" rows="2" placeholder="'+q.ph+'"></textarea>';
     if(q.hint)h+='<div class="card-dim">'+q.hint+'</div>';
     h+='</div>';
   });
-  h+='</div>';
+  h+='</div></details>';
 
   // Decomposition
   h+='<div class="card"><div class="card-title">Путь к цели</div>';

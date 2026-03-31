@@ -211,11 +211,65 @@ window.renderGoals=function(){
       h+='</div>';
     });
   }
-  h+='<div class="btn-row"><button class="btn btn-secondary btn-sm" id="btn-export">Экспорт</button><button class="btn btn-danger btn-sm" id="btn-nuke">Удалить всё</button></div>';
+  h+='<div class="card" style="margin-top:20px"><div class="card-title">Данные и безопасность</div>';
+  h+='<div class="card-dim" style="margin-bottom:12px">Все записи хранятся на вашем устройстве. Если вы смените телефон или очистите данные браузера — записи пропадут. Делайте резервную копию раз в неделю.</div>';
+  h+='<div class="card-dim" style="margin-bottom:12px;color:var(--cr)">Важно для iPhone/Safari: если вы не открываете дневник больше 7 дней, браузер может удалить данные. Открывайте дневник хотя бы раз в неделю или добавьте страницу на главный экран.</div>';
+  h+='<div class="btn-row" style="flex-wrap:wrap">';
+  h+='<button class="btn btn-secondary btn-sm" id="btn-export-full">Сохранить копию</button>';
+  h+='<button class="btn btn-secondary btn-sm" id="btn-import">Загрузить копию</button>';
+  h+='<button class="btn btn-danger btn-sm" id="btn-nuke">Удалить всё</button>';
+  h+='</div><input type="file" id="import-file" style="display:none" accept=".json"></div>';
   $('goals-content').innerHTML=h;
 
-  $('btn-export').onclick=function(){var d=JSON.stringify(loadD(),null,2);if(navigator.clipboard)navigator.clipboard.writeText(d).then(function(){$('modal').classList.add('show')})};
-  $('btn-nuke').onclick=function(){if(!confirm('Удалить ВСЕ данные?'))return;if(!confirm('Точно?'))return;saveD({});renderGoals()};
+  // Full export (localStorage + IndexedDB)
+  $('btn-export-full').onclick=function(){
+    var db=window.OPORA_DB;
+    if(!db){alert('База не загружена');return}
+    dbGetAll(db,'daily',function(daily){
+      dbGetAll(db,'reviews',function(reviews){
+        var fullData={localStorage:loadD(),daily:daily,reviews:reviews,exportDate:new Date().toISOString(),version:'2.0'};
+        var json=JSON.stringify(fullData,null,2);
+        var blob=new Blob([json],{type:'application/json'});
+        var url=URL.createObjectURL(blob);
+        var a=document.createElement('a');
+        a.href=url;a.download='opora-backup-'+new Date().toISOString().split('T')[0]+'.json';
+        a.click();URL.revokeObjectURL(url);
+      });
+    });
+  };
+
+  // Import
+  $('btn-import').onclick=function(){$('import-file').click()};
+  $('import-file').onchange=function(e){
+    var file=e.target.files[0];if(!file)return;
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      try{
+        var imported=JSON.parse(ev.target.result);
+        if(!imported.version){alert('Неверный формат файла');return}
+        if(!confirm('Загрузить данные из файла? Текущие данные будут заменены.'))return;
+        // Restore localStorage
+        if(imported.localStorage)saveD(imported.localStorage);
+        // Restore IndexedDB
+        var db=window.OPORA_DB;
+        if(db&&imported.daily){
+          var count=0;var total=imported.daily.length+(imported.reviews?imported.reviews.length:0);
+          imported.daily.forEach(function(item){
+            dbPut(db,'daily',item.key,item.val,function(){count++;if(count>=total){alert('Данные восстановлены! ('+imported.daily.length+' дней, '+(imported.reviews?imported.reviews.length:0)+' обзоров)');location.reload()}});
+          });
+          if(imported.reviews){
+            imported.reviews.forEach(function(item){
+              dbPut(db,'reviews',item.key,item.val,function(){count++;if(count>=total){alert('Данные восстановлены!');location.reload()}});
+            });
+          }
+          if(!total){alert('Данные восстановлены!');location.reload()}
+        }else{alert('Настройки восстановлены!');location.reload()}
+      }catch(err){alert('Ошибка: файл повреждён')}
+    };
+    reader.readAsText(file);
+  };
+
+  $('btn-nuke').onclick=function(){if(!confirm('Удалить ВСЕ данные? Необратимо!'))return;if(!confirm('Точно? Записи нельзя будет восстановить.'))return;saveD({});var db=window.OPORA_DB;if(db){dbGetAll(db,'daily',function(){var tx=db.transaction('daily','readwrite');tx.objectStore('daily').clear();var tx2=db.transaction('reviews','readwrite');tx2.objectStore('reviews').clear();tx2.oncomplete=function(){renderGoals()}})}else{renderGoals()}};
 };
 
 window._editG=function(gi,field,label){var data=loadD();var g=data.goals[gi];var v=prompt(label,g[field]||'');if(v===null)return;g[field]=v.trim();saveD(data);renderGoals()};

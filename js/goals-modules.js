@@ -254,9 +254,10 @@ window.renderHabits=function(){
   var unlinked=[];
   var byGoal={};
   data.habits.forEach(function(hab,hi){
-    if(hab.goalIdx!==undefined&&hab.goalIdx!==null&&goals[hab.goalIdx]){
-      if(!byGoal[hab.goalIdx])byGoal[hab.goalIdx]=[];
-      byGoal[hab.goalIdx].push({hab:hab,hi:hi});
+    if(hab.goalId){
+      var found=false;
+      goals.forEach(function(g,gi){if(g.id===hab.goalId){if(!byGoal[gi])byGoal[gi]=[];byGoal[gi].push({hab:hab,hi:hi});found=true}});
+      if(!found)unlinked.push({hab:hab,hi:hi});
     }else{
       unlinked.push({hab:hab,hi:hi});
     }
@@ -285,7 +286,7 @@ window.renderHabits=function(){
   h+='<div class="form-group"><input class="form-input" id="hab-name" placeholder="Название привычки"></div>';
   if(goals.length){
     h+='<div class="form-group"><label class="form-label">Привязать к цели</label><select class="form-select" id="hab-goal"><option value="">Без привязки (общая)</option>';
-    goals.forEach(function(g,gi){h+='<option value="'+gi+'">'+esc(g.name)+'</option>'});
+    goals.forEach(function(g){h+='<option value="'+g.id+'">'+esc(g.name)+'</option>'});
     h+='</select></div>';
   }
   h+='<button class="btn btn-primary btn-sm" id="btn-add-hab">Добавить</button></div>';
@@ -298,8 +299,8 @@ window.renderHabits=function(){
   $('btn-add-hab').onclick=function(){
     var n=$('hab-name').value.trim();if(!n)return;
     var goalSel=$('hab-goal');
-    var goalIdx=goalSel&&goalSel.value!==''?parseInt(goalSel.value):null;
-    data.habits.push({name:n,days:[],goalIdx:goalIdx});
+    var goalId=goalSel&&goalSel.value!==''?parseInt(goalSel.value):null;
+    data.habits.push({name:n,days:[],goalId:goalId});
     saveD(data);$('hab-name').value='';renderHabits();
   };
 };
